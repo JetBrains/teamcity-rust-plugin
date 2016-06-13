@@ -23,7 +23,8 @@ public class CargoParametersProvider {
     public CargoParametersProvider() {
         myTypes = Arrays.asList(
                 new BuildCommandType(),
-                new CleanCommandType());
+                new CleanCommandType(),
+                new TestCommandType());
     }
 
     public List<CommandType> getTypes() {
@@ -88,5 +89,53 @@ public class CargoParametersProvider {
 
     public String getCleanManifestKey() {
         return CargoConstants.PARAM_CLEAN_MANIFEST;
+    }
+
+    public String getTestArgumentsKey() {
+        return CargoConstants.PARAM_TEST_ARGUMENTS;
+    }
+
+    public String getTestPackageKey() {
+        return CargoConstants.PARAM_TEST_PACKAGE;
+    }
+
+    public String getTestTypeKey() {
+        return CargoConstants.PARAM_TEST_TYPE;
+    }
+
+    public String getTestTypeNameKey() {
+        return CargoConstants.PARAM_TEST_TYPE_NAME;
+    }
+
+    public String getTestReleaseKey() {
+        return CargoConstants.PARAM_TEST_RELEASE;
+    }
+
+    public String getTestNoRunTestsKey() {
+        return CargoConstants.PARAM_TEST_NO_RUN_TESTS;
+    }
+
+    public String getTestFeaturesKey() {
+        return CargoConstants.PARAM_TEST_FEATURES;
+    }
+
+    public String getTestNoDefaultFeaturesKey() {
+        return CargoConstants.PARAM_TEST_NO_DEFAULT_FEATURES;
+    }
+
+    public String getTestNoFailFastKey() {
+        return CargoConstants.PARAM_TEST_NO_FAIL_FAST;
+    }
+
+    public String getTestTargetKey() {
+        return CargoConstants.PARAM_TEST_TARGET;
+    }
+
+    public String getTestManifestKey() {
+        return CargoConstants.PARAM_TEST_MANIFEST;
+    }
+
+    public String getTestParallelKey() {
+        return CargoConstants.PARAM_TEST_PARALLEL;
     }
 }

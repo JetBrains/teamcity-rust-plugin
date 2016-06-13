@@ -40,6 +40,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testTestArgumentsData")
+    public void testTestArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new TestArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -77,6 +85,37 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_CLEAN_TARGET, "name",
                         CargoConstants.PARAM_CLEAN_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("clean", "--target", "name", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testTestArgumentsData")
+    public Object[][] testTestArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_TEST_PACKAGE, "name",
+                        CargoConstants.PARAM_TEST_RELEASE, "true"),
+                        Arrays.asList("test", "--package", "name", "--release")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_TEST_TYPE, "--bin",
+                        CargoConstants.PARAM_TEST_TYPE_NAME, "name"),
+                        Arrays.asList("test", "--bin", "name")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_TEST_FEATURES, "name1 name2",
+                        CargoConstants.PARAM_TEST_NO_DEFAULT_FEATURES, "true"),
+                        Arrays.asList("test", "--features", "name1 name2", "--no-default-features")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_TEST_TARGET, "name",
+                        CargoConstants.PARAM_TEST_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("test", "--target", "name", "--manifest-path", "/path/to/manifest")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_TEST_ARGUMENTS, "name",
+                        CargoConstants.PARAM_TEST_NO_RUN_TESTS, "true",
+                        CargoConstants.PARAM_TEST_NO_FAIL_FAST, "true"),
+                        Arrays.asList("test", "--no-run", "--no-fail-fast", "name")},
         };
     }
 }

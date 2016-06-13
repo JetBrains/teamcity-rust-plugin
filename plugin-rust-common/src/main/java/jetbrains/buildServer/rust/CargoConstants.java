@@ -46,4 +46,17 @@ public interface CargoConstants {
     String PARAM_CLEAN_RELEASE = "cargo-clean-release";
     String PARAM_CLEAN_TARGET = "cargo clean-target";
     String PARAM_CLEAN_MANIFEST = "cargo-clean-manifest";
+
+    String PARAM_TEST_ARGUMENTS = "cargo-test-arguments";
+    String PARAM_TEST_PACKAGE = "cargo-test-package";
+    String PARAM_TEST_TYPE = "cargo-test-type";
+    String PARAM_TEST_TYPE_NAME = "cargo-test-type-name";
+    String PARAM_TEST_RELEASE = "cargo-test-release";
+    String PARAM_TEST_NO_RUN_TESTS = "cargo-test-no-run-tests";
+    String PARAM_TEST_FEATURES = "cargo-test-features";
+    String PARAM_TEST_NO_DEFAULT_FEATURES = "cargo-test-no-default-features";
+    String PARAM_TEST_NO_FAIL_FAST = "cargo-test-no-fail-fast";
+    String PARAM_TEST_TARGET = "cargo-test-target";
+    String PARAM_TEST_MANIFEST = "cargo-test-manifest";
+    String PARAM_TEST_PARALLEL = "cargo-test-parallel";
 }
