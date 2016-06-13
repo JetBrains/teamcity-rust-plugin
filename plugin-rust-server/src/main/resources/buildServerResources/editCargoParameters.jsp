@@ -19,10 +19,10 @@
 <tr class="advancedSetting">
     <th><label for="${params.verbosityKey}">Output verbosity:</label></th>
     <td>
-        <props:selectProperty name="${params.verbosityKey}" className="mediumField">
+        <props:selectProperty name="${params.verbosityKey}" className="smallField">
             <props:option value="">&lt;Default&gt;</props:option>
-            <props:option value="verbose">Verbose</props:option>
-            <props:option value="quiet">Quiet</props:option>
+            <props:option value="--verbose">Verbose</props:option>
+            <props:option value="--quiet">Quiet</props:option>
         </props:selectProperty>
     </td>
 </tr>

@@ -22,7 +22,6 @@ public class CargoParametersProvider {
 
     public CargoParametersProvider() {
         myTypes = Arrays.asList(
-                new BuildCommandType(),
                 (CommandType)new BuildCommandType());
     }
 

@@ -11,14 +11,14 @@
     <td>
         <props:textProperty name="${params.buildPackageKey}" className="longField"/>
         <span class="error" id="error_${params.buildPackageKey}"></span>
-        <span class="smallNote">Package to build</span>
+        <span class="smallNote">Package to build.</span>
     </td>
 </tr>
 
 <tr class="advancedSetting">
-    <th class="noBorder"><label for="${params.buildTypeKey}">Type:</label></th>
+    <th><label for="${params.buildTypeKey}">Build:</label></th>
     <td>
-        <props:selectProperty name="${params.buildTypeKey}" enableFilter="true" className="mediumField">
+        <props:selectProperty name="${params.buildTypeKey}" enableFilter="true" className="smallField">
             <props:option value="">&lt;Auto&gt;</props:option>
             <props:option value="--lib">Library</props:option>
             <props:option value="--bin">Binary</props:option>
@@ -26,21 +26,34 @@
             <props:option value="--test">Test</props:option>
             <props:option value="--bench">Benchmark</props:option>
         </props:selectProperty>
-        <props:textProperty name="${params.buildTypeNameKey}" className="longField"/>
+        <span>name:</span>
+        <props:textProperty name="${params.buildTypeNameKey}" className="mediumField"/>
         <span class="error" id="error_${params.buildTypeNameKey}"></span>
-        <props:checkboxProperty name="${params.buildReleaseKey}"/>
-        <label for="${params.buildReleaseKey}">Release mode</label>
     </td>
 </tr>
 
 <tr class="advancedSetting">
-    <th class="noBorder"><label for="${params.buildFeaturesKey}">Features:</label></th>
+    <th class="noBorder"><label for="${params.buildTypeKey}"></label></th>
+    <td>
+        <props:checkboxProperty name="${params.buildReleaseKey}"/>
+        <label for="${params.buildReleaseKey}">Build artifacts in release mode, with optimizations</label>
+    </td>
+</tr>
+
+<tr class="advancedSetting">
+    <th><label for="${params.buildFeaturesKey}">Features:</label></th>
     <td>
         <props:textProperty name="${params.buildFeaturesKey}" className="longField"/>
-        <span class="smallNote">Space-separated list of features to also build</span>
+        <span class="smallNote">Space-separated list of features to also build.</span>
         <span class="error" id="error_${params.buildFeaturesKey}"></span>
+    </td>
+</tr>
+
+<tr class="advancedSetting">
+    <th class="noBorder"><label for="${params.buildFeaturesKey}"></label></th>
+    <td>
         <props:checkboxProperty name="${params.buildNoDefaultFeaturesKey}"/>
-        <label for="${params.buildNoDefaultFeaturesKey}">Don't build default features</label>
+        <label for="${params.buildNoDefaultFeaturesKey}">Do not build default features</label>
     </td>
 </tr>
 
@@ -54,7 +67,7 @@
 </tr>
 
 <tr class="advancedSetting">
-    <th class="noBorder"><label for="${params.buildManifestKey}">Manifest:</label></th>
+    <th><label for="${params.buildManifestKey}">Manifest:</label></th>
     <td>
         <props:textProperty name="${params.buildManifestKey}" className="longField"/>
         <span class="error" id="error_${params.buildManifestKey}"></span>
@@ -63,7 +76,7 @@
 </tr>
 
 <tr class="advancedSetting">
-    <th class="noBorder"><label for="${params.buildParallelKey}">Parallel jobs:</label></th>
+    <th><label for="${params.buildParallelKey}">Parallel jobs:</label></th>
     <td>
         <props:textProperty name="${params.buildParallelKey}" className="longField"/>
         <span class="error" id="error_${params.buildParallelKey}"></span>
