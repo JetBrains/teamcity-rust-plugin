@@ -24,6 +24,7 @@ public class CargoParametersProvider {
         myTypes = Arrays.asList(
                 new BuildCommandType(),
                 new CleanCommandType(),
+                new RunCommandType(),
                 new TestCommandType());
     }
 
@@ -137,5 +138,41 @@ public class CargoParametersProvider {
 
     public String getTestParallelKey() {
         return CargoConstants.PARAM_TEST_PARALLEL;
+    }
+
+    public String getRunArgumentsKey() {
+        return CargoConstants.PARAM_RUN_ARGUMENTS;
+    }
+
+    public String getRunTypeKey() {
+        return CargoConstants.PARAM_RUN_TYPE;
+    }
+
+    public String getRunTypeNameKey() {
+        return CargoConstants.PARAM_RUN_TYPE_NAME;
+    }
+
+    public String getRunReleaseKey() {
+        return CargoConstants.PARAM_RUN_RELEASE;
+    }
+
+    public String getRunFeaturesKey() {
+        return CargoConstants.PARAM_RUN_FEATURES;
+    }
+
+    public String getRunNoDefaultFeaturesKey() {
+        return CargoConstants.PARAM_RUN_NO_DEFAULT_FEATURES;
+    }
+
+    public String getRunTargetKey() {
+        return CargoConstants.PARAM_RUN_TARGET;
+    }
+
+    public String getRunManifestKey() {
+        return CargoConstants.PARAM_RUN_MANIFEST;
+    }
+
+    public String getRunParallelKey() {
+        return CargoConstants.PARAM_RUN_PARALLEL;
     }
 }

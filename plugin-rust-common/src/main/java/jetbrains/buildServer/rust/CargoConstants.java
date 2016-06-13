@@ -59,4 +59,14 @@ public interface CargoConstants {
     String PARAM_TEST_TARGET = "cargo-test-target";
     String PARAM_TEST_MANIFEST = "cargo-test-manifest";
     String PARAM_TEST_PARALLEL = "cargo-test-parallel";
+    
+    String PARAM_RUN_ARGUMENTS = "cargo-run-arguments";
+    String PARAM_RUN_TYPE = "cargo-run-type";
+    String PARAM_RUN_TYPE_NAME = "cargo-run-type-name";
+    String PARAM_RUN_RELEASE = "cargo-run-release";
+    String PARAM_RUN_FEATURES = "cargo-run-features";
+    String PARAM_RUN_NO_DEFAULT_FEATURES = "cargo-run-no-default-features";
+    String PARAM_RUN_TARGET = "cargo-run-target";
+    String PARAM_RUN_MANIFEST = "cargo-run-manifest";
+    String PARAM_RUN_PARALLEL = "cargo-run-parallel";
 }

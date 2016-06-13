@@ -48,6 +48,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testRunArgumentsData")
+    public void testRunArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new RunArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -116,6 +124,31 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_TEST_NO_RUN_TESTS, "true",
                         CargoConstants.PARAM_TEST_NO_FAIL_FAST, "true"),
                         Arrays.asList("test", "--no-run", "--no-fail-fast", "name")},
+        };
+    }
+
+    @DataProvider(name = "testRunArgumentsData")
+    public Object[][] testRunArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUN_ARGUMENTS, "name",
+                        CargoConstants.PARAM_RUN_RELEASE, "true"),
+                        Arrays.asList("run", "--release", "name")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUN_TYPE, "--bin",
+                        CargoConstants.PARAM_RUN_TYPE_NAME, "name"),
+                        Arrays.asList("run", "--bin", "name")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUN_FEATURES, "name1 name2",
+                        CargoConstants.PARAM_RUN_NO_DEFAULT_FEATURES, "true"),
+                        Arrays.asList("run", "--features", "name1 name2", "--no-default-features")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUN_TARGET, "name",
+                        CargoConstants.PARAM_RUN_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("run", "--target", "name", "--manifest-path", "/path/to/manifest")},
         };
     }
 }

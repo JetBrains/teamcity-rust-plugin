@@ -44,8 +44,8 @@
     <th><label for="${params.buildFeaturesKey}">Features:</label></th>
     <td>
         <props:textProperty name="${params.buildFeaturesKey}" className="longField"/>
-        <span class="smallNote">Space-separated list of features to also build.</span>
         <span class="error" id="error_${params.buildFeaturesKey}"></span>
+        <span class="smallNote">Space-separated list of features to also build.</span>
     </td>
 </tr>
 

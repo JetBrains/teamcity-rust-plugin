@@ -24,7 +24,7 @@
 </tr>
 
 <tr class="advancedSetting">
-    <th><label for="${params.testTypeKey}">Build:</label></th>
+    <th><label for="${params.testTypeKey}">Test:</label></th>
     <td>
         <props:selectProperty name="${params.testTypeKey}" enableFilter="true" className="smallField">
             <props:option value="">&lt;Auto&gt;</props:option>
@@ -68,8 +68,8 @@
     <th><label for="${params.testFeaturesKey}">Features:</label></th>
     <td>
         <props:textProperty name="${params.testFeaturesKey}" className="longField"/>
-        <span class="smallNote">Space-separated list of features to also build.</span>
         <span class="error" id="error_${params.testFeaturesKey}"></span>
+        <span class="smallNote">Space-separated list of features to also build.</span>
     </td>
 </tr>
 
