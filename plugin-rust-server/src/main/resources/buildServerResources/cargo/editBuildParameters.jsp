@@ -33,7 +33,7 @@
 </tr>
 
 <tr class="advancedSetting">
-    <th class="noBorder"><label for="${params.buildTypeKey}"></label></th>
+    <th class="noBorder"></th>
     <td>
         <props:checkboxProperty name="${params.buildReleaseKey}"/>
         <label for="${params.buildReleaseKey}">Build artifacts in release mode, with optimizations</label>
@@ -50,7 +50,7 @@
 </tr>
 
 <tr class="advancedSetting">
-    <th class="noBorder"><label for="${params.buildFeaturesKey}"></label></th>
+    <th class="noBorder"></th>
     <td>
         <props:checkboxProperty name="${params.buildNoDefaultFeaturesKey}"/>
         <label for="${params.buildNoDefaultFeaturesKey}">Do not build default features</label>

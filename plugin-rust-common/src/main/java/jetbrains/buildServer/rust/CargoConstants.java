@@ -41,4 +41,9 @@ public interface CargoConstants {
     String PARAM_BUILD_TARGET = "cargo-build-target";
     String PARAM_BUILD_MANIFEST = "cargo-build-manifest";
     String PARAM_BUILD_PARALLEL = "cargo-build-parallel";
+
+    String PARAM_CLEAN_PACKAGE = "cargo-clean-package";
+    String PARAM_CLEAN_RELEASE = "cargo-clean-release";
+    String PARAM_CLEAN_TARGET = "cargo clean-target";
+    String PARAM_CLEAN_MANIFEST = "cargo-clean-manifest";
 }

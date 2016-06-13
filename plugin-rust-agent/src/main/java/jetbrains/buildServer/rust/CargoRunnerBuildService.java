@@ -11,7 +11,7 @@ import jetbrains.buildServer.RunBuildException;
 import jetbrains.buildServer.agent.ToolCannotBeFoundException;
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter;
 import jetbrains.buildServer.agent.runner.ProgramCommandLine;
-import jetbrains.buildServer.rust.cargo.BuildArgumentsProvider;
+import jetbrains.buildServer.rust.cargo.*;
 import jetbrains.buildServer.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +29,7 @@ public class CargoRunnerBuildService extends BuildServiceAdapter {
     public CargoRunnerBuildService() {
         myArgumentsProviders = new HashMap<String, ArgumentsProvider>();
         myArgumentsProviders.put(CargoConstants.COMMAND_BUILD, new BuildArgumentsProvider());
+        myArgumentsProviders.put(CargoConstants.COMMAND_CLEAN, new CleanArgumentsProvider());
     }
 
     @NotNull

@@ -22,7 +22,8 @@ public class CargoParametersProvider {
 
     public CargoParametersProvider() {
         myTypes = Arrays.asList(
-                (CommandType)new BuildCommandType());
+                new BuildCommandType(),
+                new CleanCommandType());
     }
 
     public List<CommandType> getTypes() {
@@ -71,5 +72,21 @@ public class CargoParametersProvider {
 
     public String getBuildParallelKey() {
         return CargoConstants.PARAM_BUILD_PARALLEL;
+    }
+
+    public String getCleanPackageKey() {
+        return CargoConstants.PARAM_CLEAN_PACKAGE;
+    }
+
+    public String getCleanReleaseKey() {
+        return CargoConstants.PARAM_CLEAN_RELEASE;
+    }
+
+    public String getCleanTargetKey() {
+        return CargoConstants.PARAM_CLEAN_TARGET;
+    }
+
+    public String getCleanManifestKey() {
+        return CargoConstants.PARAM_CLEAN_MANIFEST;
     }
 }

@@ -9,7 +9,7 @@ package jetbrains.buildServer.rust.test;
 
 import jetbrains.buildServer.rust.ArgumentsProvider;
 import jetbrains.buildServer.rust.CargoConstants;
-import jetbrains.buildServer.rust.cargo.BuildArgumentsProvider;
+import jetbrains.buildServer.rust.cargo.*;
 import jetbrains.buildServer.util.CollectionsUtil;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -27,6 +27,14 @@ public class CargoRunnerBuildServiceTest {
     @Test(dataProvider = "testBuildArgumentsData")
     public void testBuildArguments(final Map<String, String> parameters, final List<String> arguments) {
         final ArgumentsProvider argumentsProvider = new BuildArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
+    @Test(dataProvider = "testCleanArgumentsData")
+    public void testCleanArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new CleanArgumentsProvider();
         final List<String> result = argumentsProvider.getArguments(parameters);
 
         Assert.assertEquals(result, arguments);
@@ -54,6 +62,21 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_BUILD_TARGET, "name",
                         CargoConstants.PARAM_BUILD_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("build", "--target", "name", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testCleanArgumentsData")
+    public Object[][] testCleanArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_CLEAN_PACKAGE, "name",
+                        CargoConstants.PARAM_CLEAN_RELEASE, "true"),
+                        Arrays.asList("clean", "--package", "name", "--release")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_CLEAN_TARGET, "name",
+                        CargoConstants.PARAM_CLEAN_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("clean", "--target", "name", "--manifest-path", "/path/to/manifest")},
         };
     }
 }
