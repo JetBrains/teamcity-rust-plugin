@@ -266,4 +266,20 @@ public class CargoParametersProvider {
     public String getPackageManifestKey() {
         return CargoConstants.PARAM_PACKAGE_MANIFEST;
     }
+
+    public String getPublishHostKey() {
+        return CargoConstants.PARAM_PUBLISH_HOST;
+    }
+
+    public String getPublishTokenKey() {
+        return CargoConstants.PARAM_PUBLISH_TOKEN;
+    }
+
+    public String getPublishNoVerifyKey() {
+        return CargoConstants.PARAM_PUBLISH_NO_VERIFY;
+    }
+
+    public String getPublishManifestKey() {
+        return CargoConstants.PARAM_PUBLISH_MANIFEST;
+    }
 }

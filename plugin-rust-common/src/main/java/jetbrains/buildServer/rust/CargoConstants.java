@@ -94,4 +94,9 @@ public interface CargoConstants {
     String PARAM_PACKAGE_NO_VERIFY = "cargo-package-no-verify";
     String PARAM_PACKAGE_NO_METADATA = "cargo-package-no-metadata";
     String PARAM_PACKAGE_MANIFEST = "cargo-package-manifest";
+
+    String PARAM_PUBLISH_HOST = "cargo-publish-host";
+    String PARAM_PUBLISH_TOKEN = "cargo-publish-token";
+    String PARAM_PUBLISH_NO_VERIFY = "cargo-publish-no-verify";
+    String PARAM_PUBLISH_MANIFEST = "cargo-publish-manifest";
 }

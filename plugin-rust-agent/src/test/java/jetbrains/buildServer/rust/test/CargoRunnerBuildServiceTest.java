@@ -80,6 +80,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testPublishArgumentsData")
+    public void testPublishArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new PublishArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -235,6 +243,21 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_PACKAGE_NO_VERIFY, "true",
                         CargoConstants.PARAM_PACKAGE_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("package", "--no-verify", "--no-metadata", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testPublishArgumentsData")
+    public Object[][] testPublishArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_PUBLISH_HOST, "host",
+                        CargoConstants.PARAM_PUBLISH_TOKEN, "token"),
+                        Arrays.asList("publish", "--host", "host", "--token", "token")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_PUBLISH_NO_VERIFY, "true",
+                        CargoConstants.PARAM_PUBLISH_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("publish", "--no-verify", "--manifest-path", "/path/to/manifest")},
         };
     }
 }
