@@ -25,6 +25,7 @@ public class CargoParametersProvider {
                 new BenchCommandType(),
                 new BuildCommandType(),
                 new CleanCommandType(),
+                new DocCommandType(),
                 new RunCommandType(),
                 new TestCommandType());
     }
@@ -219,5 +220,37 @@ public class CargoParametersProvider {
 
     public String getBenchParallelKey() {
         return CargoConstants.PARAM_BENCH_PARALLEL;
+    }
+
+    public String getDocPackageKey() {
+        return CargoConstants.PARAM_DOC_PACKAGE;
+    }
+
+    public String getDocReleaseKey() {
+        return CargoConstants.PARAM_DOC_RELEASE;
+    }
+
+    public String getDocNoDependenciesKey() {
+        return CargoConstants.PARAM_DOC_NO_DEPS;
+    }
+
+    public String getDocFeaturesKey() {
+        return CargoConstants.PARAM_DOC_FEATURES;
+    }
+
+    public String getDocNoDefaultFeaturesKey() {
+        return CargoConstants.PARAM_DOC_NO_DEFAULT_FEATURES;
+    }
+
+    public String getDocTargetKey() {
+        return CargoConstants.PARAM_DOC_TARGET;
+    }
+
+    public String getDocManifestKey() {
+        return CargoConstants.PARAM_DOC_MANIFEST;
+    }
+
+    public String getDocParallelKey() {
+        return CargoConstants.PARAM_DOC_PARALLEL;
     }
 }

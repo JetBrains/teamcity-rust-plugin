@@ -81,4 +81,13 @@ public interface CargoConstants {
     String PARAM_BENCH_TARGET = "cargo-bench-target";
     String PARAM_BENCH_MANIFEST = "cargo-bench-manifest";
     String PARAM_BENCH_PARALLEL = "cargo-bench-parallel";
+
+    String PARAM_DOC_PACKAGE = "cargo-doc-package";
+    String PARAM_DOC_RELEASE = "cargo-doc-release";
+    String PARAM_DOC_NO_DEPS = "cargo-doc-no-deps";
+    String PARAM_DOC_FEATURES = "cargo-doc-features";
+    String PARAM_DOC_NO_DEFAULT_FEATURES = "cargo-doc-no-default-features";
+    String PARAM_DOC_TARGET = "cargo-doc-target";
+    String PARAM_DOC_MANIFEST = "cargo-doc-manifest";
+    String PARAM_DOC_PARALLEL = "cargo-doc-parallel";
 }

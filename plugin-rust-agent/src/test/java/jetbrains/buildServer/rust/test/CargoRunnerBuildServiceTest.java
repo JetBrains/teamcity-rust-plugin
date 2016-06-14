@@ -64,6 +64,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testDocArgumentsData")
+    public void testDocArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new DocArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -187,6 +195,27 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_BENCH_ARGUMENTS, "name",
                         CargoConstants.PARAM_BENCH_NO_RUN, "true"),
                         Arrays.asList("bench", "--no-run", "name")},
+        };
+    }
+
+    @DataProvider(name = "testDocArgumentsData")
+    public Object[][] testDocArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_DOC_PACKAGE, "name",
+                        CargoConstants.PARAM_DOC_RELEASE, "true",
+                        CargoConstants.PARAM_DOC_NO_DEPS, "true"),
+                        Arrays.asList("doc", "--package", "name", "--release", "--no-deps")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_DOC_FEATURES, "name1 name2",
+                        CargoConstants.PARAM_DOC_NO_DEFAULT_FEATURES, "true"),
+                        Arrays.asList("doc", "--features", "name1 name2", "--no-default-features")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_DOC_TARGET, "name",
+                        CargoConstants.PARAM_DOC_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("doc", "--target", "name", "--manifest-path", "/path/to/manifest")},
         };
     }
 }
