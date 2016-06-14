@@ -32,6 +32,7 @@ public class CargoRunnerBuildService extends BuildServiceAdapter {
         myArgumentsProviders.put(CargoConstants.COMMAND_BUILD, new BuildArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_CLEAN, new CleanArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_DOC, new DocArgumentsProvider());
+        myArgumentsProviders.put(CargoConstants.COMMAND_PACKAGE, new PackageArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_RUN, new RunArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_TEST, new TestArgumentsProvider());
     }

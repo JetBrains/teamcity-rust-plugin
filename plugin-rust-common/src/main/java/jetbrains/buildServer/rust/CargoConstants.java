@@ -90,4 +90,8 @@ public interface CargoConstants {
     String PARAM_DOC_TARGET = "cargo-doc-target";
     String PARAM_DOC_MANIFEST = "cargo-doc-manifest";
     String PARAM_DOC_PARALLEL = "cargo-doc-parallel";
+
+    String PARAM_PACKAGE_NO_VERIFY = "cargo-package-no-verify";
+    String PARAM_PACKAGE_NO_METADATA = "cargo-package-no-metadata";
+    String PARAM_PACKAGE_MANIFEST = "cargo-package-manifest";
 }

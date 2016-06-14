@@ -26,6 +26,7 @@ public class CargoParametersProvider {
                 new BuildCommandType(),
                 new CleanCommandType(),
                 new DocCommandType(),
+                new PackageCommandType(),
                 new RunCommandType(),
                 new TestCommandType());
     }
@@ -252,5 +253,17 @@ public class CargoParametersProvider {
 
     public String getDocParallelKey() {
         return CargoConstants.PARAM_DOC_PARALLEL;
+    }
+
+    public String getPackageNoVerifyKey() {
+        return CargoConstants.PARAM_PACKAGE_NO_VERIFY;
+    }
+
+    public String getPackageNoMetadataKey() {
+        return CargoConstants.PARAM_PACKAGE_NO_METADATA;
+    }
+
+    public String getPackageManifestKey() {
+        return CargoConstants.PARAM_PACKAGE_MANIFEST;
     }
 }

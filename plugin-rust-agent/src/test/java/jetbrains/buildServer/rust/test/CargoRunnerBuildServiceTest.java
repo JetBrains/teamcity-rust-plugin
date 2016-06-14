@@ -72,6 +72,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testPackageArgumentsData")
+    public void testPackageArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new PackageArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -216,6 +224,17 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_DOC_TARGET, "name",
                         CargoConstants.PARAM_DOC_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("doc", "--target", "name", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testPackageArgumentsData")
+    public Object[][] testPackageArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_PACKAGE_NO_METADATA, "true",
+                        CargoConstants.PARAM_PACKAGE_NO_VERIFY, "true",
+                        CargoConstants.PARAM_PACKAGE_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("package", "--no-verify", "--no-metadata", "--manifest-path", "/path/to/manifest")},
         };
     }
 }
