@@ -19,7 +19,7 @@ public interface CargoConstants {
     String COMMAND_BUILD = "build";
     String COMMAND_CLEAN = "clean";
     String COMMAND_DOC = "doc";
-    String COMMAND_LOGIN = "lgin";
+    String COMMAND_LOGIN = "login";
     String COMMAND_PACKAGE = "package";
     String COMMAND_PUBLISH = "publish";
     String COMMAND_RUN = "run";
@@ -52,7 +52,7 @@ public interface CargoConstants {
     String PARAM_TEST_TYPE = "cargo-test-type";
     String PARAM_TEST_TYPE_NAME = "cargo-test-type-name";
     String PARAM_TEST_RELEASE = "cargo-test-release";
-    String PARAM_TEST_NO_RUN_TESTS = "cargo-test-no-run-tests";
+    String PARAM_TEST_NO_RUN = "cargo-test-no-run";
     String PARAM_TEST_FEATURES = "cargo-test-features";
     String PARAM_TEST_NO_DEFAULT_FEATURES = "cargo-test-no-default-features";
     String PARAM_TEST_NO_FAIL_FAST = "cargo-test-no-fail-fast";
@@ -69,4 +69,16 @@ public interface CargoConstants {
     String PARAM_RUN_TARGET = "cargo-run-target";
     String PARAM_RUN_MANIFEST = "cargo-run-manifest";
     String PARAM_RUN_PARALLEL = "cargo-run-parallel";
+
+    String PARAM_BENCH_ARGUMENTS = "cargo-bench-arguments";
+    String PARAM_BENCH_PACKAGE = "cargo-bench-package";
+    String PARAM_BENCH_TYPE = "cargo-bench-type";
+    String PARAM_BENCH_TYPE_NAME = "cargo-bench-type-name";
+    String PARAM_BENCH_RELEASE = "cargo-bench-release";
+    String PARAM_BENCH_NO_RUN = "cargo-bench-no-run";
+    String PARAM_BENCH_FEATURES = "cargo-bench-features";
+    String PARAM_BENCH_NO_DEFAULT_FEATURES = "cargo-bench-no-default-features";
+    String PARAM_BENCH_TARGET = "cargo-bench-target";
+    String PARAM_BENCH_MANIFEST = "cargo-bench-manifest";
+    String PARAM_BENCH_PARALLEL = "cargo-bench-parallel";
 }

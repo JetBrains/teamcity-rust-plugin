@@ -17,70 +17,65 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provides arguments to cargo test command.
+ * Provides arguments to cargo bench command.
  */
-public class TestArgumentsProvider implements ArgumentsProvider {
+public class BenchArgumentsProvider implements ArgumentsProvider {
 
     @NotNull
     @Override
     public List<String> getArguments(@NotNull final Map<String, String> parameters) {
         final List<String> arguments = new ArrayList<String>();
-        arguments.add(CargoConstants.COMMAND_TEST);
+        arguments.add(CargoConstants.COMMAND_BENCH);
 
-        final String packageValue = parameters.get(CargoConstants.PARAM_TEST_PACKAGE);
+        final String packageValue = parameters.get(CargoConstants.PARAM_BENCH_PACKAGE);
         if (!StringUtil.isEmptyOrSpaces(packageValue)) {
             arguments.add("--package");
             arguments.add(packageValue.trim());
         }
 
-        final String parallelJobsValue = parameters.get(CargoConstants.PARAM_TEST_PARALLEL);
+        final String parallelJobsValue = parameters.get(CargoConstants.PARAM_BENCH_PARALLEL);
         if (!StringUtil.isEmptyOrSpaces(parallelJobsValue)) {
             arguments.add("--jobs");
             arguments.add(parallelJobsValue.trim());
         }
 
-        final String typeValue = parameters.get(CargoConstants.PARAM_TEST_TYPE);
+        final String typeValue = parameters.get(CargoConstants.PARAM_BENCH_TYPE);
         if (!StringUtil.isEmptyOrSpaces(typeValue)) {
             arguments.add(typeValue.trim());
-            final String typeNameValue = parameters.get(CargoConstants.PARAM_TEST_TYPE_NAME);
+            final String typeNameValue = parameters.get(CargoConstants.PARAM_BENCH_TYPE_NAME);
             if (!StringUtil.isEmptyOrSpaces(typeNameValue)) {
                 arguments.add(typeNameValue.trim());
             }
         }
 
-        final String releaseValue = parameters.get(CargoConstants.PARAM_TEST_RELEASE);
+        final String releaseValue = parameters.get(CargoConstants.PARAM_BENCH_RELEASE);
         if ("true".equalsIgnoreCase(releaseValue)) {
             arguments.add("--release");
         }
 
-        final String noRunTestsValue = parameters.get(CargoConstants.PARAM_TEST_NO_RUN);
+        final String noRunTestsValue = parameters.get(CargoConstants.PARAM_BENCH_NO_RUN);
         if ("true".equalsIgnoreCase(noRunTestsValue)) {
             arguments.add("--no-run");
         }
 
-        final String failFastValue = parameters.get(CargoConstants.PARAM_TEST_NO_FAIL_FAST);
-        if ("true".equalsIgnoreCase(failFastValue)) {
-            arguments.add("--no-fail-fast");
-        }
-
-        final String featuresValue = parameters.get(CargoConstants.PARAM_TEST_FEATURES);
+        final String featuresValue = parameters.get(CargoConstants.PARAM_BENCH_FEATURES);
         if (!StringUtil.isEmptyOrSpaces(featuresValue)) {
             arguments.add("--features");
             arguments.add(featuresValue.trim());
         }
 
-        final String noDefaultFeaturesValue = parameters.get(CargoConstants.PARAM_TEST_NO_DEFAULT_FEATURES);
+        final String noDefaultFeaturesValue = parameters.get(CargoConstants.PARAM_BENCH_NO_DEFAULT_FEATURES);
         if ("true".equalsIgnoreCase(noDefaultFeaturesValue)) {
             arguments.add("--no-default-features");
         }
 
-        final String targetValue = parameters.get(CargoConstants.PARAM_TEST_TARGET);
+        final String targetValue = parameters.get(CargoConstants.PARAM_BENCH_TARGET);
         if (!StringUtil.isEmptyOrSpaces(targetValue)) {
             arguments.add("--target");
             arguments.add(targetValue.trim());
         }
 
-        final String manifestValue = parameters.get(CargoConstants.PARAM_TEST_MANIFEST);
+        final String manifestValue = parameters.get(CargoConstants.PARAM_BENCH_MANIFEST);
         if (!StringUtil.isEmptyOrSpaces(manifestValue)) {
             arguments.add("--manifest-path");
             arguments.add(manifestValue.trim());
@@ -91,7 +86,7 @@ public class TestArgumentsProvider implements ArgumentsProvider {
             arguments.add(verbosityValue.trim());
         }
 
-        final String argumentsValue = parameters.get(CargoConstants.PARAM_TEST_ARGUMENTS);
+        final String argumentsValue = parameters.get(CargoConstants.PARAM_BENCH_ARGUMENTS);
         if (!StringUtil.isEmptyOrSpaces(argumentsValue)) {
             arguments.addAll(StringUtil.splitCommandArgumentsAndUnquote(argumentsValue));
         }

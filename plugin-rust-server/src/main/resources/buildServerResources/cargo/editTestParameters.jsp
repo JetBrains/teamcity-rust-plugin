@@ -51,8 +51,8 @@
 <tr class="advancedSetting">
     <th class="noBorder"></th>
     <td>
-        <props:checkboxProperty name="${params.testNoRunTestsKey}"/>
-        <label for="${params.testNoRunTestsKey}">Compile, but do not run tests</label>
+        <props:checkboxProperty name="${params.testNoRunKey}"/>
+        <label for="${params.testNoRunKey}">Compile, but do not run tests</label>
     </td>
 </tr>
 

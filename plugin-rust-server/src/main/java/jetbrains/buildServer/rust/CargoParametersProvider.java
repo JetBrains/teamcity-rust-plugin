@@ -22,6 +22,7 @@ public class CargoParametersProvider {
 
     public CargoParametersProvider() {
         myTypes = Arrays.asList(
+                new BenchCommandType(),
                 new BuildCommandType(),
                 new CleanCommandType(),
                 new RunCommandType(),
@@ -112,8 +113,8 @@ public class CargoParametersProvider {
         return CargoConstants.PARAM_TEST_RELEASE;
     }
 
-    public String getTestNoRunTestsKey() {
-        return CargoConstants.PARAM_TEST_NO_RUN_TESTS;
+    public String getTestNoRunKey() {
+        return CargoConstants.PARAM_TEST_NO_RUN;
     }
 
     public String getTestFeaturesKey() {
@@ -174,5 +175,49 @@ public class CargoParametersProvider {
 
     public String getRunParallelKey() {
         return CargoConstants.PARAM_RUN_PARALLEL;
+    }
+
+    public String getBenchArgumentsKey() {
+        return CargoConstants.PARAM_BENCH_ARGUMENTS;
+    }
+
+    public String getBenchPackageKey() {
+        return CargoConstants.PARAM_BENCH_PACKAGE;
+    }
+
+    public String getBenchTypeKey() {
+        return CargoConstants.PARAM_BENCH_TYPE;
+    }
+
+    public String getBenchTypeNameKey() {
+        return CargoConstants.PARAM_BENCH_TYPE_NAME;
+    }
+
+    public String getBenchReleaseKey() {
+        return CargoConstants.PARAM_BENCH_RELEASE;
+    }
+
+    public String getBenchNoRunKey() {
+        return CargoConstants.PARAM_BENCH_NO_RUN;
+    }
+
+    public String getBenchFeaturesKey() {
+        return CargoConstants.PARAM_BENCH_FEATURES;
+    }
+
+    public String getBenchNoDefaultFeaturesKey() {
+        return CargoConstants.PARAM_BENCH_NO_DEFAULT_FEATURES;
+    }
+
+    public String getBenchTargetKey() {
+        return CargoConstants.PARAM_BENCH_TARGET;
+    }
+
+    public String getBenchManifestKey() {
+        return CargoConstants.PARAM_BENCH_MANIFEST;
+    }
+
+    public String getBenchParallelKey() {
+        return CargoConstants.PARAM_BENCH_PARALLEL;
     }
 }

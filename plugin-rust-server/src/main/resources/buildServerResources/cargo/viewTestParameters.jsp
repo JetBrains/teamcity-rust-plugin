@@ -30,7 +30,7 @@
     </div>
 </c:if>
 
-<c:if test="${not empty propertiesBean.properties[params.testNoRunTestsKey]}">
+<c:if test="${not empty propertiesBean.properties[params.testNoRunKey]}">
     <div class="parameter">
         Compile, but do not run tests: <strong>ON</strong>
     </div>

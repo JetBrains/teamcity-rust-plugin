@@ -28,6 +28,7 @@ public class CargoRunnerBuildService extends BuildServiceAdapter {
 
     public CargoRunnerBuildService() {
         myArgumentsProviders = new HashMap<String, ArgumentsProvider>();
+        myArgumentsProviders.put(CargoConstants.COMMAND_BENCH, new BenchArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_BUILD, new BuildArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_CLEAN, new CleanArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_RUN, new RunArgumentsProvider());

@@ -56,6 +56,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testBenchArgumentsData")
+    public void testBenchArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new BenchArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -121,7 +129,7 @@ public class CargoRunnerBuildServiceTest {
 
                 {CollectionsUtil.asMap(
                         CargoConstants.PARAM_TEST_ARGUMENTS, "name",
-                        CargoConstants.PARAM_TEST_NO_RUN_TESTS, "true",
+                        CargoConstants.PARAM_TEST_NO_RUN, "true",
                         CargoConstants.PARAM_TEST_NO_FAIL_FAST, "true"),
                         Arrays.asList("test", "--no-run", "--no-fail-fast", "name")},
         };
@@ -149,6 +157,36 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_RUN_TARGET, "name",
                         CargoConstants.PARAM_RUN_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("run", "--target", "name", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testBenchArgumentsData")
+    public Object[][] testBenchArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_BENCH_PACKAGE, "name",
+                        CargoConstants.PARAM_BENCH_RELEASE, "true"),
+                        Arrays.asList("bench", "--package", "name", "--release")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_BENCH_TYPE, "--bin",
+                        CargoConstants.PARAM_BENCH_TYPE_NAME, "name"),
+                        Arrays.asList("bench", "--bin", "name")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_BENCH_FEATURES, "name1 name2",
+                        CargoConstants.PARAM_BENCH_NO_DEFAULT_FEATURES, "true"),
+                        Arrays.asList("bench", "--features", "name1 name2", "--no-default-features")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_BENCH_TARGET, "name",
+                        CargoConstants.PARAM_BENCH_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("bench", "--target", "name", "--manifest-path", "/path/to/manifest")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_BENCH_ARGUMENTS, "name",
+                        CargoConstants.PARAM_BENCH_NO_RUN, "true"),
+                        Arrays.asList("bench", "--no-run", "name")},
         };
     }
 }
