@@ -104,6 +104,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testUpdateArgumentsData")
+    public void testUpdateArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new UpdateArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -310,6 +318,21 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_LOGIN_HOST, "host",
                         CargoConstants.PARAM_LOGIN_TOKEN, "token"),
                         Arrays.asList("login", "--host", "host", "token")},
+        };
+    }
+
+    @DataProvider(name = "testUpdateArgumentsData")
+    public Object[][] testUpdateArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_UPDATE_PACKAGE, "name",
+                        CargoConstants.PARAM_UPDATE_PRECISE, "precise"),
+                        Arrays.asList("update", "--package", "name", "--precise", "precise")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_UPDATE_AGGRESSIVE, "true",
+                        CargoConstants.PARAM_UPDATE_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("update", "--aggressive", "--manifest-path", "/path/to/manifest")},
         };
     }
 }

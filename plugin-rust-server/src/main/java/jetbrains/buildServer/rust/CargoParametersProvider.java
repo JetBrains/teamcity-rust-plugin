@@ -31,7 +31,8 @@ public class CargoParametersProvider {
                 new PublishCommandType(),
                 new RunCommandType(),
                 new RustcCommandType(),
-                new TestCommandType());
+                new TestCommandType(),
+                new UpdateCommandType());
     }
 
     public List<CommandType> getTypes() {
@@ -332,5 +333,21 @@ public class CargoParametersProvider {
 
     public String getLoginHostKey() {
         return CargoConstants.PARAM_LOGIN_HOST;
+    }
+
+    public String getUpdatePackageKey() {
+        return CargoConstants.PARAM_UPDATE_PACKAGE;
+    }
+
+    public String getUpdatePreciseKey() {
+        return CargoConstants.PARAM_UPDATE_PRECISE;
+    }
+
+    public String getUpdateAggressiveKey() {
+        return CargoConstants.PARAM_UPDATE_AGGRESSIVE;
+    }
+
+    public String getUpdateManifestKey() {
+        return CargoConstants.PARAM_UPDATE_MANIFEST;
     }
 }

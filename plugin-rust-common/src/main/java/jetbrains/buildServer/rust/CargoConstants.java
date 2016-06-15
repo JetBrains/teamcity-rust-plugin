@@ -113,4 +113,9 @@ public interface CargoConstants {
 
     String PARAM_LOGIN_TOKEN = "cargo-login-token";
     String PARAM_LOGIN_HOST = "cargo-login-host";
+
+    String PARAM_UPDATE_PACKAGE = "cargo-update-package";
+    String PARAM_UPDATE_PRECISE = "cargo-update-precise";
+    String PARAM_UPDATE_AGGRESSIVE = "cargo-update-aggressive";
+    String PARAM_UPDATE_MANIFEST = "cargo-update-manifest";
 }
