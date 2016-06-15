@@ -118,4 +118,15 @@ public interface CargoConstants {
     String PARAM_UPDATE_PRECISE = "cargo-update-precise";
     String PARAM_UPDATE_AGGRESSIVE = "cargo-update-aggressive";
     String PARAM_UPDATE_MANIFEST = "cargo-update-manifest";
+    
+    String PARAM_RUSTDOC_OPTS = "cargo-rustdoc-opts";
+    String PARAM_RUSTDOC_PACKAGE = "cargo-rustdoc-package";
+    String PARAM_RUSTDOC_TYPE = "cargo-rustdoc-type";
+    String PARAM_RUSTDOC_TYPE_NAME = "cargo-rustdoc-type-name";
+    String PARAM_RUSTDOC_RELEASE = "cargo-rustdoc-release";
+    String PARAM_RUSTDOC_FEATURES = "cargo-rustdoc-features";
+    String PARAM_RUSTDOC_NO_DEFAULT_FEATURES = "cargo-rustdoc-no-default-features";
+    String PARAM_RUSTDOC_TARGET = "cargo-rustdoc-target";
+    String PARAM_RUSTDOC_MANIFEST = "cargo-rustdoc-manifest";
+    String PARAM_RUSTDOC_PARALLEL = "cargo-rustdoc-parallel";
 }

@@ -112,6 +112,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testRustDocArgumentsData")
+    public void testRustDocArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new RustDocArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -333,6 +341,27 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_UPDATE_AGGRESSIVE, "true",
                         CargoConstants.PARAM_UPDATE_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("update", "--aggressive", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testRustDocArgumentsData")
+    public Object[][] testRustDocArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUSTDOC_OPTS, "opt1 opt2",
+                        CargoConstants.PARAM_RUSTDOC_PACKAGE, "name",
+                        CargoConstants.PARAM_RUSTDOC_RELEASE, "true"),
+                        Arrays.asList("rustdoc", "--package", "name", "--release", "opt1", "opt2")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUSTDOC_FEATURES, "name1 name2",
+                        CargoConstants.PARAM_RUSTDOC_NO_DEFAULT_FEATURES, "true"),
+                        Arrays.asList("rustdoc", "--features", "name1 name2", "--no-default-features")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUSTDOC_TARGET, "name",
+                        CargoConstants.PARAM_RUSTDOC_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("rustdoc", "--target", "name", "--manifest-path", "/path/to/manifest")},
         };
     }
 }
