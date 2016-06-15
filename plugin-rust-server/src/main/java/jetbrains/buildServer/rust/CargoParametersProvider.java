@@ -26,7 +26,9 @@ public class CargoParametersProvider {
                 new BuildCommandType(),
                 new CleanCommandType(),
                 new DocCommandType(),
+                new LoginCommandType(),
                 new PackageCommandType(),
+                new PublishCommandType(),
                 new RunCommandType(),
                 new RustcCommandType(),
                 new TestCommandType());
@@ -322,5 +324,13 @@ public class CargoParametersProvider {
 
     public String getRustcParallelKey() {
         return CargoConstants.PARAM_RUSTC_PARALLEL;
+    }
+
+    public String getLoginTokenKey() {
+        return CargoConstants.PARAM_LOGIN_TOKEN;
+    }
+
+    public String getLoginHostKey() {
+        return CargoConstants.PARAM_LOGIN_HOST;
     }
 }

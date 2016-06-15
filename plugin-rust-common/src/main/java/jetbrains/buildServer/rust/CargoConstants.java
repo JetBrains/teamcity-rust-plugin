@@ -110,4 +110,7 @@ public interface CargoConstants {
     String PARAM_RUSTC_TARGET = "cargo-rustc-target";
     String PARAM_RUSTC_MANIFEST = "cargo-rustc-manifest";
     String PARAM_RUSTC_PARALLEL = "cargo-rustc-parallel";
+
+    String PARAM_LOGIN_TOKEN = "cargo-login-token";
+    String PARAM_LOGIN_HOST = "cargo-login-host";
 }

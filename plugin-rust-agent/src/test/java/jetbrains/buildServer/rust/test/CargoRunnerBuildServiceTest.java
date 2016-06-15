@@ -96,6 +96,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testLoginArgumentsData")
+    public void testLoginArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new LoginArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -292,6 +300,16 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_RUSTC_TARGET, "name",
                         CargoConstants.PARAM_RUSTC_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("rustc", "--target", "name", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testLoginArgumentsData")
+    public Object[][] testLoginArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_LOGIN_HOST, "host",
+                        CargoConstants.PARAM_LOGIN_TOKEN, "token"),
+                        Arrays.asList("login", "--host", "host", "token")},
         };
     }
 }
