@@ -99,4 +99,15 @@ public interface CargoConstants {
     String PARAM_PUBLISH_TOKEN = "cargo-publish-token";
     String PARAM_PUBLISH_NO_VERIFY = "cargo-publish-no-verify";
     String PARAM_PUBLISH_MANIFEST = "cargo-publish-manifest";
+
+    String PARAM_RUSTC_OPTS = "cargo-rustc-opts";
+    String PARAM_RUSTC_PACKAGE = "cargo-rustc-package";
+    String PARAM_RUSTC_TYPE = "cargo-rustc-type";
+    String PARAM_RUSTC_TYPE_NAME = "cargo-rustc-type-name";
+    String PARAM_RUSTC_RELEASE = "cargo-rustc-release";
+    String PARAM_RUSTC_FEATURES = "cargo-rustc-features";
+    String PARAM_RUSTC_NO_DEFAULT_FEATURES = "cargo-rustc-no-default-features";
+    String PARAM_RUSTC_TARGET = "cargo-rustc-target";
+    String PARAM_RUSTC_MANIFEST = "cargo-rustc-manifest";
+    String PARAM_RUSTC_PARALLEL = "cargo-rustc-parallel";
 }

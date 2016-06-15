@@ -88,6 +88,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testRustcArgumentsData")
+    public void testRustcArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new RustcArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -258,6 +266,32 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_PUBLISH_NO_VERIFY, "true",
                         CargoConstants.PARAM_PUBLISH_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("publish", "--no-verify", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testRustcArgumentsData")
+    public Object[][] testRustcArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUSTC_PACKAGE, "name",
+                        CargoConstants.PARAM_RUSTC_RELEASE, "true",
+                        CargoConstants.PARAM_RUSTC_OPTS, "opt1 opt2"),
+                        Arrays.asList("rustc", "--package", "name", "--release", "opt1", "opt2")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUSTC_TYPE, "--bin",
+                        CargoConstants.PARAM_RUSTC_TYPE_NAME, "name"),
+                        Arrays.asList("rustc", "--bin", "name")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUSTC_FEATURES, "name1 name2",
+                        CargoConstants.PARAM_RUSTC_NO_DEFAULT_FEATURES, "true"),
+                        Arrays.asList("rustc", "--features", "name1 name2", "--no-default-features")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_RUSTC_TARGET, "name",
+                        CargoConstants.PARAM_RUSTC_MANIFEST, "/path/to/manifest"),
+                        Arrays.asList("rustc", "--target", "name", "--manifest-path", "/path/to/manifest")},
         };
     }
 }

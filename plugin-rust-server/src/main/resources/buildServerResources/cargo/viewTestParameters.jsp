@@ -26,7 +26,7 @@
 
 <c:if test="${not empty propertiesBean.properties[params.testReleaseKey]}">
     <div class="parameter">
-        Release mode: <strong>ON</strong>
+        Build artifacts in release mode, with optimizations: <strong>ON</strong>
     </div>
 </c:if>
 
@@ -50,7 +50,7 @@
 
 <c:if test="${not empty propertiesBean.properties[params.testNoDefaultFeaturesKey]}">
     <div class="parameter">
-        Don't build default features: <strong>ON</strong>
+        Do not build default features: <strong>ON</strong>
     </div>
 </c:if>
 

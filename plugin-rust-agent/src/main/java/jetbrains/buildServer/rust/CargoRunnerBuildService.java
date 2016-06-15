@@ -35,6 +35,7 @@ public class CargoRunnerBuildService extends BuildServiceAdapter {
         myArgumentsProviders.put(CargoConstants.COMMAND_PACKAGE, new PackageArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_PUBLISH, new PublishArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_RUN, new RunArgumentsProvider());
+        myArgumentsProviders.put(CargoConstants.COMMAND_RUSTC, new RustcArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_TEST, new TestArgumentsProvider());
     }
 

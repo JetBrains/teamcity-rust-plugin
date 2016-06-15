@@ -28,6 +28,7 @@ public class CargoParametersProvider {
                 new DocCommandType(),
                 new PackageCommandType(),
                 new RunCommandType(),
+                new RustcCommandType(),
                 new TestCommandType());
     }
 
@@ -281,5 +282,45 @@ public class CargoParametersProvider {
 
     public String getPublishManifestKey() {
         return CargoConstants.PARAM_PUBLISH_MANIFEST;
+    }
+
+    public String getRustcOptsKey() {
+        return CargoConstants.PARAM_RUSTC_OPTS;
+    }
+
+    public String getRustcPackageKey() {
+        return CargoConstants.PARAM_RUSTC_PACKAGE;
+    }
+
+    public String getRustcTypeKey() {
+        return CargoConstants.PARAM_RUSTC_TYPE;
+    }
+
+    public String getRustcTypeNameKey() {
+        return CargoConstants.PARAM_RUSTC_TYPE_NAME;
+    }
+
+    public String getRustcReleaseKey() {
+        return CargoConstants.PARAM_RUSTC_RELEASE;
+    }
+
+    public String getRustcFeaturesKey() {
+        return CargoConstants.PARAM_RUSTC_FEATURES;
+    }
+
+    public String getRustcNoDefaultFeaturesKey() {
+        return CargoConstants.PARAM_RUSTC_NO_DEFAULT_FEATURES;
+    }
+
+    public String getRustcTargetKey() {
+        return CargoConstants.PARAM_RUSTC_TARGET;
+    }
+
+    public String getRustcManifestKey() {
+        return CargoConstants.PARAM_RUSTC_MANIFEST;
+    }
+
+    public String getRustcParallelKey() {
+        return CargoConstants.PARAM_RUSTC_PARALLEL;
     }
 }
