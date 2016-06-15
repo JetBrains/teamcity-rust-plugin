@@ -129,4 +129,10 @@ public interface CargoConstants {
     String PARAM_RUSTDOC_TARGET = "cargo-rustdoc-target";
     String PARAM_RUSTDOC_MANIFEST = "cargo-rustdoc-manifest";
     String PARAM_RUSTDOC_PARALLEL = "cargo-rustdoc-parallel";
+
+    String PARAM_YANK_CRATE = "cargo-yank-crate";
+    String PARAM_YANK_VERSION = "cargo-yank-version";
+    String PARAM_YANK_UNDO = "cargo-yank-undo";
+    String PARAM_YANK_INDEX = "cargo-yank-index";
+    String PARAM_YANK_TOKEN = "cargo-yank-token";
 }

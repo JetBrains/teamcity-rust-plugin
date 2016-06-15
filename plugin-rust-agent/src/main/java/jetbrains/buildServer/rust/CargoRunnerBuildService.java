@@ -40,6 +40,7 @@ public class CargoRunnerBuildService extends BuildServiceAdapter {
         myArgumentsProviders.put(CargoConstants.COMMAND_RUSTDOC, new RustDocArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_TEST, new TestArgumentsProvider());
         myArgumentsProviders.put(CargoConstants.COMMAND_UPDATE, new UpdateArgumentsProvider());
+        myArgumentsProviders.put(CargoConstants.COMMAND_YANK, new YankArgumentsProvider());
     }
 
     @NotNull

@@ -120,6 +120,14 @@ public class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments);
     }
 
+    @Test(dataProvider = "testYankArgumentsData")
+    public void testYankArguments(final Map<String, String> parameters, final List<String> arguments) {
+        final ArgumentsProvider argumentsProvider = new YankArgumentsProvider();
+        final List<String> result = argumentsProvider.getArguments(parameters);
+
+        Assert.assertEquals(result, arguments);
+    }
+
     @DataProvider(name = "testBuildArgumentsData")
     public Object[][] testBuildArgumentsData() {
         return new Object[][]{
@@ -362,6 +370,22 @@ public class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_RUSTDOC_TARGET, "name",
                         CargoConstants.PARAM_RUSTDOC_MANIFEST, "/path/to/manifest"),
                         Arrays.asList("rustdoc", "--target", "name", "--manifest-path", "/path/to/manifest")},
+        };
+    }
+
+    @DataProvider(name = "testYankArgumentsData")
+    public Object[][] testYankArgumentsData() {
+        return new Object[][]{
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_YANK_VERSION, "version",
+                        CargoConstants.PARAM_YANK_UNDO, "true"),
+                        Arrays.asList("yank", "--vers", "version", "--undo")},
+
+                {CollectionsUtil.asMap(
+                        CargoConstants.PARAM_YANK_INDEX, "index",
+                        CargoConstants.PARAM_YANK_TOKEN, "token",
+                        CargoConstants.PARAM_YANK_CRATE, "crate"),
+                        Arrays.asList("yank", "--index", "index", "--token", "token", "crate")},
         };
     }
 }

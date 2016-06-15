@@ -33,7 +33,8 @@ public class CargoParametersProvider {
                 new RustcCommandType(),
                 new RustDocCommandType(),
                 new TestCommandType(),
-                new UpdateCommandType());
+                new UpdateCommandType(),
+                new YankCommandType());
     }
 
     public List<CommandType> getTypes() {
@@ -390,5 +391,25 @@ public class CargoParametersProvider {
 
     public String getRustDocParallelKey() {
         return CargoConstants.PARAM_RUSTDOC_PARALLEL;
+    }
+
+    public String getYankCrateKey() {
+        return CargoConstants.PARAM_YANK_CRATE;
+    }
+
+    public String getYankVersionKey() {
+        return CargoConstants.PARAM_YANK_VERSION;
+    }
+
+    public String getYankUndoKey() {
+        return CargoConstants.PARAM_YANK_UNDO;
+    }
+
+    public String getYankIndexKey() {
+        return CargoConstants.PARAM_YANK_INDEX;
+    }
+
+    public String getYankTokenKey() {
+        return CargoConstants.PARAM_YANK_TOKEN;
     }
 }
