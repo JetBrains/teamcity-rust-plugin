@@ -1,1 +1,3 @@
+rootProject.name='teamcity-rust-plugin'
+
 include 'plugin-rust-agent', 'plugin-rust-common', 'plugin-rust-server'
