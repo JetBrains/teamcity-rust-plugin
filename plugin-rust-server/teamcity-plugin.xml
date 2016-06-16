@@ -12,5 +12,5 @@
             <url>http://www.jetbrains.com/</url>
         </vendor>
     </info>
-    <deployment use-separate-classloader="false"/>
+    <deployment use-separate-classloader="true"/>
 </teamcity-plugin>
