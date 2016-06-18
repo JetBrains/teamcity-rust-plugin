@@ -1,5 +1,28 @@
-def versionNumber = System.getenv('versionNumber') != null ? System.getenv('versionNumber') : 'SNAPSHOT'
-ext.projectIds = ['group': 'teamcity-rust-plugin', 'version': versionNumber, 'artifact': 'rust-plugin.zip']
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath group: 'com.github.rodm', name: 'gradle-teamcity-plugin', version: '0.8.4'
+    }
+}
+
+ext {
+    versionNumber = System.getenv('versionNumber') != null ? System.getenv('versionNumber') : 'SNAPSHOT'
+    projectIds = ['group': 'teamcity-rust-plugin', 'version': versionNumber, 'artifact': 'rust-plugin.zip']
+
+    teamcityVersion = project.hasProperty('teamcityVersion') ? project.getProperty('teamcityVersion') : '9.0'
+
+    teamcityDir = project.hasProperty('teamcityDir') ? project.getProperty('teamcityDir') : "$rootDir/servers/TeamCity-${teamcityVersion}"
+    teamcityDataDir = "$rootDir/data/" + (teamcityVersion =~ /(\d+\.\d+).*/)[0][1]
+
+    teamcityJavaHome = System.properties['java.home']
+    teamcityInstall = project.hasProperty("teamcityInstall") ? project.getProperty("teamcityInstall") : false
+}
 
 group = projectIds.group
 version = projectIds.version
@@ -7,6 +30,10 @@ version = projectIds.version
 allprojects {
     group = projectIds.group
     version = projectIds.version
+
+    if (!teamcityInstall) {
+        project.tasks.findByName("downloadTeamCity")*.setEnabled(false)
+    }
 }
 
 subprojects {
@@ -15,6 +42,7 @@ subprojects {
     targetCompatibility = 1.6
 
     repositories {
+        mavenLocal()
         mavenCentral()
         maven {
             name 'JetBrains Maven Repository'
@@ -27,71 +55,71 @@ subprojects {
 }
 
 project(':plugin-rust-agent') {
+    apply plugin: 'com.github.rodm.teamcity-agent'
+
+    teamcity {
+        version = teamcityVersion
+        descriptor {
+            pluginDeployment {
+                useSeparateClassloader = true
+            }
+        }
+    }
+
     dependencies {
         compile project(':plugin-rust-common')
-        compile 'org.jetbrains.teamcity:agent-api:9.0'
-        compile 'org.jetbrains.teamcity.internal:agent:9.0'
-        runtime 'javax.servlet:jstl:1.1.2'
+        provided "org.jetbrains.teamcity.internal:agent:${teamcityVersion}"
         testCompile 'org.testng:testng:6.8'
     }
-    
-    task distrib(type: Zip, dependsOn: jar) {
-        archiveName = projectIds.artifact
-    
-        from (libsDir) {
-            into 'lib'
-        }
-        
-        from (configurations.compile) {
-            include 'plugin-rust-*.jar'
-            into 'lib'
-        }
-        
-        from 'teamcity-plugin.xml'
-
-        into 'rust-plugin'
-    }
-    
-    artifacts {
-        archives distrib
-    }
+    agentPlugin.version = null
 }
 
 project(':plugin-rust-common') {
+    apply plugin: 'com.github.rodm.teamcity-common'
+
+    teamcity {
+        version = teamcityVersion
+    }
 }
 
 project(':plugin-rust-server') {
+    apply plugin: 'com.github.rodm.teamcity-server'
+
+    teamcity {
+        version = teamcityVersion
+        descriptor = project.file('teamcity-plugin.xml')
+        tokens = [Plugin_Version: project.version]
+
+        homeDir = file(teamcityDir)
+        dataDir = file(teamcityDataDir)
+        javaHome = file(teamcityJavaHome)
+        serverOptions = '-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5500 ' +
+                '-Dteamcity.oauthConnections.enabled=true ' +
+                '-Dteamcity.development.mode=true ' +
+                '-Dteamcity.development.shadowCopyClasses=true'
+    }
+
     dependencies {
         compile project(':plugin-rust-common')
-        compile 'org.jetbrains.teamcity:server-api:9.0'
-        runtime 'javax.servlet:jstl:1.1.2'
+        provided 'javax.servlet:jstl:1.1.2'
+
+        agent project(path: ':plugin-rust-agent', configuration: 'plugin')
     }
-    
-    task distrib(type: Zip, dependsOn: [':plugin-rust-agent:assemble', jar]) {
-        archiveName = projectIds.artifact
-    
-        from (libsDir) {
-            into 'server'
-        }
-        
-        from (configurations.compile) {
-            include 'plugin-rust-*.jar'
-            into 'server'
-        }
-        
-        from (project(':plugin-rust-agent').file('build/distributions')) {
-            include projectIds.artifact
-            into 'agent'
-        }
-        
-        from ('teamcity-plugin.xml') {
-            filter {
-                it.replaceAll('@Plugin_Version@', projectIds.version)
-            }
-        }        
+
+    serverPlugin.version = null
+
+    deployPlugin.dependsOn(build)
+}
+
+apply plugin: 'idea'
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
     }
-    
-    artifacts {
-        archives distrib
-    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
 }
