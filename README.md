@@ -11,7 +11,7 @@ It provides following features for rust projects:
  
 # Download
 
-You can download plugin from the [last successful build](https://teamcity.jetbrains.com/repository/download/TeamCityRustPluginBuild/.lastSuccessful/rust-plugin.zip?guest=1) and install it as [additional TeamCity plugin](https://confluence.jetbrains.com/display/TCDL/Installing+Additional+Plugins).
+You can download plugin from the [last successful build](https://teamcity.jetbrains.com/repository/download/TeamCityRustPluginBuild/.lastSuccessful/teamcity-rust-plugin.zip?guest=1) and install it as [additional TeamCity plugin](https://confluence.jetbrains.com/display/TCDL/Installing+Additional+Plugins).
 
 # Compatibility
 
