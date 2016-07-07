@@ -87,16 +87,24 @@ project(':plugin-rust-server') {
 
     teamcity {
         version = teamcityVersion
-        descriptor = project.file('teamcity-plugin.xml')
-        tokens = [Plugin_Version: project.version]
 
-        homeDir = file(teamcityDir)
-        dataDir = file(teamcityDataDir)
-        javaHome = file(teamcityJavaHome)
-        serverOptions = '-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5500 ' +
-                '-Dteamcity.oauthConnections.enabled=true ' +
-                '-Dteamcity.development.mode=true ' +
-                '-Dteamcity.development.shadowCopyClasses=true'
+        server {
+            descriptor = project.file('teamcity-plugin.xml')
+            tokens = [Plugin_Version: project.version]
+
+            environments {
+                teamcity9 {
+                    version = teamcityVersion
+                    homeDir = file(teamcityDir)
+                    dataDir = file(teamcityDataDir)
+                    javaHome = file(teamcityJavaHome)
+                    serverOptions = '-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5500 ' +
+                            '-Dteamcity.oauthConnections.enabled=true ' +
+                            '-Dteamcity.development.mode=true ' +
+                            '-Dteamcity.development.shadowCopyClasses=true'
+                }
+            }
+        }
     }
 
     dependencies {
