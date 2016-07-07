@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'com.github.rodm', name: 'gradle-teamcity-plugin', version: '0.8.4'
+        classpath group: 'com.github.rodm', name: 'gradle-teamcity-plugin', version: '0.9.1'
     }
 }
 
@@ -115,8 +115,6 @@ project(':plugin-rust-server') {
     }
 
     serverPlugin.version = null
-
-    deployPlugin.dependsOn(build)
 }
 
 apply plugin: 'idea'
