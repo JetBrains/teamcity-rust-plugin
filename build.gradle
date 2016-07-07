@@ -21,7 +21,6 @@ ext {
     teamcityDataDir = "$rootDir/data/" + (teamcityVersion =~ /(\d+\.\d+).*/)[0][1]
 
     teamcityJavaHome = System.properties['java.home']
-    teamcityInstall = project.hasProperty("teamcityInstall") ? project.getProperty("teamcityInstall") : false
 }
 
 group = projectIds.group
@@ -30,10 +29,6 @@ version = projectIds.version
 allprojects {
     group = projectIds.group
     version = projectIds.version
-
-    if (!teamcityInstall) {
-        project.tasks.findByName("downloadTeamCity")*.setEnabled(false)
-    }
 }
 
 subprojects {
