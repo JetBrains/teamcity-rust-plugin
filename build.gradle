@@ -1,7 +1,5 @@
 buildscript {
     repositories {
-        mavenLocal()
-        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -35,15 +33,6 @@ subprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven {
-            name 'JetBrains Maven Repository'
-            url 'http://download.jetbrains.com/teamcity-repository'
-        }
-    }
 
     test.useTestNG()
     jar.version = null
