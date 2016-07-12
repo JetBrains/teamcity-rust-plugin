@@ -43,3 +43,7 @@ fabric.properties
 # Build artifacts
 .gradle
 build
+
+# gradle-teamcity-plugin
+data/
+servers/

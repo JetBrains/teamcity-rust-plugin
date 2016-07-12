@@ -1,13 +1,11 @@
 buildscript {
     repositories {
-        mavenLocal()
-        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
     }
     dependencies {
-        classpath group: 'com.github.rodm', name: 'gradle-teamcity-plugin', version: '0.8.4'
+        classpath group: 'com.github.rodm', name: 'gradle-teamcity-plugin', version: '0.9.1'
     }
 }
 
@@ -21,7 +19,6 @@ ext {
     teamcityDataDir = "$rootDir/data/" + (teamcityVersion =~ /(\d+\.\d+).*/)[0][1]
 
     teamcityJavaHome = System.properties['java.home']
-    teamcityInstall = project.hasProperty("teamcityInstall") ? project.getProperty("teamcityInstall") : false
 }
 
 group = projectIds.group
@@ -30,25 +27,12 @@ version = projectIds.version
 allprojects {
     group = projectIds.group
     version = projectIds.version
-
-    if (!teamcityInstall) {
-        project.tasks.findByName("downloadTeamCity")*.setEnabled(false)
-    }
 }
 
 subprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven {
-            name 'JetBrains Maven Repository'
-            url 'http://download.jetbrains.com/teamcity-repository'
-        }
-    }
 
     test.useTestNG()
     jar.version = null
@@ -87,16 +71,24 @@ project(':plugin-rust-server') {
 
     teamcity {
         version = teamcityVersion
-        descriptor = project.file('teamcity-plugin.xml')
-        tokens = [Plugin_Version: project.version]
 
-        homeDir = file(teamcityDir)
-        dataDir = file(teamcityDataDir)
-        javaHome = file(teamcityJavaHome)
-        serverOptions = '-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5500 ' +
-                '-Dteamcity.oauthConnections.enabled=true ' +
-                '-Dteamcity.development.mode=true ' +
-                '-Dteamcity.development.shadowCopyClasses=true'
+        server {
+            descriptor = project.file('teamcity-plugin.xml')
+            tokens = [Plugin_Version: project.version]
+
+            environments {
+                teamcity9 {
+                    version = teamcityVersion
+                    homeDir = file(teamcityDir)
+                    dataDir = file(teamcityDataDir)
+                    javaHome = file(teamcityJavaHome)
+                    serverOptions = '-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5500 ' +
+                            '-Dteamcity.oauthConnections.enabled=true ' +
+                            '-Dteamcity.development.mode=true ' +
+                            '-Dteamcity.development.shadowCopyClasses=true'
+                }
+            }
+        }
     }
 
     dependencies {
@@ -107,8 +99,6 @@ project(':plugin-rust-server') {
     }
 
     serverPlugin.version = null
-
-    deployPlugin.dependsOn(build)
 }
 
 apply plugin: 'idea'
