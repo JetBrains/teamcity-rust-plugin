@@ -10,11 +10,15 @@ package jetbrains.buildServer.rust;
 import jetbrains.buildServer.RunBuildException;
 import jetbrains.buildServer.agent.ToolCannotBeFoundException;
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter;
+import jetbrains.buildServer.agent.runner.ProcessListener;
 import jetbrains.buildServer.agent.runner.ProgramCommandLine;
 import jetbrains.buildServer.rust.cargo.*;
+import jetbrains.buildServer.rust.logging.CargoLoggerFactory;
+import jetbrains.buildServer.rust.logging.CargoLoggingListener;
 import jetbrains.buildServer.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +27,6 @@ import java.util.Map;
  * Cargo runner service.
  */
 public class CargoRunnerBuildService extends BuildServiceAdapter {
-
     private final Map<String, ArgumentsProvider> myArgumentsProviders;
 
     public CargoRunnerBuildService() {
@@ -73,5 +76,12 @@ public class CargoRunnerBuildService extends BuildServiceAdapter {
         }
 
         return createProgramCommandline(toolPath, arguments);
+    }
+
+    @NotNull
+    @Override
+    public List<ProcessListener> getListeners() {
+        final CargoLoggerFactory loggerFactory = new CargoLoggerFactory(getLogger());
+        return Collections.<ProcessListener>singletonList(new CargoLoggingListener(loggerFactory));
     }
 }
