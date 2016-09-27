@@ -17,30 +17,27 @@ import jetbrains.buildServer.rust.logging.CargoLoggerFactory
 import jetbrains.buildServer.rust.logging.CargoLoggingListener
 import jetbrains.buildServer.util.StringUtil
 
-import java.util.Collections
-import java.util.HashMap
-
 /**
  * Cargo runner service.
  */
 class CargoRunnerBuildService : BuildServiceAdapter() {
-    private val myArgumentsProviders: MutableMap<String, ArgumentsProvider>
+    private val myArgumentsProviders: Map<String, ArgumentsProvider>
 
     init {
-        myArgumentsProviders = HashMap<String, ArgumentsProvider>()
-        myArgumentsProviders.put(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_BUILD, BuildArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_CLEAN, CleanArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_DOC, DocArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_LOGIN, LoginArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_PACKAGE, PackageArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_PUBLISH, PublishArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_RUN, RunArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_RUSTC, RustcArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_RUSTDOC, RustDocArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_TEST, TestArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_UPDATE, UpdateArgumentsProvider())
-        myArgumentsProviders.put(CargoConstants.COMMAND_YANK, YankArgumentsProvider())
+        myArgumentsProviders = mapOf(
+                Pair(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_BUILD, BuildArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_CLEAN, CleanArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_DOC, DocArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_LOGIN, LoginArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_PACKAGE, PackageArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_PUBLISH, PublishArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_RUN, RunArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_RUSTC, RustcArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_RUSTDOC, RustDocArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_TEST, TestArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_UPDATE, UpdateArgumentsProvider()),
+                Pair(CargoConstants.COMMAND_YANK, YankArgumentsProvider()))
     }
 
     @Throws(RunBuildException::class)
@@ -54,9 +51,9 @@ class CargoRunnerBuildService : BuildServiceAdapter() {
             throw buildException
         }
 
-        val argumentsProvider = myArgumentsProviders.get(commandName)
+        val argumentsProvider = myArgumentsProviders[commandName]
         if (argumentsProvider == null) {
-            val buildException = RunBuildException("Unable to construct arguments for cargo command " + commandName)
+            val buildException = RunBuildException("Unable to construct arguments for cargo command $commandName")
             buildException.isLogStacktrace = false
             throw buildException
         }

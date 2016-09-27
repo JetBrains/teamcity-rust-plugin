@@ -9,35 +9,33 @@ package jetbrains.buildServer.rust.logging
 
 import jetbrains.buildServer.agent.BuildProgressLogger
 
-import java.util.HashMap
-
 /**
  * Logger factory.
  */
 class CargoLoggerFactory(logger: BuildProgressLogger) {
-    private val myLoggers: MutableMap<CargoState, CargoLogger>
+    private val myLoggers: Map<CargoState, CargoLogger>
 
     init {
-        myLoggers = HashMap<CargoState, CargoLogger>()
-        myLoggers.put(CargoState.Running, CargoStateLogger(logger, CargoState.Running))
-        myLoggers.put(CargoState.Compiling, CargoCompileLogger(logger))
-        myLoggers.put(CargoState.Error, CargoStateLogger(logger, CargoState.Error))
-        myLoggers.put(CargoState.Warning, CargoStateLogger(logger, CargoState.Warning))
-        myLoggers.put(CargoState.Documenting, CargoStateLogger(logger, CargoState.Documenting))
-        myLoggers.put(CargoState.Fresh, CargoStateLogger(logger, CargoState.Fresh))
-        myLoggers.put(CargoState.Updating, CargoStateLogger(logger, CargoState.Updating))
-        myLoggers.put(CargoState.Adding, CargoStateLogger(logger, CargoState.Adding))
-        myLoggers.put(CargoState.Removing, CargoStateLogger(logger, CargoState.Removing))
-        myLoggers.put(CargoState.DocTests, CargoStateLogger(logger, CargoState.DocTests))
-        myLoggers.put(CargoState.Packaging, CargoStateLogger(logger, CargoState.Packaging))
-        myLoggers.put(CargoState.Downloading, CargoStateLogger(logger, CargoState.Downloading))
-        myLoggers.put(CargoState.Uploading, CargoStateLogger(logger, CargoState.Uploading))
-        myLoggers.put(CargoState.Verifying, CargoStateLogger(logger, CargoState.Verifying))
-        myLoggers.put(CargoState.Archiving, CargoStateLogger(logger, CargoState.Archiving))
-        myLoggers.put(CargoState.Installing, CargoStateLogger(logger, CargoState.Installing))
-        myLoggers.put(CargoState.Replacing, CargoStateLogger(logger, CargoState.Replacing))
-        myLoggers.put(CargoState.Default, CargoDefaultLogger(logger))
-        myLoggers.put(CargoState.Testing, CargoTestingLogger(logger))
+        myLoggers = mapOf(
+                Pair(CargoState.Running, CargoStateLogger(logger, CargoState.Running)),
+                Pair(CargoState.Compiling, CargoCompileLogger(logger)),
+                Pair(CargoState.Error, CargoStateLogger(logger, CargoState.Error)),
+                Pair(CargoState.Warning, CargoStateLogger(logger, CargoState.Warning)),
+                Pair(CargoState.Documenting, CargoStateLogger(logger, CargoState.Documenting)),
+                Pair(CargoState.Fresh, CargoStateLogger(logger, CargoState.Fresh)),
+                Pair(CargoState.Updating, CargoStateLogger(logger, CargoState.Updating)),
+                Pair(CargoState.Adding, CargoStateLogger(logger, CargoState.Adding)),
+                Pair(CargoState.Removing, CargoStateLogger(logger, CargoState.Removing)),
+                Pair(CargoState.DocTests, CargoStateLogger(logger, CargoState.DocTests)),
+                Pair(CargoState.Packaging, CargoStateLogger(logger, CargoState.Packaging)),
+                Pair(CargoState.Downloading, CargoStateLogger(logger, CargoState.Downloading)),
+                Pair(CargoState.Uploading, CargoStateLogger(logger, CargoState.Uploading)),
+                Pair(CargoState.Verifying, CargoStateLogger(logger, CargoState.Verifying)),
+                Pair(CargoState.Archiving, CargoStateLogger(logger, CargoState.Archiving)),
+                Pair(CargoState.Installing, CargoStateLogger(logger, CargoState.Installing)),
+                Pair(CargoState.Replacing, CargoStateLogger(logger, CargoState.Replacing)),
+                Pair(CargoState.Default, CargoDefaultLogger(logger)),
+                Pair(CargoState.Testing, CargoTestingLogger(logger)))
     }
 
     fun getLogger(state: CargoState): CargoLogger {
