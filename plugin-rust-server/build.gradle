@@ -1,0 +1,26 @@
+plugins {
+    id 'com.github.rodm.teamcity-server' version "0.9.1"
+}
+
+teamcity {
+    version = teamcityVersion
+
+    server {
+        descriptor = project.file('teamcity-plugin.xml')
+        tokens = [Plugin_Version: project.version]
+    }
+}
+
+dependencies {
+    compile project(':plugin-rust-common')
+    provided 'javax.servlet:jstl:1.1.2'
+
+    agent project(path: ':plugin-rust-agent', configuration: 'plugin')
+}
+
+serverPlugin.version = null
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}

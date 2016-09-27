@@ -1,0 +1,7 @@
+plugins{
+    id 'com.github.rodm.teamcity-common' version '0.9.1'
+}
+
+teamcity {
+    version = teamcityVersion
+}
