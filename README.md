@@ -8,6 +8,8 @@ TeamCity Rust plugin brings build infrastructure support for [Rust](https://www.
 
 It provides following features for rust projects:
 * Cargo command build runner
+* Cargo tests reporter
+* Structured build log listener
  
 # Download
 
