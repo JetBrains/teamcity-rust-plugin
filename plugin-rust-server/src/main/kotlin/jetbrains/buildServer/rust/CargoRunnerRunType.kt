@@ -8,6 +8,7 @@
 package jetbrains.buildServer.rust
 
 import jetbrains.buildServer.requirements.Requirement
+import jetbrains.buildServer.requirements.RequirementType
 import jetbrains.buildServer.serverSide.PropertiesProcessor
 import jetbrains.buildServer.serverSide.RunType
 import jetbrains.buildServer.serverSide.RunTypeRegistry
@@ -52,10 +53,10 @@ class CargoRunnerRunType(private val myPluginDescriptor: PluginDescriptor,
     }
 
     override fun describeParameters(parameters: Map<String, String>): String {
-        return "cargo $parameters[CargoConstants.PARAM_COMMAND]"
+        return "cargo ${parameters[CargoConstants.PARAM_COMMAND]}"
     }
 
     override fun getRunnerSpecificRequirements(runParameters: Map<String, String>): List<Requirement> {
-        return emptyList()
+        return listOf(Requirement(CargoConstants.CONFIG_PATH, null, RequirementType.EXISTS))
     }
 }
