@@ -10,7 +10,6 @@ package jetbrains.buildServer.rust.logging;
 import jetbrains.buildServer.agent.runner.ProcessListenerAdapter;
 import jetbrains.buildServer.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,9 +48,11 @@ public class CargoLoggingListener extends ProcessListenerAdapter {
         final Matcher stateMatcher = myStatement.matcher(text);
         if (stateMatcher.find()) {
             final String stateKey = stateMatcher.group(1);
+            final String stateText = stateMatcher.group(2);
+
             final CargoState state = CargoState.get(stateKey);
-            if (state != null) {
-                changeState(state, stateMatcher.group(2));
+            if (state != null && myLogger.canChangeState(state, stateText)) {
+                changeState(state, stateText);
                 return;
             }
         }

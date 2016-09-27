@@ -39,4 +39,9 @@ public class CargoDefaultLogger implements CargoLogger {
     @Override
     public void onLeave() {
     }
+
+    @Override
+    public boolean canChangeState(CargoState state, String text) {
+        return true;
+    }
 }

@@ -17,4 +17,5 @@ public interface CargoLogger {
     void processLine(@NotNull final String text);
     void processError(@NotNull final String text);
     void onLeave();
+    boolean canChangeState(CargoState state, String text);
 }

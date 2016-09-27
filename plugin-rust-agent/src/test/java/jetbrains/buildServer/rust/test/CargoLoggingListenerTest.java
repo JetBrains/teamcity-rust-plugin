@@ -80,7 +80,8 @@ public class CargoLoggingListenerTest {
     @DataProvider
     public static Object[][] getTestTransformations() {
         return new Object[][]{
-                {"cargoTests1.txt"}
+                {"cargoTests.txt"},
+                {"cargoCompileVerbose.txt"}
         };
     }
 }

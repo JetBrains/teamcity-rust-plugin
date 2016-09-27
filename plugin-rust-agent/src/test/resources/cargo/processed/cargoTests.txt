@@ -1,6 +1,6 @@
-##teamcity[compilationStarted compiler='rustc']
+##teamcity[compilationStarted compiler='rustc:adder']
 ##teamcity[message text='Compiling adder v0.0.1 (file:///home/you/projects/adder)']
-##teamcity[compilationFinished compiler='rustc']
+##teamcity[compilationFinished compiler='rustc:adder']
 ##teamcity[message text='Running target/adder-91b3e234d4ed382a']
 ##teamcity[testSuiteStarted name='adder']
 ##teamcity[testStarted name='tests::it_works']

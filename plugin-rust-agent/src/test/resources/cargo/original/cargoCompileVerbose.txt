@@ -1,0 +1,4 @@
+   Compiling winapi-build v0.1.1
+     Running `rustc .\cargo\registry\src\github.com-88ac128001ac3a9a\winapi-build-0.1.1\src\lib.rs --crate-name build --crate-type lib -g -C metadata=4b44f3fae4f83db0 -C extra-filename=-4b44f3fae4f83db0 --out-dir target\debug\deps --emit=dep-info,link -L dependency=target\debug\deps -L dependency=target\debug\deps --cap-lints allow`
+   Compiling log v0.3.6
+     Running `rustc .\cargo\registry\src\github.com-88ac128001ac3a9a\log-0.3.6\src\lib.rs --crate-name log --crate-type lib -g --cfg "feature=\"use_std\"" --cfg "feature=\"default\"" -C metadata=342ffb7444a9471d -C extra-filename=-342ffb7444a9471d --out-dir target\debug\deps --emit=dep-info,link -L dependency=target\debug\deps -L dependency=target\debug\deps --cap-lints allow`
