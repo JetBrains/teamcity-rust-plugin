@@ -1,0 +1,18 @@
+     Running target\debug\server-da9f78b2ee5009f7.exe
+
+running 9 tests
+test server_empty_response_chunked ... FAILED
+test server_get_with_body ... ok
+
+failures:
+
+---- server_empty_response_chunked stdout ----
+        thread 'server_empty_response_chunked' panicked at 'called `Result::unwrap()` on an `Err` value: Error { repr: Os { code: 10054, message: "An existing connection was forcibly closed by the remote host." } }', ../src/libcore\result.rs:746
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+failures:
+    server_empty_response_chunked
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured
+
+error: test failed
