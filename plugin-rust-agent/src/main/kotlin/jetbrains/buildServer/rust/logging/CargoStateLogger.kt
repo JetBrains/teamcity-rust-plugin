@@ -15,11 +15,11 @@ import jetbrains.buildServer.agent.BuildProgressLogger
 class CargoStateLogger(private val myLogger: BuildProgressLogger, private val myState: CargoState) : CargoDefaultLogger(myLogger) {
 
     override fun onEnter(text: String) {
-        myLogger.message(String.format(MESSAGE_FORMAT, "$myState $text"))
+        myLogger.message(String.format(MESSAGE_FORMAT, "$myState ${escapeValue(text)}"))
     }
 
     override fun processLine(text: String) {
-        myLogger.message(String.format(MESSAGE_FORMAT, text))
+        myLogger.message(String.format(MESSAGE_FORMAT, escapeValue(text)))
     }
 
     override fun onLeave() {

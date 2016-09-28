@@ -76,6 +76,9 @@ class CargoLoggingListenerTest {
 
     @DataProvider
     fun testTransformations(): Array<Array<Any>> {
-        return arrayOf(arrayOf<Any>("cargoTests.txt"), arrayOf<Any>("cargoCompileVerbose.txt"))
+        return arrayOf(
+                arrayOf<Any>("cargoTests.txt"),
+                arrayOf<Any>("cargoCompileVerbose.txt"),
+                arrayOf<Any>("cargoTestFailures.txt"))
     }
 }
