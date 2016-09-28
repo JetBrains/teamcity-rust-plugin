@@ -10,6 +10,7 @@ It provides following features for rust projects:
 * Cargo command build runner
 * Cargo tests reporter
 * Structured build log listener
+* Auto-discovery of build steps
  
 # Download
 
