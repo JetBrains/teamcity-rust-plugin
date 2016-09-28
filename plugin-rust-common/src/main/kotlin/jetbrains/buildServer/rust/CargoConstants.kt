@@ -16,6 +16,7 @@ interface CargoConstants {
         val RUNNER_DISPLAY_NAME = "cargo"
         val RUNNER_DESCRIPTION = "Provides cargo support for rust projects"
         val CONFIG_PATH = RUNNER_TYPE + "_Path"
+        val PROJECT_FILE = "Cargo.toml"
 
         val COMMAND_BENCH = "bench"
         val COMMAND_BUILD = "build"
