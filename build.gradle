@@ -12,9 +12,10 @@ buildscript {
 }
 
 ext {
-    versionNumber = project.hasProperty('versionNumber') ? property('versionNumber') : 'SNAPSHOT-' + new Date().format('yyyyMMddHHmmss')
+    def correctVersion = project.hasProperty('versionNumber') && property('versionNumber') ==~ /\d+\.\d+\.\d+.*/
+    versionNumber = correctVersion ? property('versionNumber') : 'SNAPSHOT-' + new Date().format('yyyyMMddHHmmss')
     projectIds = ['group': 'teamcity-rust-plugin', 'version': versionNumber]
-    teamcityVersion = project.hasProperty('teamcityVersion') ? project.getProperty('teamcityVersion') : '9.0'
+    teamcityVersion = project.hasProperty('teamcityVersion') ? property('teamcityVersion') : '9.0'
 }
 
 group = projectIds.group
