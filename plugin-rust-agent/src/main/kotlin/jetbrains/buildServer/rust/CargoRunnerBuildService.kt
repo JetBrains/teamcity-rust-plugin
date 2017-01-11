@@ -21,26 +21,21 @@ import jetbrains.buildServer.util.StringUtil
  * Cargo runner service.
  */
 class CargoRunnerBuildService : BuildServiceAdapter() {
-    private val myArgumentsProviders: Map<String, ArgumentsProvider>
+    private val myArgumentsProviders = mapOf(
+            Pair(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_BUILD, BuildArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_CLEAN, CleanArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_DOC, DocArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_LOGIN, LoginArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_PACKAGE, PackageArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_PUBLISH, PublishArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_RUN, RunArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_RUSTC, RustcArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_RUSTDOC, RustDocArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_TEST, TestArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_UPDATE, UpdateArgumentsProvider()),
+            Pair(CargoConstants.COMMAND_YANK, YankArgumentsProvider()))
 
-    init {
-        myArgumentsProviders = mapOf(
-                Pair(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_BUILD, BuildArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_CLEAN, CleanArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_DOC, DocArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_LOGIN, LoginArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_PACKAGE, PackageArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_PUBLISH, PublishArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_RUN, RunArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_RUSTC, RustcArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_RUSTDOC, RustDocArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_TEST, TestArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_UPDATE, UpdateArgumentsProvider()),
-                Pair(CargoConstants.COMMAND_YANK, YankArgumentsProvider()))
-    }
-
-    @Throws(RunBuildException::class)
     override fun makeProgramCommandLine(): ProgramCommandLine {
         val parameters = runnerParameters
 

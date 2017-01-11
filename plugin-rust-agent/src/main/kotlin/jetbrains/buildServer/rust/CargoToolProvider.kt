@@ -11,40 +11,40 @@ import jetbrains.buildServer.agent.*
 import jetbrains.buildServer.util.StringUtil
 
 import java.io.File
-import java.util.regex.Pattern
 
 /**
  * Determines cargo location.
  */
 class CargoToolProvider(toolProvidersRegistry: ToolProvidersRegistry) : ToolProvider {
 
+    private val patterns = hashMapOf(
+            "cargo" to Regex("^.*cargo(\\.(exe))?$", RegexOption.IGNORE_CASE),
+            "rustc" to Regex("^.*rustc(\\.(exe))?$", RegexOption.IGNORE_CASE))
+
     init {
         toolProvidersRegistry.registerToolProvider(this)
     }
 
     override fun supports(toolName: String): Boolean {
-        return CargoConstants.RUNNER_TYPE.equals(toolName, ignoreCase = true)
+        return patterns.containsKey(toolName.toLowerCase())
     }
 
-    @Throws(ToolCannotBeFoundException::class)
     override fun getPath(toolName: String): String {
+        val pattern = patterns[toolName.toLowerCase()] ?:
+                throw ToolCannotBeFoundException("Unsupported tool $toolName")
+
         val pathVariable = System.getenv("PATH")
         val paths = StringUtil.splitHonorQuotes(pathVariable, File.pathSeparatorChar)
 
-        return FileUtils.findToolPath(paths, TOOL_PATTERN) ?:
+        return FileUtils.findToolPath(paths, pattern) ?:
                 throw ToolCannotBeFoundException("""
                 Unable to locate tool $toolName in system. Please make sure to add it in the PATH variable
                 """.trimIndent())
     }
 
-    @Throws(ToolCannotBeFoundException::class)
     override fun getPath(toolName: String,
                          build: AgentRunningBuild,
                          runner: BuildRunnerContext): String {
         return getPath(toolName)
-    }
-
-    companion object {
-        private val TOOL_PATTERN = Pattern.compile("^.*" + CargoConstants.RUNNER_TYPE + "(\\.(exe))?$")
     }
 }

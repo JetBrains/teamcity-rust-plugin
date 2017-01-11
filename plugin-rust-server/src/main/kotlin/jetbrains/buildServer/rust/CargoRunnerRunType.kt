@@ -57,6 +57,6 @@ class CargoRunnerRunType(private val myPluginDescriptor: PluginDescriptor,
     }
 
     override fun getRunnerSpecificRequirements(runParameters: Map<String, String>): List<Requirement> {
-        return listOf(Requirement(CargoConstants.CONFIG_PATH, null, RequirementType.EXISTS))
+        return listOf(Requirement(CargoConstants.CARGO_CONFIG_PATH, null, RequirementType.EXISTS))
     }
 }

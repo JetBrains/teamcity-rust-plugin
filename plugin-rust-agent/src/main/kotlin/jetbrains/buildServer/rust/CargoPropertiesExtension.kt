@@ -12,7 +12,6 @@ import com.intellij.openapi.diagnostic.Logger
 import jetbrains.buildServer.SimpleCommandLineProcessRunner
 import jetbrains.buildServer.agent.*
 import jetbrains.buildServer.util.EventDispatcher
-import java.util.regex.Pattern
 
 /**
  * Provides a cargo tool path.
@@ -20,30 +19,41 @@ import java.util.regex.Pattern
 class CargoPropertiesExtension(events: EventDispatcher<AgentLifeCycleListener>,
                                private val myToolProvider: CargoToolProvider) : AgentLifeCycleAdapter() {
 
+    private val LOG = Logger.getInstance(CargoPropertiesExtension::class.java.name)
+    private val VERSION_PATTERN = Regex("^(cargo|rustc)\\s([^\\s]+)")
+
     init {
         events.addListener(this)
     }
 
     override fun beforeAgentConfigurationLoaded(agent: BuildAgent) {
         val config = agent.configuration
-        val toolPath: String
-        val version: String
 
-        LOG.info("Locating ${CargoConstants.CONFIG_NAME} tool")
-        try {
-            toolPath = myToolProvider.getPath(CargoConstants.RUNNER_TYPE)
-            val commandLine = getVersionCommandLine(toolPath)
-            val result = SimpleCommandLineProcessRunner.runCommand(commandLine, byteArrayOf())
-            val matcher = VERSION_PATTERN.matcher(result.stdout)
-            version = if (matcher.find()) matcher.group(1) else result.stdout
-        } catch (e: ToolCannotBeFoundException) {
-            LOG.debug(e)
-            return
+        getToolInfo(CargoConstants.CARGO_CONFIG_NAME)?.let {
+            config.addConfigurationParameter(CargoConstants.CARGO_CONFIG_PATH, it.first)
+            config.addConfigurationParameter(CargoConstants.CARGO_CONFIG_NAME, it.second)
         }
 
-        LOG.info("Found ${CargoConstants.CONFIG_NAME} at $toolPath")
-        config.addConfigurationParameter(CargoConstants.CONFIG_NAME, version)
-        config.addConfigurationParameter(CargoConstants.CONFIG_PATH, toolPath)
+        getToolInfo(CargoConstants.RUSTC_CONFIG_NAME)?.let {
+            config.addConfigurationParameter(CargoConstants.RUSTC_CONFIG_PATH, it.first)
+            config.addConfigurationParameter(CargoConstants.RUSTC_CONFIG_NAME, it.second)
+        }
+    }
+
+    private fun getToolInfo(toolName: String): Pair<String, String>? {
+        LOG.info("Locating $toolName tool")
+        try {
+            val toolPath = myToolProvider.getPath(toolName)
+            val commandLine = getVersionCommandLine(toolPath)
+            val result = SimpleCommandLineProcessRunner.runCommand(commandLine, byteArrayOf())
+            val matchResult = VERSION_PATTERN.find(result.stdout)
+            val version = matchResult?.groups?.get(2)?.value ?: result.stdout
+            LOG.info("Found $toolName at $toolPath")
+            return toolPath to version
+        } catch (e: ToolCannotBeFoundException) {
+            LOG.debug(e)
+            return null
+        }
     }
 
     private fun getVersionCommandLine(toolPath: String): GeneralCommandLine {
@@ -51,10 +61,5 @@ class CargoPropertiesExtension(events: EventDispatcher<AgentLifeCycleListener>,
         commandLine.exePath = toolPath
         commandLine.addParameter("--version")
         return commandLine
-    }
-
-    companion object {
-        private val LOG = Logger.getInstance(CargoPropertiesExtension::class.java.name)
-        private val VERSION_PATTERN = Pattern.compile("^cargo\\s([^\\s]+)")
     }
 }
