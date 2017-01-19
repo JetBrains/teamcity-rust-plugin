@@ -7,9 +7,11 @@
 
 package jetbrains.buildServer.rust
 
+import jetbrains.buildServer.agent.BuildRunnerContext
+
 /**
  * Provides arguments to the utility.
  */
 interface ArgumentsProvider {
-    fun getArguments(parameters: Map<String, String>): List<String>
+    fun getArguments(runnerContext: BuildRunnerContext): List<String>
 }

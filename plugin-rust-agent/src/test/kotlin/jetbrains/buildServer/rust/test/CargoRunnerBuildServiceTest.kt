@@ -7,10 +7,12 @@
 
 package jetbrains.buildServer.rust.test
 
-import jetbrains.buildServer.rust.ArgumentsProvider
+import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.rust.CargoConstants
 import jetbrains.buildServer.rust.cargo.*
 import jetbrains.buildServer.util.CollectionsUtil
+import org.jmock.Expectations
+import org.jmock.Mockery
 import org.testng.Assert
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
@@ -24,106 +26,131 @@ class CargoRunnerBuildServiceTest {
 
     @Test(dataProvider = "testBuildArgumentsData")
     fun testBuildArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = BuildArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testCleanArgumentsData")
     fun testCleanArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = CleanArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testTestArgumentsData")
     fun testTestArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = TestArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testRunArgumentsData")
     fun testRunArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = RunArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testBenchArgumentsData")
     fun testBenchArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = BenchArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testDocArgumentsData")
     fun testDocArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = DocArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testPackageArgumentsData")
     fun testPackageArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = PackageArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testPublishArgumentsData")
     fun testPublishArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = PublishArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testRustcArgumentsData")
     fun testRustcArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = RustcArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testLoginArgumentsData")
     fun testLoginArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = LoginArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testUpdateArgumentsData")
     fun testUpdateArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = UpdateArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testRustDocArgumentsData")
     fun testRustDocArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = RustDocArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
     }
 
     @Test(dataProvider = "testYankArgumentsData")
     fun testYankArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
         val argumentsProvider = YankArgumentsProvider()
-        val result = argumentsProvider.getArguments(parameters)
+        val result = argumentsProvider.getArguments(context)
 
         Assert.assertEquals(result, arguments)
+    }
+
+    private fun getRunnerContext(parameters: Map<String, String>): BuildRunnerContext {
+        val m = Mockery()
+        val context = m.mock<BuildRunnerContext>(BuildRunnerContext::class.java)
+        m.checking(object : Expectations() {
+            init {
+                oneOf(context).runnerParameters
+                will(returnValue(parameters))
+            }
+        })
+        return context
     }
 
     @DataProvider(name = "testBuildArgumentsData")

@@ -7,6 +7,7 @@
 
 package jetbrains.buildServer.rust.cargo
 
+import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.rust.ArgumentsProvider
 import jetbrains.buildServer.rust.CargoConstants
 import jetbrains.buildServer.util.StringUtil
@@ -17,7 +18,8 @@ import java.util.ArrayList
  */
 class RustcArgumentsProvider : ArgumentsProvider {
 
-    override fun getArguments(parameters: Map<String, String>): List<String> {
+    override fun getArguments(runnerContext: BuildRunnerContext): List<String> {
+        val parameters = runnerContext.runnerParameters
         val arguments = ArrayList<String>()
         arguments.add(CargoConstants.COMMAND_RUSTC)
 

@@ -54,7 +54,7 @@ class CargoRunnerBuildService : BuildServiceAdapter() {
         }
 
         val toolPath: String
-        val arguments = argumentsProvider.getArguments(parameters)
+        val arguments = argumentsProvider.getArguments(runnerContext)
         try {
             toolPath = getToolPath(CargoConstants.RUNNER_TYPE)
         } catch (e: ToolCannotBeFoundException) {
