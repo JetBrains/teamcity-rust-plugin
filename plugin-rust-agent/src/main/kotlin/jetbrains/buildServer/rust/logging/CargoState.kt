@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2016 JetBrains s.r.o.
+ * Copyright 2000-2017 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -16,6 +16,8 @@ import java.util.HashMap
 enum class CargoState constructor(private val myName: String) {
     Running("Running"),
     Compiling("Compiling"),
+    Created("Created"),
+    Finished("Finished"),
     Error("error:"),
     Warning("warning:"),
     Documenting("Documenting"),
@@ -31,6 +33,7 @@ enum class CargoState constructor(private val myName: String) {
     Archiving("Archiving"),
     Installing("Installing"),
     Replacing("Replacing"),
+    Unpacking("Unpacking"),
 
     Default("Default"),
     Testing("Testing");

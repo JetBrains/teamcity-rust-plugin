@@ -1,0 +1,1 @@
+##teamcity[message text='Finished debug |[unoptimized + debuginfo|] target(s) in 0.0 secs']

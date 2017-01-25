@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2016 JetBrains s.r.o.
+ * Copyright 2000-2017 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -8,7 +8,6 @@
 package jetbrains.buildServer.rust.logging
 
 import jetbrains.buildServer.agent.runner.ProcessListenerAdapter
-import java.util.regex.Pattern
 
 /**
  * Handles build messages from cargo tool.
@@ -28,17 +27,14 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
         val lastLine = myLastLine
         myLastLine = line
 
-        val testsMatcher = myTestsStart.matcher(line)
-        if (testsMatcher.find()) {
+        myTestsStart.find(line)?.let {
             val testSuiteName = getTestSuiteName(lastLine!!)
             changeState(CargoState.Testing, testSuiteName)
             return
         }
 
-        val stateMatcher = myStatement.matcher(line)
-        if (stateMatcher.find()) {
-            val stateKey = stateMatcher.group(1)
-            val stateText = stateMatcher.group(2)
+        myStatement.find(line)?.let {
+            val (stateKey, stateText) = it.destructured
 
             val state = CargoState[stateKey]
             if (state != null && myLogger.canChangeState(state, stateText)) {
@@ -67,8 +63,8 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
     }
 
     companion object {
-        private val myStatement = Pattern.compile("^([\\w][\\w-]+\\:?)\\s+(.*)?$")
-        private val myTestsStart = Pattern.compile("^running \\d+ tests?$")
+        private val myStatement = Regex("^([\\w][\\w-]+\\:?)\\s+(.*)?$")
+        private val myTestsStart = Regex("^running \\d+ tests?$")
 
         private fun getTestSuiteName(text: String): String {
             if (text.startsWith(CargoState.Running.toString())) {
