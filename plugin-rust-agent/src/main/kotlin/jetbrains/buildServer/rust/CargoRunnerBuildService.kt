@@ -7,6 +7,7 @@
 
 package jetbrains.buildServer.rust
 
+import com.github.zafarkhaja.semver.Version
 import jetbrains.buildServer.RunBuildException
 import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter
@@ -21,6 +22,8 @@ import jetbrains.buildServer.util.StringUtil
  * Cargo runner service.
  */
 class CargoRunnerBuildService : BuildServiceAdapter() {
+    private val osName = System.getProperty("os.name").toLowerCase()
+    private val myCargoWithStdErrVersion = Version.forIntegers(0, 13)
     private val myArgumentsProviders = mapOf(
             Pair(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider()),
             Pair(CargoConstants.COMMAND_BUILD, BuildArgumentsProvider()),
@@ -54,13 +57,29 @@ class CargoRunnerBuildService : BuildServiceAdapter() {
         }
 
         val toolPath: String
-        val arguments = argumentsProvider.getArguments(runnerContext)
         try {
             toolPath = getToolPath(CargoConstants.RUNNER_TYPE)
         } catch (e: ToolCannotBeFoundException) {
             val buildException = RunBuildException(e)
             buildException.isLogStacktrace = false
             throw buildException
+        }
+
+        val arguments = argumentsProvider.getArguments(runnerContext)
+        runnerContext.configParameters[CargoConstants.CARGO_CONFIG_NAME]?.let {
+            if (Version.valueOf(it).greaterThanOrEqualTo(myCargoWithStdErrVersion)) {
+                if (osName.startsWith("windows")) {
+                    return createProgramCommandline("cmd.exe", arrayListOf("/c", "2>&1", toolPath).apply {
+                        addAll(arguments)
+                    })
+                } else if (osName.startsWith("freebsd") || osName.startsWith("sunos")) {
+                    return createProgramCommandline("sh",
+                            arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                } else {
+                    return createProgramCommandline("bash",
+                            arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                }
+            }
         }
 
         return createProgramCommandline(toolPath, arguments)
