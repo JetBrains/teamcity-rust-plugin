@@ -6,4 +6,5 @@
     <bean class="jetbrains.buildServer.rust.CargoRunnerBuildServiceFactory"/>
     <bean class="jetbrains.buildServer.rust.CargoToolProvider"/>
     <bean class="jetbrains.buildServer.rust.RustcToolProvider"/>
+    <bean class="jetbrains.buildServer.rust.RustupToolProvider"/>
 </beans>

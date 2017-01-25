@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2016 JetBrains s.r.o.
+ * Copyright 2000-2017 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -18,6 +18,8 @@ object CargoConstants {
     const val CARGO_CONFIG_PATH = CARGO_CONFIG_NAME + "_Path"
     const val RUSTC_CONFIG_NAME = "Rustc"
     const val RUSTC_CONFIG_PATH = RUSTC_CONFIG_NAME + "_Path"
+    const val RUSTUP_CONFIG_NAME = "Rustup"
+    const val RUSTUP_CONFIG_PATH = RUSTUP_CONFIG_NAME + "_Path"
     const val PROJECT_FILE = "Cargo.toml"
 
     const val COMMAND_BENCH = "bench"
