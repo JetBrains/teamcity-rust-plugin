@@ -73,8 +73,11 @@ abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
      * @return first matching file.
      */
     fun findToolPath(): Pair<String, Version>? {
-        val path = System.getenv("PATH")
-        return StringUtil.splitHonorQuotes(path, File.pathSeparatorChar)
+        val paths = StringUtil.splitHonorQuotes(System.getenv("PATH"), File.pathSeparatorChar).toHashSet().apply {
+            add(System.getProperty("user.home") + File.separatorChar + ".cargo" + File.separatorChar + "bin")
+        }
+
+        return paths
                 .map { File(it).listFiles() }
                 .filterNotNull()
                 .flatMap { it.map { it.absolutePath } }
