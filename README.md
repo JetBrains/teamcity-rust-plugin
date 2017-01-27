@@ -7,14 +7,15 @@ The TeamCity Rust plugin brings build infrastructure support for the [Rust](http
 # Features
 
 It provides the following features for Rust projects:
-* Cargo command build runner
+* Rust toolchains installation via [rustup](https://www.rustup.rs/)
+* Cargo command build runners
 * Cargo tests reporter
 * Structured build log listener
 * Auto-discovery of build steps
  
 # Download
 
-You can download the plugin from the [last successful build](https://teamcity.jetbrains.com/repository/download/TeamCityRustPluginBuild/.lastSuccessful/teamcity-rust-plugin.zip?guest=1) and install it as [an additional TeamCity plugin](https://confluence.jetbrains.com/display/TCDL/Installing+Additional+Plugins).
+You can [download the plugin](https://plugins.jetbrains.com/teamcity/plugin/9044) and install it as [an additional TeamCity plugin](https://confluence.jetbrains.com/display/TCDL/Installing+Additional+Plugins).
 
 # Compatibility
 
