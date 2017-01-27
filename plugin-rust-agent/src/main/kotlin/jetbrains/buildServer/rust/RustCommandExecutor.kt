@@ -21,8 +21,8 @@ class RustCommandExecutor : CommandExecutor {
     private val locks = ConcurrentHashMap<String, ReadWriteLock>()
 
     override fun executeWithReadLock(toolPath: String, arguments: List<String>): String {
-        val lock = locks.getOrDefault(toolPath, ReentrantReadWriteLock())
-        val readLock = lock.readLock()
+        locks.putIfAbsent(toolPath, ReentrantReadWriteLock())
+        val readLock = locks[toolPath]!!.readLock()
         readLock.lock()
         try {
             return execute(toolPath, arguments)
@@ -32,8 +32,8 @@ class RustCommandExecutor : CommandExecutor {
     }
 
     override fun executeWithWriteLock(toolPath: String, arguments: List<String>): String {
-        val lock = locks.getOrDefault(toolPath, ReentrantReadWriteLock())
-        val writeLock = lock.writeLock()
+        locks.putIfAbsent(toolPath, ReentrantReadWriteLock())
+        val writeLock = locks[toolPath]!!.writeLock()
         writeLock.lock()
         try {
             return execute(toolPath, arguments)
