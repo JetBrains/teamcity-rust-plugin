@@ -40,6 +40,9 @@ class CargoParametersProvider {
     val verbosityKey: String
         get() = CargoConstants.PARAM_VERBOSITY
 
+    val toolchainKey: String
+        get() = CargoConstants.PARAM_TOOLCHAIN
+
     val buildPackageKey: String
         get() = CargoConstants.PARAM_BUILD_PACKAGE
 

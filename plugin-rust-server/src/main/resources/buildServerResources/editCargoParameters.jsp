@@ -26,3 +26,14 @@
         </props:selectProperty>
     </td>
 </tr>
+
+<tr class="advancedSetting">
+    <th><label for="${params.toolchainKey}">Toolchain version:</label></th>
+    <td>
+        <props:textProperty name="${params.toolchainKey}" className="longField"/>
+        <span class="error" id="error_${params.toolchainKey}"></span>
+        <span class="smallNote">Defines rust toolchain version: stable, beta, nightly or custom.<br/>
+            Leave blank to use default version installed on the build agent.</span>
+        <span class="error" id="error_${params.toolchainKey}"></span>
+    </td>
+</tr>

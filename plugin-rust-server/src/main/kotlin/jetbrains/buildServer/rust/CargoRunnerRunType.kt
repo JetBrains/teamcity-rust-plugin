@@ -56,7 +56,12 @@ class CargoRunnerRunType(private val myPluginDescriptor: PluginDescriptor,
         return "cargo ${parameters[CargoConstants.PARAM_COMMAND]}"
     }
 
-    override fun getRunnerSpecificRequirements(runParameters: Map<String, String>): List<Requirement> {
-        return listOf(Requirement(CargoConstants.CARGO_CONFIG_PATH, null, RequirementType.EXISTS))
+    override fun getRunnerSpecificRequirements(parameters: Map<String, String>): List<Requirement> {
+        val toolchainVersion = parameters[CargoConstants.PARAM_TOOLCHAIN]
+        return if (toolchainVersion.isNullOrBlank()) {
+            listOf(Requirement(CargoConstants.CARGO_CONFIG_PATH, null, RequirementType.EXISTS))
+        } else {
+            listOf(Requirement(CargoConstants.RUSTUP_CONFIG_PATH, null, RequirementType.EXISTS))
+        }
     }
 }

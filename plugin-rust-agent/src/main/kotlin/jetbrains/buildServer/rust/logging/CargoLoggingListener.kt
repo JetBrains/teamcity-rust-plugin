@@ -8,6 +8,7 @@
 package jetbrains.buildServer.rust.logging
 
 import jetbrains.buildServer.agent.runner.ProcessListenerAdapter
+import java.io.File
 
 /**
  * Handles build messages from cargo tool.
@@ -54,6 +55,20 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
         myLogger = logger
     }
 
+    override fun processStarted(programCommandLine: String, workingDirectory: File) {
+        val commandLine: String
+        val result = myCargoCommandLine.find(programCommandLine)
+        if (result == null) {
+            commandLine = programCommandLine
+        } else {
+            val (name, arguments) = result.destructured
+            commandLine = "cargo ${arguments.removeSuffix(" 2>&1")}"
+        }
+
+        myLoggerFactory.logger.message("Starting: " + commandLine)
+        myLoggerFactory.logger.message("in directory: " + workingDirectory)
+    }
+
     override fun onErrorOutput(text: String) {
         myLogger.processError(text)
     }
@@ -65,6 +80,7 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
     companion object {
         private val myStatement = Regex("^([\\w][\\w-]+\\:?)\\s+(.*)?$")
         private val myTestsStart = Regex("^running \\d+ tests?$")
+        private val myCargoCommandLine = Regex("cargo(\\.exe)?\\s(.*)")
 
         private fun getTestSuiteName(text: String): String {
             if (text.startsWith(CargoState.Running.toString())) {

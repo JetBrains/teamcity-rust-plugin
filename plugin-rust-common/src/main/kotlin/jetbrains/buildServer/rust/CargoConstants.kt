@@ -38,6 +38,7 @@ object CargoConstants {
 
     const val PARAM_COMMAND = "cargo-command"
     const val PARAM_VERBOSITY = "cargo-verbosity"
+    const val PARAM_TOOLCHAIN = "cargo-toolchain"
 
     const val PARAM_BUILD_PACKAGE = "cargo-build-package"
     const val PARAM_BUILD_TYPE = "cargo-build-type"

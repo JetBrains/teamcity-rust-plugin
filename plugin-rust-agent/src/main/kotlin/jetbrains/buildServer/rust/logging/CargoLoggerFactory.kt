@@ -12,7 +12,7 @@ import jetbrains.buildServer.agent.BuildProgressLogger
 /**
  * Logger factory.
  */
-class CargoLoggerFactory(private val logger: BuildProgressLogger) {
+class CargoLoggerFactory(val logger: BuildProgressLogger) {
     private val myLoggers = mapOf(
             Pair(CargoState.Running, CargoStateLogger(logger, CargoState.Running)),
             Pair(CargoState.Compiling, CargoCompileLogger(logger)),

@@ -19,3 +19,9 @@
         Output verbosity: <props:displayValue name="${params.verbosityKey}"/>
     </div>
 </c:if>
+
+<c:if test="${not empty propertiesBean.properties[params.toolchainKey]}">
+    <div class="parameter">
+        Toolchain version: <props:displayValue name="${params.toolchainKey}"/>
+    </div>
+</c:if>
