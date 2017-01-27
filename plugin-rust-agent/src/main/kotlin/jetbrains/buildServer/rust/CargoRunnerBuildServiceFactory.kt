@@ -15,10 +15,11 @@ import jetbrains.buildServer.agent.runner.CommandLineBuildServiceFactory
 /**
  * Cargo runner service factory.
  */
-class CargoRunnerBuildServiceFactory : CommandLineBuildServiceFactory {
+class CargoRunnerBuildServiceFactory(private val commandExecutor: CommandExecutor)
+    : CommandLineBuildServiceFactory {
 
     override fun createService(): CommandLineBuildService {
-        return CargoRunnerBuildService()
+        return CargoRunnerBuildService(commandExecutor)
     }
 
     override fun getBuildRunnerInfo(): AgentBuildRunnerInfo {

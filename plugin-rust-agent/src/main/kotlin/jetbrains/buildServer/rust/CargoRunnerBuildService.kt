@@ -8,9 +8,7 @@
 package jetbrains.buildServer.rust
 
 import com.github.zafarkhaja.semver.Version
-import com.intellij.execution.configurations.GeneralCommandLine
 import jetbrains.buildServer.RunBuildException
-import jetbrains.buildServer.SimpleCommandLineProcessRunner
 import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter
 import jetbrains.buildServer.agent.runner.ProcessListener
@@ -23,7 +21,7 @@ import jetbrains.buildServer.util.StringUtil
 /**
  * Cargo runner service.
  */
-class CargoRunnerBuildService : BuildServiceAdapter() {
+class CargoRunnerBuildService(private val commandExecutor: CommandExecutor) : BuildServiceAdapter() {
     private val osName = System.getProperty("os.name").toLowerCase()
     private val myCargoWithStdErrVersion = Version.forIntegers(0, 13)
     private val myArgumentsProviders = mapOf(
@@ -62,7 +60,8 @@ class CargoRunnerBuildService : BuildServiceAdapter() {
         val (toolPath, arguments) = if (toolchainVersion.isNotEmpty()) {
             val rustupPath = getPath(CargoConstants.RUSTUP_CONFIG_NAME)
 
-            installRust(rustupPath, toolchainVersion)
+            logger.message("Using rust toolchain: $toolchainVersion")
+            commandExecutor.executeWithReadLock(rustupPath, arrayListOf("toolchain", "install", toolchainVersion))
 
             rustupPath to argumentsProvider.getArguments(runnerContext).toMutableList().apply {
                 addAll(0, arrayListOf("run", toolchainVersion, "cargo"))
@@ -97,20 +96,6 @@ class CargoRunnerBuildService : BuildServiceAdapter() {
             val buildException = RunBuildException(e)
             buildException.isLogStacktrace = false
             throw buildException
-        }
-    }
-
-    private fun installRust(toolPath: String, version: String) {
-        val commandLine = GeneralCommandLine().apply {
-            exePath = toolPath
-            addParameters("toolchain", "install", version)
-        }
-
-        logger.message("Using rust toolchain: $version")
-
-        val result = SimpleCommandLineProcessRunner.runCommand(commandLine, byteArrayOf())
-        if (result.exitCode != 0) {
-            throw RunBuildException(result.stderr.trim())
         }
     }
 

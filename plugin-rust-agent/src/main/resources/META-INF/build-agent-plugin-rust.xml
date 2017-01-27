@@ -5,6 +5,8 @@
        default-autowire="constructor">
     <bean class="jetbrains.buildServer.rust.CargoRunnerBuildServiceFactory"/>
     <bean class="jetbrains.buildServer.rust.CargoToolProvider"/>
+    <bean class="jetbrains.buildServer.rust.RustCommandExecutor"/>
     <bean class="jetbrains.buildServer.rust.RustcToolProvider"/>
     <bean class="jetbrains.buildServer.rust.RustupToolProvider"/>
+    <bean class="jetbrains.buildServer.rust.RustupCacheCleaner"/>
 </beans>
