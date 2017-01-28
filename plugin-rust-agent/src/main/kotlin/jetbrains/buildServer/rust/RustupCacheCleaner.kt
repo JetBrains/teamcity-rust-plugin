@@ -41,14 +41,20 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
         rustupPath?.let {
             LOG.info("Registering rust toolchains directory $rustupCache for cleaning")
             registry.addCleaner(rustupCache, Date(), {
-                File(rustupCache, "toolchains").listFiles()?.forEach {
-                    val name = it.name
-                    LOG.info("Removing rust toolchain $name")
-                    try {
-                        commandExecutor.executeWithWriteLock(rustupPath, arrayListOf("toolchain", "uninstall", name))
-                    } catch (e: Throwable) {
-                        LOG.warnAndDebugDetails("Failed to uninstall rust toolchain $name: ${e.message}", e)
-                    }
+                try {
+                    commandExecutor.executeWithReadLock(rustupPath, listOf("toolchain", "list"))
+                            .lineSequence()
+                            .filter { !it.endsWith("(default)") }
+                            .forEach {
+                                LOG.info("Removing rust toolchain $it")
+                                try {
+                                    commandExecutor.executeWithWriteLock(rustupPath, listOf("toolchain", "uninstall", it))
+                                } catch (e: Throwable) {
+                                    LOG.warnAndDebugDetails("Failed to uninstall rust toolchain $it: ${e.message}", e)
+                                }
+                            }
+                } catch (e: Throwable) {
+                    LOG.warnAndDebugDetails("Failed to get list of rust toolchains: ${e.message}", e)
                 }
             })
         }
