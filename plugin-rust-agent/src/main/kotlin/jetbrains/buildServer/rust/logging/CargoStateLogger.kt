@@ -31,7 +31,7 @@ class CargoStateLogger(private val myLogger: BuildProgressLogger,
         if (myMessage == null) {
             myLogger.message(String.format(MESSAGE_FORMAT, escapeValue(text)))
         } else {
-            myMessage?.appendln(text)
+            myMessage?.append(text)?.append("\n")
         }
     }
 
