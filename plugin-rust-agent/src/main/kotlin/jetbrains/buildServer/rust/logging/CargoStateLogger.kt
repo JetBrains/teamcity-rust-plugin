@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2016 JetBrains s.r.o.
+ * Copyright 2000-2017 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -12,20 +12,38 @@ import jetbrains.buildServer.agent.BuildProgressLogger
 /**
  * State-based logger.
  */
-class CargoStateLogger(private val myLogger: BuildProgressLogger, private val myState: CargoState) : CargoDefaultLogger(myLogger) {
+class CargoStateLogger(private val myLogger: BuildProgressLogger,
+                       private val myState: CargoState,
+                       private val myPriority: String? = null)
+    : CargoDefaultLogger(myLogger) {
+
+    private var myMessage: StringBuilder? = null
 
     override fun onEnter(text: String) {
-        myLogger.message(String.format(MESSAGE_FORMAT, "$myState ${escapeValue(text)}"))
+        if (myPriority.isNullOrEmpty()) {
+            myLogger.message(String.format(MESSAGE_FORMAT, "$myState ${escapeValue(text)}", ""))
+        } else {
+            myMessage = StringBuilder("$myState $text")
+        }
     }
 
     override fun processLine(text: String) {
-        myLogger.message(String.format(MESSAGE_FORMAT, escapeValue(text)))
+        if (myMessage == null) {
+            myLogger.message(String.format(MESSAGE_FORMAT, escapeValue(text)))
+        } else {
+            myMessage?.appendln(text)
+        }
     }
 
     override fun onLeave() {
+        if (myMessage != null) {
+            val message = escapeValue(myMessage.toString().trim())
+            myLogger.message(String.format(MESSAGE_FORMAT, message, " status='$myPriority'"))
+            myMessage = null
+        }
     }
 
     companion object {
-        private val MESSAGE_FORMAT = "##teamcity[message text='%s']"
+        private val MESSAGE_FORMAT = "##teamcity[message text='%s'%s]"
     }
 }

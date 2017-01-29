@@ -1,0 +1,14 @@
+warning: unused manifest key: package.categories
+   Compiling cfg-if v0.1.0
+   Compiling mio v0.6.4 (file:///C:/TeamCity/buildAgent/work/498a06f7e57149f9)
+warning: unused import: `cmp`, #[warn(unused_imports)] on by default
+ --> src\sys\windows\selector.rs:1:11
+  |
+1 | use std::{cmp, io, u32};
+  |           ^^^
+
+warning: unused import: `convert`, #[warn(unused_imports)] on by default
+  --> src\sys\windows\selector.rs:10:5
+   |
+10 | use convert;
+   |     ^^^^^^^
