@@ -1,0 +1,9 @@
+   Doc-tests iron
+
+running 6 tests
+test itry_0 ... ignored
+test _0 ... ok
+test prelude_0 ... ok
+test modifiers_0 ... ok
+
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured

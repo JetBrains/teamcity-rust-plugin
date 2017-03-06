@@ -29,7 +29,7 @@ class CargoStateLogger(private val myLogger: BuildProgressLogger,
 
     override fun processLine(text: String) {
         if (myMessage == null) {
-            myLogger.message(String.format(MESSAGE_FORMAT, escapeValue(text)))
+            myLogger.message(String.format(MESSAGE_FORMAT, escapeValue(text), ""))
         } else {
             myMessage?.append(text)?.append("\n")
         }

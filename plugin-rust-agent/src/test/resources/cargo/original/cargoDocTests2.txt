@@ -1,0 +1,48 @@
+   Doc-tests rust_hello_world
+
+running 2 tests
+test _0 ... FAILED
+test add_two_0 ... FAILED
+
+failures:
+
+---- _0 stdout ----
+        <anon>:2:19: 2:33 error: failed to resolve. Use of undeclared type or module `adder` [E0433]
+<anon>:2     assert_eq!(4, adder::add_two(2));
+                           ^~~~~~~~~~~~~~
+<anon>:2:5: 2:38 note: in this expansion of assert_eq! (defined in <std macros>)
+<std macros>:5:8: 5:18 error: the type of this value must be known in this context
+<std macros>:5 if ! ( * left_val == * right_val ) {
+                      ^~~~~~~~~~
+<anon>:2:5: 2:38 note: in this expansion of assert_eq! (defined in <std macros>)
+<std macros>:5:22: 5:33 error: the type of this value must be known in this context
+<std macros>:5 if ! ( * left_val == * right_val ) {
+                                    ^~~~~~~~~~~
+<anon>:2:5: 2:38 note: in this expansion of assert_eq! (defined in <std macros>)
+error: aborting due to previous error(s)
+thread '_0' panicked at 'Box<Any>', ../src/librustc\session/mod.rs:161
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+---- add_two_0 stdout ----
+        <anon>:2:9: 2:14 error: unresolved import `adder::add_two`. Maybe a missing `extern crate adder`? [E0432]
+<anon>:2     use adder::add_two;
+                 ^~~~~
+<std macros>:5:8: 5:18 error: the type of this value must be known in this context
+<std macros>:5 if ! ( * left_val == * right_val ) {
+                      ^~~~~~~~~~
+<anon>:4:5: 4:31 note: in this expansion of assert_eq! (defined in <std macros>)
+<std macros>:5:22: 5:33 error: the type of this value must be known in this context
+<std macros>:5 if ! ( * left_val == * right_val ) {
+                                    ^~~~~~~~~~~
+<anon>:4:5: 4:31 note: in this expansion of assert_eq! (defined in <std macros>)
+error: aborting due to previous error(s)
+thread 'add_two_0' panicked at 'Box<Any>', ../src/librustc\session/mod.rs:161
+
+
+failures:
+    _0
+    add_two_0
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured
+
+error: test failed

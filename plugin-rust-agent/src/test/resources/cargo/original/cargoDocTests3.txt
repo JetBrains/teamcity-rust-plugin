@@ -1,0 +1,9 @@
+   Doc-tests iron
+
+running 6 tests
+test src\macros.rs - itry (line 14) ... ignored
+test src/lib.rs -  (line 21) ... ok
+test src/lib.rs - prelude (line 116) ... ok
+test src\modifiers.rs - modifiers (line 14) ... ok
+
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured

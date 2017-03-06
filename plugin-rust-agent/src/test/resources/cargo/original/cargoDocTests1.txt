@@ -1,0 +1,25 @@
+    Doc-tests netopt
+error[E0465]: multiple rlib candidates for `quick_error` found
+  --> /opt/teamcityagent/work/485272bd58bfc4f7/poltergeist/src/netopt/src/lib.rs:10:1
+   |
+10 | extern crate quick_error;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: candidate #1: /opt/teamcityagent/work/485272bd58bfc4f7/poltergeist/target/release/deps/libquick_error-ad4e7dd1aa51c0e7.rlib
+  --> /opt/teamcityagent/work/485272bd58bfc4f7/poltergeist/src/netopt/src/lib.rs:10:1
+   |
+10 | extern crate quick_error;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+note: candidate #2: /opt/teamcityagent/work/485272bd58bfc4f7/poltergeist/target/release/deps/libquick_error-c03e0e7650d0e89d.rlib
+  --> /opt/teamcityagent/work/485272bd58bfc4f7/poltergeist/src/netopt/src/lib.rs:10:1
+   |
+10 | extern crate quick_error;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0463]: can't find crate for `quick_error`
+  --> /opt/teamcityagent/work/485272bd58bfc4f7/poltergeist/src/netopt/src/lib.rs:10:1
+   |
+10 | extern crate quick_error;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^ can't find crate
+
+error: aborting due to 2 previous errors

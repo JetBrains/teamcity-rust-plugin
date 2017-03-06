@@ -29,6 +29,10 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
         myLogger.message(String.format(TEST_SUITE_STARTED_FORMAT, myTestSuiteName))
     }
 
+    override fun canChangeState(state: CargoState, text: String): Boolean {
+        return myTestOutputName == null
+    }
+
     override fun processLine(text: String) {
         if (text == "failures:") {
             myTestOutputName = null
@@ -38,7 +42,7 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
         val testMatcher = TEST_PATTERN.matcher(text)
         if (testMatcher.find()) {
             // Test result line
-            val testName = testMatcher.group(1)
+            val testName = testMatcher.group(1).replace('\\', '/')
             val result = testMatcher.group(2).toLowerCase()
             myTestName = testName
 
@@ -88,7 +92,7 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
 
     companion object {
         private val TEST_PATTERN = Pattern.compile(
-                "^test\\s([^\\s]+)\\s\\.\\.\\.\\s(ok|failed|ignored|bench)", Pattern.CASE_INSENSITIVE)
+                "^test\\s+(.+)\\s\\.\\.\\.\\s(ok|failed|ignored|bench)", Pattern.CASE_INSENSITIVE)
         private val TEST_STDOUT_PATTERN = Pattern.compile("^---- ([^\\s]+) stdout ----")
         private val TEST_SUITE_STARTED_FORMAT = "##teamcity[testSuiteStarted name='%s']"
         private val TEST_SUITE_FINISHED_FORMAT = "##teamcity[testSuiteFinished name='%s']"
