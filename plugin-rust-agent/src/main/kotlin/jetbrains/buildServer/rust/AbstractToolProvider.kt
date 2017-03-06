@@ -27,7 +27,7 @@ abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
     : AgentLifeCycleAdapter(), ToolProvider {
 
     private val LOG = Logger.getInstance(AbstractToolProvider::class.java.name)
-    private val VERSION_PATTERN = Regex("^$configName\\s([^\\s]+)", RegexOption.IGNORE_CASE)
+    private val VERSION_PATTERN = Regex("^$configName[\\s-]([^\\s]+)", RegexOption.IGNORE_CASE)
     private val PATH_PATTERN = Regex("^.*$configName(\\.(exe))?$", RegexOption.IGNORE_CASE)
 
     init {
