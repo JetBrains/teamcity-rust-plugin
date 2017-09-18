@@ -1,4 +1,4 @@
-# TeamCity Rust Plugin
+# TeamCity Rust Plugin [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 
 <a href="https://teamcity.jetbrains.com/viewType.html?buildTypeId=TeamCityRustPluginBuild&guest=1"><img src="https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TeamCityRustPluginBuild)/statusIcon.svg" alt=""/></a>
 
