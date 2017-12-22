@@ -1,21 +1,12 @@
-buildscript {
-    ext.kotlinVersion = '1.0.6'
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    }
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.10"
 }
 
 ext {
     def correctVersion = project.hasProperty('versionNumber') && property('versionNumber') ==~ /\d+\.\d+\.\d+.*/
     versionNumber = correctVersion ? property('versionNumber') : 'SNAPSHOT-' + new Date().format('yyyyMMddHHmmss')
     projectIds = ['group': 'teamcity-rust-plugin', 'version': versionNumber]
-    teamcityVersion = project.hasProperty('teamcityVersion') ? property('teamcityVersion') : '9.0'
+    teamcityVersion = project.hasProperty('teamcityVersion') ? property('teamcityVersion') : '10.0'
 }
 
 group = projectIds.group
@@ -32,22 +23,10 @@ subprojects {
     test.useTestNG()
     jar.version = null
 
-    tasks.withType(JavaCompile) {
-        sourceCompatibility = "1.6"
-        targetCompatibility = "1.6"
-    }
-}
-
-apply plugin: 'idea'
-apply plugin: 'kotlin'
-
-idea {
-    module {
-        downloadJavadoc = false
-        downloadSources = true
-    }
+    sourceCompatibility = "1.6"
+    targetCompatibility = "1.6"
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+    gradleVersion = '4.2.1'
 }

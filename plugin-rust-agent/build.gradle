@@ -1,19 +1,17 @@
 plugins {
-    id 'com.github.rodm.teamcity-agent' version "0.9.1"
+    id 'com.github.rodm.teamcity-agent' version "1.0"
 }
 
 teamcity {
     version = teamcityVersion
-    descriptor {
-        pluginDeployment {
-            useSeparateClassloader = true
-        }
+    agent {
+        descriptor = project.file('teamcity-plugin.xml')
     }
 }
 
 dependencies {
     compile project(':plugin-rust-common')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib"
     compile "com.github.zafarkhaja:java-semver:0.9.0"
     provided "org.jetbrains.teamcity.internal:agent:${teamcityVersion}"
     testCompile 'org.testng:testng:6.8'

@@ -23,7 +23,7 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
 
     override fun onStandardOutput(text: String) {
         val line = text.trim()
-        if (line.isNullOrBlank()) return
+        if (line.isBlank()) return
 
         val lastLine = myLastLine
         myLastLine = line
@@ -58,11 +58,11 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
     override fun processStarted(programCommandLine: String, workingDirectory: File) {
         val commandLine: String
         val result = myCargoCommandLine.find(programCommandLine)
-        if (result == null) {
-            commandLine = programCommandLine
+        commandLine = if (result == null) {
+            programCommandLine
         } else {
-            val (name, arguments) = result.destructured
-            commandLine = "cargo ${arguments.removeSuffix(" 2>&1")}"
+            val (_, arguments) = result.destructured
+            "cargo ${arguments.removeSuffix(" 2>&1")}"
         }
 
         myLoggerFactory.logger.message("Starting: " + commandLine)
