@@ -5,5 +5,5 @@
 ##teamcity[compilationStarted compiler='rustc:mio']
 ##teamcity[message text='Compiling mio v0.6.4 (file:///C:/TeamCity/buildAgent/work/498a06f7e57149f9)']
 ##teamcity[compilationFinished compiler='rustc:mio']
-##teamcity[message text='warning: unused import: `cmp`, #|[warn(unused_imports)|] on by default--> src\sys\windows\selector.rs:1:11|n|||n1 || use std::{cmp, io, u32};|n||           ^^^' status='WARNING']
-##teamcity[message text='warning: unused import: `convert`, #|[warn(unused_imports)|] on by default--> src\sys\windows\selector.rs:10:5|n|||n10 || use convert;|n||     ^^^^^^^' status='WARNING']
+##teamcity[message text='warning: unused import: `cmp`, #|[warn(unused_imports)|] on by default --> src\sys\windows\selector.rs:1:11|n  |||n1 || use std::{cmp, io, u32};|n  ||           ^^^' status='WARNING']
+##teamcity[message text='warning: unused import: `convert`, #|[warn(unused_imports)|] on by default  --> src\sys\windows\selector.rs:10:5|n   |||n10 || use convert;|n   ||     ^^^^^^^' status='WARNING']

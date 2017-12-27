@@ -36,7 +36,8 @@ enum class CargoState constructor(private val myName: String) {
     Unpacking("Unpacking"),
 
     Default("Default"),
-    Testing("Testing");
+    Testing("Testing"),
+    ErrorDetails("ErrorDetails");
 
     override fun toString(): String {
         return myName

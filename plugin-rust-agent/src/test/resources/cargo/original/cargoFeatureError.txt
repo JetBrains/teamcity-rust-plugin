@@ -1,0 +1,10 @@
+   Compiling state v0.3.2
+error[E0554]: #![feature] may not be used on the stable release channel
+ --> C:\Users\User\.cargo\registry\src\github.com-1ecc6299db9ec823\state-0.3.2\src\lib.rs:1:1
+  |
+1 | #![feature(const_fn)]
+  | ^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to 1 previous errors
+
+error: Could not compile `state`.

@@ -28,7 +28,7 @@ class CargoCompileLogger(private val myLogger: BuildProgressLogger) : CargoDefau
     }
 
     override fun processLine(text: String) {
-        myLogger.message(String.format(COMPILATION_MESSAGE_FORMAT, text))
+        myLogger.message(String.format(COMPILATION_MESSAGE_FORMAT, text.trim()))
     }
 
     override fun canChangeState(state: CargoState, text: String): Boolean {

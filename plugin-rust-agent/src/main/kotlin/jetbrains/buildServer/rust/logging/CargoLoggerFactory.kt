@@ -34,7 +34,8 @@ class CargoLoggerFactory(val logger: BuildProgressLogger) {
             Pair(CargoState.Installing, CargoStateLogger(logger, CargoState.Installing)),
             Pair(CargoState.Replacing, CargoStateLogger(logger, CargoState.Replacing)),
             Pair(CargoState.Unpacking, CargoStateLogger(logger, CargoState.Unpacking)),
-            Pair(CargoState.Testing, CargoTestingLogger(logger)))
+            Pair(CargoState.Testing, CargoTestingLogger(logger)),
+            Pair(CargoState.ErrorDetails, CargoErrorDetailsLogger(logger)))
 
     fun getLogger(state: CargoState): CargoLogger {
         return myLoggers[state] ?: CargoDefaultLogger(logger)

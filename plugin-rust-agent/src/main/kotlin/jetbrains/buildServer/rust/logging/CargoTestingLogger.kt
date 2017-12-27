@@ -34,12 +34,13 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
     }
 
     override fun processLine(text: String) {
-        if (text == "failures:") {
+        val line = text.trim()
+        if (line == "failures:") {
             myTestOutputName = null
             return
         }
 
-        val testMatcher = TEST_PATTERN.matcher(text)
+        val testMatcher = TEST_PATTERN.matcher(line)
         if (testMatcher.find()) {
             // Test result line
             val testName = testMatcher.group(1).replace('\\', '/')
@@ -55,12 +56,12 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
             } else if ("failed" == result) {
                 myFailedTests?.set(testName, Pair(testDuration, StringBuilder()))
             } else {
-                myLogger.message(String.format(TEST_STDOUT_FORMAT, myTestName, escapeValue(text)))
+                myLogger.message(String.format(TEST_STDOUT_FORMAT, myTestName, escapeValue(line)))
             }
 
             myTestStartTime = System.currentTimeMillis()
         } else {
-            val outputMatcher = TEST_STDOUT_PATTERN.matcher(text)
+            val outputMatcher = TEST_STDOUT_PATTERN.matcher(line)
             if (outputMatcher.find()) {
                 // Test output line
                 val testName = outputMatcher.group(1)
@@ -72,7 +73,7 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
 
             if (!myTestOutputName.isNullOrEmpty()) {
                 val pair = myFailedTests?.get(myTestOutputName!!)
-                pair?.second?.let { it.append(text).append("\n") }
+                pair?.second?.let { it.append(line).append("\n") }
             }
         }
     }
@@ -92,7 +93,7 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
 
     companion object {
         private val TEST_PATTERN = Pattern.compile(
-                "^test\\s+(.+)\\s\\.\\.\\.\\s(ok|failed|ignored|bench)", Pattern.CASE_INSENSITIVE)
+                "^\\s*test\\s+(.+)\\s\\.\\.\\.\\s(ok|failed|ignored|bench)", Pattern.CASE_INSENSITIVE)
         private val TEST_STDOUT_PATTERN = Pattern.compile("^---- ([^\\s]+) stdout ----")
         private val TEST_SUITE_STARTED_FORMAT = "##teamcity[testSuiteStarted name='%s']"
         private val TEST_SUITE_FINISHED_FORMAT = "##teamcity[testSuiteFinished name='%s']"

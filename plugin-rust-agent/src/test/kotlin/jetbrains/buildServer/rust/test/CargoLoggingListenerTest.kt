@@ -85,7 +85,8 @@ class CargoLoggingListenerTest {
                 arrayOf<Any>("cargoDocTests1.txt"),
                 arrayOf<Any>("cargoDocTests2.txt"),
                 arrayOf<Any>("cargoDocTests3.txt"),
-                arrayOf<Any>("cargoDocTests4.txt")
+                arrayOf<Any>("cargoDocTests4.txt"),
+                arrayOf<Any>("cargoFeatureError.txt")
         )
     }
 }

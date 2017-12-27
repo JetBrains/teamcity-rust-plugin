@@ -21,16 +21,20 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
         myLogger = myLoggerFactory.getLogger(CargoState.Default)
     }
 
-    override fun onStandardOutput(text: String) {
-        val line = text.trim()
+    override fun onStandardOutput(line: String) {
         if (line.isBlank()) return
 
         val lastLine = myLastLine
         myLastLine = line
 
         myTestsStart.find(line)?.let {
-            val testSuiteName = getTestSuiteName(lastLine!!)
+            val testSuiteName = getTestSuiteName(lastLine!!.trim())
             changeState(CargoState.Testing, testSuiteName)
+            return
+        }
+
+        myErrorStart.find(line)?.let {
+            changeState(CargoState.ErrorDetails, line)
             return
         }
 
@@ -78,8 +82,9 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
     }
 
     companion object {
-        private val myStatement = Regex("^([\\w][\\w-]+\\:?)\\s+(.*)?$")
-        private val myTestsStart = Regex("^running \\d+ tests?$")
+        private val myStatement = Regex("^\\s*([\\w][\\w-]+\\:?)\\s+(.*)?$")
+        private val myTestsStart = Regex("^\\s*running \\d+ tests?$")
+        private val myErrorStart = Regex("^\\s*error\\[E\\d+\\]:\\s.+$")
         private val myCargoCommandLine = Regex("cargo(\\.exe)?\\s(.*)")
 
         private fun getTestSuiteName(text: String): String {
