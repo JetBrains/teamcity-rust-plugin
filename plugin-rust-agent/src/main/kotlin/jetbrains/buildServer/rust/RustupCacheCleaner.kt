@@ -46,7 +46,7 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
                 try {
                     commandExecutor.executeWithReadLock(rustupPath, listOf("toolchain", "list"))
                             .lineSequence()
-                            .filter { !it.endsWith("(default)") }
+                            .filter { it.isNotBlank() && !it.endsWith("(default)") }
                             .forEach {
                                 LOG.info("Removing rust toolchain $it")
                                 try {
@@ -55,12 +55,12 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
                                     LOG.warnAndDebugDetails("Failed to uninstall rust toolchain $it: ${e.message}", e)
                                     LOG.info("Will try to remove toolchain $it automatically")
 
-                                    val toolchainDirectory = File(rustupCache, "toolchains/$it")
+                                    val toolchainDirectory = File(rustupCache, "${CargoConstants.RUSTUP_TOOLCHAINS_DIR}/$it")
                                     if (!FileUtil.delete(toolchainDirectory)) {
                                         LOG.warn("Failed to delete directory: $toolchainDirectory")
                                     }
 
-                                    val toolchainFile = File(rustupCache, "update-hashes/$it")
+                                    val toolchainFile = File(rustupCache, "${CargoConstants.RUSTUP_HASHES_DIR}/$it")
                                     if (!FileUtil.delete(toolchainFile)) {
                                         LOG.warn("Failed to delete file: $toolchainFile")
                                     }
@@ -71,11 +71,11 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
                 }
             })
 
-            val downloads = File(rustupCache, "downloads")
+            val downloads = File(rustupCache, CargoConstants.RUSTUP_DOWNLOADS_DIR)
             LOG.info("Registering directory $downloads for cleaning")
             registry.addCleaner(downloads, Date())
 
-            val tmp = File(rustupCache, "tmp")
+            val tmp = File(rustupCache, CargoConstants.RUSTUP_TMP_DIR)
             LOG.info("Registering directory $tmp for cleaning")
             registry.addCleaner(tmp, Date())
         }

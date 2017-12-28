@@ -143,4 +143,9 @@ object CargoConstants {
     const val PARAM_YANK_UNDO = "cargo-yank-undo"
     const val PARAM_YANK_INDEX = "cargo-yank-index"
     const val PARAM_YANK_TOKEN = "cargo-yank-token"
+
+    const val RUSTUP_DOWNLOADS_DIR = "downloads"
+    const val RUSTUP_TMP_DIR = "tmp"
+    const val RUSTUP_TOOLCHAINS_DIR = "toolchains"
+    const val RUSTUP_HASHES_DIR = "update-hashes"
 }
