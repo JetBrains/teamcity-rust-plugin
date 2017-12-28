@@ -14,6 +14,7 @@ import jetbrains.buildServer.agent.runner.BuildServiceAdapter
 import jetbrains.buildServer.agent.runner.ProcessListener
 import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.rust.cargo.*
+import jetbrains.buildServer.rust.logging.BlockListener
 import jetbrains.buildServer.rust.logging.CargoLoggerFactory
 import jetbrains.buildServer.rust.logging.CargoLoggingListener
 import jetbrains.buildServer.util.StringUtil
@@ -21,7 +22,8 @@ import jetbrains.buildServer.util.StringUtil
 /**
  * Cargo runner service.
  */
-class CargoRunnerBuildService(private val commandExecutor: CommandExecutor) : BuildServiceAdapter() {
+class CargoRunnerBuildService : BuildServiceAdapter() {
+
     private val osName = System.getProperty("os.name").toLowerCase()
     private val myCargoWithStdErrVersion = Version.forIntegers(0, 13)
     private val myArgumentsProviders = mapOf(
@@ -59,10 +61,6 @@ class CargoRunnerBuildService(private val commandExecutor: CommandExecutor) : Bu
         val toolchainVersion = parameters[CargoConstants.PARAM_TOOLCHAIN]?.trim() ?: ""
         val (toolPath, arguments) = if (toolchainVersion.isNotEmpty()) {
             val rustupPath = getPath(CargoConstants.RUSTUP_CONFIG_NAME)
-
-            logger.message("Using rust toolchain: $toolchainVersion")
-            commandExecutor.executeWithReadLock(rustupPath, arrayListOf("toolchain", "install", toolchainVersion))
-
             rustupPath to argumentsProvider.getArguments(runnerContext).toMutableList().apply {
                 addAll(0, arrayListOf("run", toolchainVersion, "cargo"))
             }
@@ -72,16 +70,14 @@ class CargoRunnerBuildService(private val commandExecutor: CommandExecutor) : Bu
 
         runnerContext.configParameters[CargoConstants.CARGO_CONFIG_NAME]?.let {
             if (Version.valueOf(it).greaterThanOrEqualTo(myCargoWithStdErrVersion)) {
-                if (osName.startsWith("windows")) {
-                    return createProgramCommandline("cmd.exe", arrayListOf("/c", "2>&1", toolPath).apply {
+                return if (osName.startsWith("windows")) {
+                    createProgramCommandline("cmd.exe", arrayListOf("/c", "2>&1", toolPath).apply {
                         addAll(arguments)
                     })
                 } else if (osName.startsWith("freebsd") || osName.startsWith("sunos")) {
-                    return createProgramCommandline("sh",
-                            arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                    createProgramCommandline("sh", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
                 } else {
-                    return createProgramCommandline("bash",
-                            arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                    createProgramCommandline("bash", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
                 }
             }
         }
@@ -89,7 +85,7 @@ class CargoRunnerBuildService(private val commandExecutor: CommandExecutor) : Bu
         return createProgramCommandline(toolPath, arguments)
     }
 
-    fun getPath(toolName: String): String {
+    private fun getPath(toolName: String): String {
         try {
             return getToolPath(toolName)
         } catch (e: ToolCannotBeFoundException) {
@@ -103,6 +99,10 @@ class CargoRunnerBuildService(private val commandExecutor: CommandExecutor) : Bu
 
     override fun getListeners(): List<ProcessListener> {
         val loggerFactory = CargoLoggerFactory(logger)
-        return listOf<ProcessListener>(CargoLoggingListener(loggerFactory))
+        val blockName = "cargo ${runnerParameters[CargoConstants.PARAM_COMMAND]}"
+        return listOf(
+                CargoLoggingListener(loggerFactory),
+                BlockListener(blockName, logger)
+        )
     }
 }

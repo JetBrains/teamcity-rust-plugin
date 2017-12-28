@@ -20,6 +20,8 @@ allprojects {
 subprojects {
     apply plugin: "kotlin"
 
+    kotlin { experimental { coroutines 'enable' } }
+
     test.useTestNG()
     jar.version = null
 

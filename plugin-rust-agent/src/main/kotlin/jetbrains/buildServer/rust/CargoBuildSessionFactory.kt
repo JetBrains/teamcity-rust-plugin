@@ -9,18 +9,15 @@ package jetbrains.buildServer.rust
 
 import jetbrains.buildServer.agent.AgentBuildRunnerInfo
 import jetbrains.buildServer.agent.BuildAgentConfiguration
-import jetbrains.buildServer.agent.runner.CommandLineBuildService
-import jetbrains.buildServer.agent.runner.CommandLineBuildServiceFactory
+import jetbrains.buildServer.agent.BuildRunnerContext
+import jetbrains.buildServer.agent.runner.MultiCommandBuildSessionFactory
 
 /**
  * Cargo runner service factory.
  */
-class CargoRunnerBuildServiceFactory(private val commandExecutor: CommandExecutor)
-    : CommandLineBuildServiceFactory {
+class CargoBuildSessionFactory : MultiCommandBuildSessionFactory {
 
-    override fun createService(): CommandLineBuildService {
-        return CargoRunnerBuildService(commandExecutor)
-    }
+    override fun createSession(runnerContext: BuildRunnerContext) = CargoCommandBuildSession(runnerContext)
 
     override fun getBuildRunnerInfo(): AgentBuildRunnerInfo {
         return object : AgentBuildRunnerInfo {
