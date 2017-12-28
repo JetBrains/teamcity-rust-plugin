@@ -11,6 +11,7 @@ import com.intellij.openapi.diagnostic.Logger
 import jetbrains.buildServer.agent.DirectoryCleanersProvider
 import jetbrains.buildServer.agent.DirectoryCleanersProviderContext
 import jetbrains.buildServer.agent.DirectoryCleanersRegistry
+import jetbrains.buildServer.util.FileUtil
 import java.io.File
 import java.util.*
 
@@ -40,6 +41,7 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
                                            registry: DirectoryCleanersRegistry) {
         rustupPath?.let {
             LOG.info("Registering rust toolchains directory $rustupCache for cleaning")
+
             registry.addCleaner(rustupCache, Date(), {
                 try {
                     commandExecutor.executeWithReadLock(rustupPath, listOf("toolchain", "list"))
@@ -51,12 +53,31 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
                                     commandExecutor.executeWithWriteLock(rustupPath, listOf("toolchain", "uninstall", it))
                                 } catch (e: Throwable) {
                                     LOG.warnAndDebugDetails("Failed to uninstall rust toolchain $it: ${e.message}", e)
+                                    LOG.info("Will try to remove toolchain $it automatically")
+
+                                    val toolchainDirectory = File(rustupCache, "toolchains/$it")
+                                    if (!FileUtil.delete(toolchainDirectory)) {
+                                        LOG.warn("Failed to delete directory: $toolchainDirectory")
+                                    }
+
+                                    val toolchainFile = File(rustupCache, "update-hashes/$it")
+                                    if (!FileUtil.delete(toolchainFile)) {
+                                        LOG.warn("Failed to delete file: $toolchainFile")
+                                    }
                                 }
                             }
                 } catch (e: Throwable) {
                     LOG.warnAndDebugDetails("Failed to get list of rust toolchains: ${e.message}", e)
                 }
             })
+
+            val downloads = File(rustupCache, "downloads")
+            LOG.info("Registering directory $downloads for cleaning")
+            registry.addCleaner(downloads, Date())
+
+            val tmp = File(rustupCache, "tmp")
+            LOG.info("Registering directory $tmp for cleaning")
+            registry.addCleaner(tmp, Date())
         }
     }
 }
