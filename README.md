@@ -1,5 +1,6 @@
-# TeamCity Rust Plugin [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
+# TeamCity Rust Plugin
 
+[![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 <a href="https://teamcity.jetbrains.com/viewType.html?buildTypeId=TeamCityRustPluginBuild&guest=1"><img src="https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TeamCityRustPluginBuild)/statusIcon.svg" alt=""/></a>
 
 The TeamCity Rust plugin brings build infrastructure support for the [Rust](https://www.rust-lang.org/) programming language.
@@ -19,7 +20,13 @@ You can [download the plugin](https://plugins.jetbrains.com/plugin/9044) and ins
 
 # Compatibility
 
-The plugin is compatible with [TeamCity](https://www.jetbrains.com/teamcity/download/) 9.1.x and greater.
+The plugin is compatible with [TeamCity](https://www.jetbrains.com/teamcity/download/) 10.x and greater.
+
+# Configuration
+
+The plugin honors `CARGO_HOME` and `RUSTUP_HOME` environment variables which could be used in [rustup configuration](https://github.com/rust-lang-nursery/rustup.rs#choosing-where-to-install).
+
+To locate rust and cargo tools on build agent in addition to `CARGO_HOME` value also used `PATH` environment variable.
 
 # Build
 
