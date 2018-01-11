@@ -23,7 +23,7 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
     : DirectoryCleanersProvider {
 
     private val rustupPath: String?
-    private val rustupCache = File(System.getProperty("user.home"), ".rustup")
+    private val rustupCache = RustupToolProvider.getHome()
     private val LOG = Logger.getInstance(RustupCacheCleaner::class.java.name)
 
     init {

@@ -58,7 +58,7 @@ class CargoCommandBuildSession(private val runnerContext: BuildRunnerContext) : 
                     val uninstallToolchain = RustupBuildService("uninstall")
                     yield(addCommand(uninstallToolchain))
 
-                    val rustupCache = File(System.getProperty("user.home"), ".rustup")
+                    val rustupCache = RustupToolProvider.getHome()
                     installToolchain.version.let {
                         // Cleanup temp directories
                         FileUtil.delete(File(rustupCache, CargoConstants.RUSTUP_DOWNLOADS_DIR))

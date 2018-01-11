@@ -22,6 +22,9 @@ object CargoConstants {
     const val RUSTUP_CONFIG_PATH = RUSTUP_CONFIG_NAME + "_Path"
     const val PROJECT_FILE = "Cargo.toml"
 
+    const val ENV_CARGO_HOME = "CARGO_HOME"
+    const val ENV_RUSTUP_HOME = "RUSTUP_HOME"
+
     const val COMMAND_BENCH = "bench"
     const val COMMAND_BUILD = "build"
     const val COMMAND_CLEAN = "clean"

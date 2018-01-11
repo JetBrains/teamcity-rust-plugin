@@ -22,8 +22,8 @@ import java.io.File
  */
 abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
                                     events: EventDispatcher<AgentLifeCycleListener>,
-                                    val configName: String,
-                                    val configPath: String)
+                                    private val configName: String,
+                                    private val configPath: String)
     : AgentLifeCycleAdapter(), ToolProvider {
 
     private val LOG = Logger.getInstance(AbstractToolProvider::class.java.name)
@@ -72,17 +72,19 @@ abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
      *
      * @return first matching file.
      */
-    fun findToolPath(): Pair<String, Version>? {
-        val paths = StringUtil.splitHonorQuotes(System.getenv("PATH"), File.pathSeparatorChar).toHashSet().apply {
+    private fun findToolPath(): Pair<String, Version>? {
+        val paths = LinkedHashSet<String>().apply {
+            System.getenv(CargoConstants.ENV_CARGO_HOME)?.let {
+                this.add(it + File.separatorChar + "bin")
+            }
+            this.addAll(StringUtil.splitHonorQuotes(System.getenv("PATH"), File.pathSeparatorChar))
             add(System.getProperty("user.home") + File.separatorChar + ".cargo" + File.separatorChar + "bin")
         }
 
-        return paths
-                .map { File(it).listFiles() }
-                .filterNotNull()
+        return paths.mapNotNull { File(it).listFiles() }
                 .flatMap { it.map { it.absolutePath } }
                 .filter { PATH_PATTERN.matches(it) }
-                .map {
+                .mapNotNull {
                     try {
                         val commandLine = getVersionCommandLine(it)
                         val result = SimpleCommandLineProcessRunner.runCommand(commandLine, byteArrayOf())
@@ -93,7 +95,6 @@ abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
                         null
                     }
                 }
-                .filterNotNull()
                 .sortedByDescending { it.second }
                 .firstOrNull()
     }
