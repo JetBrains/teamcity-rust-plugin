@@ -6,7 +6,7 @@ ext {
     def correctVersion = project.hasProperty('versionNumber') && property('versionNumber') ==~ /\d+\.\d+\.\d+.*/
     versionNumber = correctVersion ? property('versionNumber') : 'SNAPSHOT-' + new Date().format('yyyyMMddHHmmss')
     projectIds = ['group': 'teamcity-rust-plugin', 'version': versionNumber]
-    teamcityVersion = project.hasProperty('teamcityVersion') ? property('teamcityVersion') : '10.0'
+    teamcityVersion = project.hasProperty('teamcityVersion') ? property('teamcityVersion') : '2018.1'
 }
 
 group = projectIds.group
@@ -27,8 +27,4 @@ subprojects {
 
     sourceCompatibility = "1.6"
     targetCompatibility = "1.6"
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.2.1'
 }
