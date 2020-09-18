@@ -31,9 +31,9 @@ class CargoLoggingListenerTest {
     @Test(dataProvider = "testTransformations")
     @Throws(IOException::class)
     fun testTransformation(filename: String) {
-        val originalFile = File("src/test/resources/cargo/original/" + filename)
+        val originalFile = File("src/test/resources/cargo/original/$filename")
         val original = ArrayList(FileUtil.readFile(originalFile))
-        val processedFile = File("src/test/resources/cargo/processed/" + filename)
+        val processedFile = File("src/test/resources/cargo/processed/$filename")
         val processed = ArrayList(FileUtil.readFile(processedFile))
         val m = Mockery()
         val logger = m.mock<BuildProgressLogger>(BuildProgressLogger::class.java)

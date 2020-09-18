@@ -17,8 +17,6 @@ import org.testng.Assert
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 
-import java.util.Arrays
-
 /**
  * Tests for cargo runner.
  */
@@ -157,96 +155,96 @@ class CargoRunnerBuildServiceTest {
     fun testBuildArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_BUILD_PACKAGE, "name",
-                CargoConstants.PARAM_BUILD_RELEASE, "true"), Arrays.asList("build", "--package", "name", "--release")),
+                CargoConstants.PARAM_BUILD_RELEASE, "true"), listOf("build", "--package", "name", "--release")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BUILD_TYPE, "--bin",
-                        CargoConstants.PARAM_BUILD_TYPE_NAME, "name"), Arrays.asList("build", "--bin", "name")),
+                        CargoConstants.PARAM_BUILD_TYPE_NAME, "name"), listOf("build", "--bin", "name")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BUILD_FEATURES, "name1 name2",
-                        CargoConstants.PARAM_BUILD_NO_DEFAULT_FEATURES, "true"), Arrays.asList("build", "--features", "name1 name2", "--no-default-features")),
+                        CargoConstants.PARAM_BUILD_NO_DEFAULT_FEATURES, "true"), listOf("build", "--features", "name1 name2", "--no-default-features")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BUILD_TARGET, "name",
-                        CargoConstants.PARAM_BUILD_MANIFEST, "/path/to/manifest"), Arrays.asList("build", "--target", "name", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_BUILD_MANIFEST, "/path/to/manifest"), listOf("build", "--target", "name", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testCleanArgumentsData")
     fun testCleanArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_CLEAN_PACKAGE, "name",
-                CargoConstants.PARAM_CLEAN_RELEASE, "true"), Arrays.asList("clean", "--package", "name", "--release")),
+                CargoConstants.PARAM_CLEAN_RELEASE, "true"), listOf("clean", "--package", "name", "--release")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_CLEAN_TARGET, "name",
-                        CargoConstants.PARAM_CLEAN_MANIFEST, "/path/to/manifest"), Arrays.asList("clean", "--target", "name", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_CLEAN_MANIFEST, "/path/to/manifest"), listOf("clean", "--target", "name", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testTestArgumentsData")
     fun testTestArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_TEST_PACKAGE, "name",
-                CargoConstants.PARAM_TEST_RELEASE, "true"), Arrays.asList("test", "--package", "name", "--release")),
+                CargoConstants.PARAM_TEST_RELEASE, "true"), listOf("test", "--package", "name", "--release")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_TEST_TYPE, "--bin",
-                        CargoConstants.PARAM_TEST_TYPE_NAME, "name"), Arrays.asList("test", "--bin", "name")),
+                        CargoConstants.PARAM_TEST_TYPE_NAME, "name"), listOf("test", "--bin", "name")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_TEST_FEATURES, "name1 name2",
-                        CargoConstants.PARAM_TEST_NO_DEFAULT_FEATURES, "true"), Arrays.asList("test", "--features", "name1 name2", "--no-default-features")),
+                        CargoConstants.PARAM_TEST_NO_DEFAULT_FEATURES, "true"), listOf("test", "--features", "name1 name2", "--no-default-features")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_TEST_TARGET, "name",
-                        CargoConstants.PARAM_TEST_MANIFEST, "/path/to/manifest"), Arrays.asList("test", "--target", "name", "--manifest-path", "/path/to/manifest")),
+                        CargoConstants.PARAM_TEST_MANIFEST, "/path/to/manifest"), listOf("test", "--target", "name", "--manifest-path", "/path/to/manifest")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_TEST_ARGUMENTS, "name",
                         CargoConstants.PARAM_TEST_NO_RUN, "true",
-                        CargoConstants.PARAM_TEST_NO_FAIL_FAST, "true"), Arrays.asList("test", "--no-run", "--no-fail-fast", "name")))
+                        CargoConstants.PARAM_TEST_NO_FAIL_FAST, "true"), listOf("test", "--no-run", "--no-fail-fast", "name")))
     }
 
     @DataProvider(name = "testRunArgumentsData")
     fun testRunArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_RUN_ARGUMENTS, "name",
-                CargoConstants.PARAM_RUN_RELEASE, "true"), Arrays.asList("run", "--release", "name")),
+                CargoConstants.PARAM_RUN_RELEASE, "true"), listOf("run", "--release", "name")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUN_TYPE, "--bin",
-                        CargoConstants.PARAM_RUN_TYPE_NAME, "name"), Arrays.asList("run", "--bin", "name")),
+                        CargoConstants.PARAM_RUN_TYPE_NAME, "name"), listOf("run", "--bin", "name")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUN_FEATURES, "name1 name2",
-                        CargoConstants.PARAM_RUN_NO_DEFAULT_FEATURES, "true"), Arrays.asList("run", "--features", "name1 name2", "--no-default-features")),
+                        CargoConstants.PARAM_RUN_NO_DEFAULT_FEATURES, "true"), listOf("run", "--features", "name1 name2", "--no-default-features")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUN_TARGET, "name",
-                        CargoConstants.PARAM_RUN_MANIFEST, "/path/to/manifest"), Arrays.asList("run", "--target", "name", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_RUN_MANIFEST, "/path/to/manifest"), listOf("run", "--target", "name", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testBenchArgumentsData")
     fun testBenchArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_BENCH_PACKAGE, "name",
-                CargoConstants.PARAM_BENCH_RELEASE, "true"), Arrays.asList("bench", "--package", "name", "--release")),
+                CargoConstants.PARAM_BENCH_RELEASE, "true"), listOf("bench", "--package", "name", "--release")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BENCH_TYPE, "--bin",
-                        CargoConstants.PARAM_BENCH_TYPE_NAME, "name"), Arrays.asList("bench", "--bin", "name")),
+                        CargoConstants.PARAM_BENCH_TYPE_NAME, "name"), listOf("bench", "--bin", "name")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BENCH_FEATURES, "name1 name2",
-                        CargoConstants.PARAM_BENCH_NO_DEFAULT_FEATURES, "true"), Arrays.asList("bench", "--features", "name1 name2", "--no-default-features")),
+                        CargoConstants.PARAM_BENCH_NO_DEFAULT_FEATURES, "true"), listOf("bench", "--features", "name1 name2", "--no-default-features")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BENCH_TARGET, "name",
-                        CargoConstants.PARAM_BENCH_MANIFEST, "/path/to/manifest"), Arrays.asList("bench", "--target", "name", "--manifest-path", "/path/to/manifest")),
+                        CargoConstants.PARAM_BENCH_MANIFEST, "/path/to/manifest"), listOf("bench", "--target", "name", "--manifest-path", "/path/to/manifest")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BENCH_ARGUMENTS, "name",
-                        CargoConstants.PARAM_BENCH_NO_RUN, "true"), Arrays.asList("bench", "--no-run", "name")))
+                        CargoConstants.PARAM_BENCH_NO_RUN, "true"), listOf("bench", "--no-run", "name")))
     }
 
     @DataProvider(name = "testDocArgumentsData")
@@ -254,15 +252,15 @@ class CargoRunnerBuildServiceTest {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_DOC_PACKAGE, "name",
                 CargoConstants.PARAM_DOC_RELEASE, "true",
-                CargoConstants.PARAM_DOC_NO_DEPS, "true"), Arrays.asList("doc", "--package", "name", "--release", "--no-deps")),
+                CargoConstants.PARAM_DOC_NO_DEPS, "true"), listOf("doc", "--package", "name", "--release", "--no-deps")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_DOC_FEATURES, "name1 name2",
-                        CargoConstants.PARAM_DOC_NO_DEFAULT_FEATURES, "true"), Arrays.asList("doc", "--features", "name1 name2", "--no-default-features")),
+                        CargoConstants.PARAM_DOC_NO_DEFAULT_FEATURES, "true"), listOf("doc", "--features", "name1 name2", "--no-default-features")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_DOC_TARGET, "name",
-                        CargoConstants.PARAM_DOC_MANIFEST, "/path/to/manifest"), Arrays.asList("doc", "--target", "name", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_DOC_MANIFEST, "/path/to/manifest"), listOf("doc", "--target", "name", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testPackageArgumentsData")
@@ -270,18 +268,18 @@ class CargoRunnerBuildServiceTest {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_PACKAGE_NO_METADATA, "true",
                 CargoConstants.PARAM_PACKAGE_NO_VERIFY, "true",
-                CargoConstants.PARAM_PACKAGE_MANIFEST, "/path/to/manifest"), Arrays.asList("package", "--no-verify", "--no-metadata", "--manifest-path", "/path/to/manifest")))
+                CargoConstants.PARAM_PACKAGE_MANIFEST, "/path/to/manifest"), listOf("package", "--no-verify", "--no-metadata", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testPublishArgumentsData")
     fun testPublishArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_PUBLISH_HOST, "host",
-                CargoConstants.PARAM_PUBLISH_TOKEN, "token"), Arrays.asList("publish", "--host", "host", "--token", "token")),
+                CargoConstants.PARAM_PUBLISH_TOKEN, "token"), listOf("publish", "--host", "host", "--token", "token")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_PUBLISH_NO_VERIFY, "true",
-                        CargoConstants.PARAM_PUBLISH_MANIFEST, "/path/to/manifest"), Arrays.asList("publish", "--no-verify", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_PUBLISH_MANIFEST, "/path/to/manifest"), listOf("publish", "--no-verify", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testRustcArgumentsData")
@@ -289,37 +287,37 @@ class CargoRunnerBuildServiceTest {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_RUSTC_PACKAGE, "name",
                 CargoConstants.PARAM_RUSTC_RELEASE, "true",
-                CargoConstants.PARAM_RUSTC_OPTS, "opt1 opt2"), Arrays.asList("rustc", "--package", "name", "--release", "opt1", "opt2")),
+                CargoConstants.PARAM_RUSTC_OPTS, "opt1 opt2"), listOf("rustc", "--package", "name", "--release", "opt1", "opt2")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUSTC_TYPE, "--bin",
-                        CargoConstants.PARAM_RUSTC_TYPE_NAME, "name"), Arrays.asList("rustc", "--bin", "name")),
+                        CargoConstants.PARAM_RUSTC_TYPE_NAME, "name"), listOf("rustc", "--bin", "name")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUSTC_FEATURES, "name1 name2",
-                        CargoConstants.PARAM_RUSTC_NO_DEFAULT_FEATURES, "true"), Arrays.asList("rustc", "--features", "name1 name2", "--no-default-features")),
+                        CargoConstants.PARAM_RUSTC_NO_DEFAULT_FEATURES, "true"), listOf("rustc", "--features", "name1 name2", "--no-default-features")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUSTC_TARGET, "name",
-                        CargoConstants.PARAM_RUSTC_MANIFEST, "/path/to/manifest"), Arrays.asList("rustc", "--target", "name", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_RUSTC_MANIFEST, "/path/to/manifest"), listOf("rustc", "--target", "name", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testLoginArgumentsData")
     fun testLoginArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_LOGIN_HOST, "host",
-                CargoConstants.PARAM_LOGIN_TOKEN, "token"), Arrays.asList("login", "--host", "host", "token")))
+                CargoConstants.PARAM_LOGIN_TOKEN, "token"), listOf("login", "--host", "host", "token")))
     }
 
     @DataProvider(name = "testUpdateArgumentsData")
     fun testUpdateArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_UPDATE_PACKAGE, "name",
-                CargoConstants.PARAM_UPDATE_PRECISE, "precise"), Arrays.asList("update", "--package", "name", "--precise", "precise")),
+                CargoConstants.PARAM_UPDATE_PRECISE, "precise"), listOf("update", "--package", "name", "--precise", "precise")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_UPDATE_AGGRESSIVE, "true",
-                        CargoConstants.PARAM_UPDATE_MANIFEST, "/path/to/manifest"), Arrays.asList("update", "--aggressive", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_UPDATE_MANIFEST, "/path/to/manifest"), listOf("update", "--aggressive", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testRustDocArgumentsData")
@@ -327,26 +325,26 @@ class CargoRunnerBuildServiceTest {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_RUSTDOC_OPTS, "opt1 opt2",
                 CargoConstants.PARAM_RUSTDOC_PACKAGE, "name",
-                CargoConstants.PARAM_RUSTDOC_RELEASE, "true"), Arrays.asList("rustdoc", "--package", "name", "--release", "opt1", "opt2")),
+                CargoConstants.PARAM_RUSTDOC_RELEASE, "true"), listOf("rustdoc", "--package", "name", "--release", "opt1", "opt2")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUSTDOC_FEATURES, "name1 name2",
-                        CargoConstants.PARAM_RUSTDOC_NO_DEFAULT_FEATURES, "true"), Arrays.asList("rustdoc", "--features", "name1 name2", "--no-default-features")),
+                        CargoConstants.PARAM_RUSTDOC_NO_DEFAULT_FEATURES, "true"), listOf("rustdoc", "--features", "name1 name2", "--no-default-features")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_RUSTDOC_TARGET, "name",
-                        CargoConstants.PARAM_RUSTDOC_MANIFEST, "/path/to/manifest"), Arrays.asList("rustdoc", "--target", "name", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_RUSTDOC_MANIFEST, "/path/to/manifest"), listOf("rustdoc", "--target", "name", "--manifest-path", "/path/to/manifest")))
     }
 
     @DataProvider(name = "testYankArgumentsData")
     fun testYankArgumentsData(): Array<Array<Any>> {
         return arrayOf(arrayOf(CollectionsUtil.asMap(
                 CargoConstants.PARAM_YANK_VERSION, "version",
-                CargoConstants.PARAM_YANK_UNDO, "true"), Arrays.asList("yank", "--vers", "version", "--undo")),
+                CargoConstants.PARAM_YANK_UNDO, "true"), listOf("yank", "--vers", "version", "--undo")),
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_YANK_INDEX, "index",
                         CargoConstants.PARAM_YANK_TOKEN, "token",
-                        CargoConstants.PARAM_YANK_CRATE, "crate"), Arrays.asList("yank", "--index", "index", "--token", "token", "crate")))
+                        CargoConstants.PARAM_YANK_CRATE, "crate"), listOf("yank", "--index", "index", "--token", "token", "crate")))
     }
 }

@@ -42,7 +42,7 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
         rustupPath?.let {
             LOG.info("Registering rust toolchains directory $rustupCache for cleaning")
 
-            registry.addCleaner(rustupCache, Date(), {
+            registry.addCleaner(rustupCache, Date()) {
                 try {
                     commandExecutor.executeWithReadLock(rustupPath, listOf("toolchain", "list"))
                             .lineSequence()
@@ -69,7 +69,7 @@ class RustupCacheCleaner(toolProvider: RustupToolProvider,
                 } catch (e: Throwable) {
                     LOG.warnAndDebugDetails("Failed to get list of rust toolchains: ${e.message}", e)
                 }
-            })
+            }
 
             val downloads = File(rustupCache, CargoConstants.RUSTUP_DOWNLOADS_DIR)
             LOG.info("Registering directory $downloads for cleaning")

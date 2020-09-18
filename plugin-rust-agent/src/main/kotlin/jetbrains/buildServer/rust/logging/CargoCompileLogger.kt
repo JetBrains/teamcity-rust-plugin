@@ -9,7 +9,6 @@ package jetbrains.buildServer.rust.logging
 
 import jetbrains.buildServer.agent.BuildProgressLogger
 
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
@@ -41,8 +40,8 @@ class CargoCompileLogger(private val myLogger: BuildProgressLogger) : CargoDefau
 
     companion object {
         private val PROJECT_NAME_PATTERN = Pattern.compile("([^\\s]+)")
-        private val COMPILATION_STARTED_FORMAT = "##teamcity[compilationStarted compiler='rustc%s']"
-        private val COMPILATION_FINISHED_FORMAT = "##teamcity[compilationFinished compiler='rustc%s']"
-        private val COMPILATION_MESSAGE_FORMAT = "##teamcity[message text='%s']"
+        private const val COMPILATION_STARTED_FORMAT = "##teamcity[compilationStarted compiler='rustc%s']"
+        private const val COMPILATION_FINISHED_FORMAT = "##teamcity[compilationFinished compiler='rustc%s']"
+        private const val COMPILATION_MESSAGE_FORMAT = "##teamcity[message text='%s']"
     }
 }

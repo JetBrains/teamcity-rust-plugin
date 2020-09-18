@@ -15,24 +15,21 @@ import jetbrains.buildServer.rust.commands.cargo.*
  */
 class CargoParametersProvider {
 
-    val types: List<CommandType>
-
-    init {
-        types = listOf(
-                BenchCommandType(),
-                BuildCommandType(),
-                CleanCommandType(),
-                DocCommandType(),
-                LoginCommandType(),
-                PackageCommandType(),
-                PublishCommandType(),
-                RunCommandType(),
-                RustcCommandType(),
-                RustDocCommandType(),
-                TestCommandType(),
-                UpdateCommandType(),
-                YankCommandType())
-    }
+    val types: List<CommandType> = listOf(
+            BenchCommandType(),
+            BuildCommandType(),
+            CleanCommandType(),
+            DocCommandType(),
+            LoginCommandType(),
+            PackageCommandType(),
+            PublishCommandType(),
+            RunCommandType(),
+            RustcCommandType(),
+            RustDocCommandType(),
+            TestCommandType(),
+            UpdateCommandType(),
+            YankCommandType()
+    )
 
     val commandKey: String
         get() = CargoConstants.PARAM_COMMAND

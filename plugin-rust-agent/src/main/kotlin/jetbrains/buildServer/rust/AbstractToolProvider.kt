@@ -94,9 +94,7 @@ abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
                         LOG.warnAndDebugDetails("Failed to parse $configName version: ${e.message}", e)
                         null
                     }
-                }
-                .sortedByDescending { it.second }
-                .firstOrNull()
+                }.maxBy { it.second }
     }
 
     private fun getVersionCommandLine(toolPath: String): GeneralCommandLine {

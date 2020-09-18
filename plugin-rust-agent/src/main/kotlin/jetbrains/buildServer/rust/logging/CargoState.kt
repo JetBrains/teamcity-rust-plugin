@@ -7,7 +7,7 @@
 
 package jetbrains.buildServer.rust.logging
 
-import java.util.HashMap
+import java.util.*
 
 /**
  * Cargo states.
@@ -49,7 +49,7 @@ enum class CargoState constructor(private val myName: String) {
 
         init {
             for (state in values()) {
-                STATES.put(state.myName, state)
+                STATES[state.myName] = state
             }
         }
 

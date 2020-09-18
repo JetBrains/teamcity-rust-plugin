@@ -73,7 +73,7 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
 
             if (!myTestOutputName.isNullOrEmpty()) {
                 val pair = myFailedTests?.get(myTestOutputName!!)
-                pair?.second?.let { it.append(line).append("\n") }
+                pair?.second?.append(line)?.append("\n")
             }
         }
     }
@@ -95,12 +95,12 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
         private val TEST_PATTERN = Pattern.compile(
                 "^\\s*test\\s+(.+)\\s\\.\\.\\.\\s(ok|failed|ignored|bench)", Pattern.CASE_INSENSITIVE)
         private val TEST_STDOUT_PATTERN = Pattern.compile("^---- ([^\\s]+) stdout ----")
-        private val TEST_SUITE_STARTED_FORMAT = "##teamcity[testSuiteStarted name='%s']"
-        private val TEST_SUITE_FINISHED_FORMAT = "##teamcity[testSuiteFinished name='%s']"
-        private val TEST_STARTED_FORMAT = "##teamcity[testStarted name='%s']"
-        private val TEST_FINISHED_FORMAT = "##teamcity[testFinished name='%s' duration='%s']"
-        private val TEST_IGNORED_FORMAT = "##teamcity[testIgnored name='%s' message='%s']"
-        private val TEST_FAILED_FORMAT = "##teamcity[testFailed name='%s' message='%s' details='%s']"
-        private val TEST_STDOUT_FORMAT = "##teamcity[testStdOut name='%s' out='%s']"
+        private const val TEST_SUITE_STARTED_FORMAT = "##teamcity[testSuiteStarted name='%s']"
+        private const val TEST_SUITE_FINISHED_FORMAT = "##teamcity[testSuiteFinished name='%s']"
+        private const val TEST_STARTED_FORMAT = "##teamcity[testStarted name='%s']"
+        private const val TEST_FINISHED_FORMAT = "##teamcity[testFinished name='%s' duration='%s']"
+        private const val TEST_IGNORED_FORMAT = "##teamcity[testIgnored name='%s' message='%s']"
+        private const val TEST_FAILED_FORMAT = "##teamcity[testFailed name='%s' message='%s' details='%s']"
+        private const val TEST_STDOUT_FORMAT = "##teamcity[testStdOut name='%s' out='%s']"
     }
 }

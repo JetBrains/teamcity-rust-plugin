@@ -44,6 +44,6 @@ class CargoStateLogger(private val myLogger: BuildProgressLogger,
     }
 
     companion object {
-        private val MESSAGE_FORMAT = "##teamcity[message text='%s'%s]"
+        private const val MESSAGE_FORMAT = "##teamcity[message text='%s'%s]"
     }
 }

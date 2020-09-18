@@ -69,8 +69,8 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
             "cargo ${arguments.removeSuffix(" 2>&1")}"
         }
 
-        myLoggerFactory.logger.message("Starting: " + commandLine)
-        myLoggerFactory.logger.message("in directory: " + workingDirectory)
+        myLoggerFactory.logger.message("Starting: $commandLine")
+        myLoggerFactory.logger.message("in directory: $workingDirectory")
     }
 
     override fun onErrorOutput(text: String) {
@@ -82,9 +82,9 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
     }
 
     companion object {
-        private val myStatement = Regex("^\\s*([\\w][\\w-]+\\:?)\\s+(.*)?$")
+        private val myStatement = Regex("^\\s*([\\w][\\w-]+:?)\\s+(.*)?$")
         private val myTestsStart = Regex("^\\s*running \\d+ tests?$")
-        private val myErrorStart = Regex("^\\s*error\\[E\\d+\\]:\\s.+$")
+        private val myErrorStart = Regex("^\\s*error\\[E\\d+]:\\s.+$")
         private val myCargoCommandLine = Regex("cargo(\\.exe)?\\s(.*)")
 
         private fun getTestSuiteName(text: String): String {

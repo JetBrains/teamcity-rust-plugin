@@ -32,6 +32,6 @@ class CargoErrorDetailsLogger(private val myLogger: BuildProgressLogger) : Cargo
     }
 
     companion object {
-        private val BUILD_PROBLEM_FORMAT = "##teamcity[buildProblem description='%s']"
+        private const val BUILD_PROBLEM_FORMAT = "##teamcity[buildProblem description='%s']"
     }
 }
