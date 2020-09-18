@@ -10,7 +10,7 @@ package jetbrains.buildServer.rust.cargo
 import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.rust.ArgumentsProvider
 import jetbrains.buildServer.rust.CargoConstants
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Provides arguments to cargo package command.
@@ -35,12 +35,12 @@ class PackageArgumentsProvider : ArgumentsProvider {
         val manifestValue = parameters[CargoConstants.PARAM_PACKAGE_MANIFEST]
         if (!manifestValue.isNullOrBlank()) {
             arguments.add("--manifest-path")
-            arguments.add(manifestValue!!.trim())
+            arguments.add(manifestValue.trim())
         }
 
         val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
         if (!verbosityValue.isNullOrBlank()) {
-            arguments.add(verbosityValue!!.trim())
+            arguments.add(verbosityValue.trim())
         }
 
         return arguments

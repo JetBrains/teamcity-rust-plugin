@@ -10,7 +10,7 @@ package jetbrains.buildServer.rust.cargo
 import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.rust.ArgumentsProvider
 import jetbrains.buildServer.rust.CargoConstants
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Provides arguments to cargo doc command.
@@ -25,13 +25,13 @@ class DocArgumentsProvider : ArgumentsProvider {
         val packageValue = parameters[CargoConstants.PARAM_DOC_PACKAGE]
         if (!packageValue.isNullOrBlank()) {
             arguments.add("--package")
-            arguments.add(packageValue!!.trim())
+            arguments.add(packageValue.trim())
         }
 
         val parallelJobsValue = parameters[CargoConstants.PARAM_DOC_PARALLEL]
         if (!parallelJobsValue.isNullOrBlank()) {
             arguments.add("--jobs")
-            arguments.add(parallelJobsValue!!.trim())
+            arguments.add(parallelJobsValue.trim())
         }
 
         val releaseValue = parameters[CargoConstants.PARAM_DOC_RELEASE]
@@ -47,7 +47,7 @@ class DocArgumentsProvider : ArgumentsProvider {
         val featuresValue = parameters[CargoConstants.PARAM_DOC_FEATURES]
         if (!featuresValue.isNullOrBlank()) {
             arguments.add("--features")
-            arguments.add(featuresValue!!.trim())
+            arguments.add(featuresValue.trim())
         }
 
         val noDefaultFeaturesValue = parameters[CargoConstants.PARAM_DOC_NO_DEFAULT_FEATURES]
@@ -58,18 +58,18 @@ class DocArgumentsProvider : ArgumentsProvider {
         val targetValue = parameters[CargoConstants.PARAM_DOC_TARGET]
         if (!targetValue.isNullOrBlank()) {
             arguments.add("--target")
-            arguments.add(targetValue!!.trim())
+            arguments.add(targetValue.trim())
         }
 
         val manifestValue = parameters[CargoConstants.PARAM_DOC_MANIFEST]
         if (!manifestValue.isNullOrBlank()) {
             arguments.add("--manifest-path")
-            arguments.add(manifestValue!!.trim())
+            arguments.add(manifestValue.trim())
         }
 
         val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
         if (!verbosityValue.isNullOrBlank()) {
-            arguments.add(verbosityValue!!.trim())
+            arguments.add(verbosityValue.trim())
         }
 
         return arguments

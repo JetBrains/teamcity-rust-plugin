@@ -10,7 +10,7 @@ package jetbrains.buildServer.rust.cargo
 import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.rust.ArgumentsProvider
 import jetbrains.buildServer.rust.CargoConstants
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Provides arguments to cargo yank command.
@@ -25,7 +25,7 @@ class YankArgumentsProvider : ArgumentsProvider {
         val versionValue = parameters[CargoConstants.PARAM_YANK_VERSION]
         if (!versionValue.isNullOrBlank()) {
             arguments.add("--vers")
-            arguments.add(versionValue!!.trim())
+            arguments.add(versionValue.trim())
         }
 
         val undoValue = parameters[CargoConstants.PARAM_YANK_UNDO]
@@ -36,23 +36,23 @@ class YankArgumentsProvider : ArgumentsProvider {
         val indexValue = parameters[CargoConstants.PARAM_YANK_INDEX]
         if (!indexValue.isNullOrBlank()) {
             arguments.add("--index")
-            arguments.add(indexValue!!.trim())
+            arguments.add(indexValue.trim())
         }
 
         val tokenValue = parameters[CargoConstants.PARAM_YANK_TOKEN]
         if (!tokenValue.isNullOrBlank()) {
             arguments.add("--token")
-            arguments.add(tokenValue!!.trim())
+            arguments.add(tokenValue.trim())
         }
 
         val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
         if (!verbosityValue.isNullOrBlank()) {
-            arguments.add(verbosityValue!!.trim())
+            arguments.add(verbosityValue.trim())
         }
 
         val crateValue = parameters[CargoConstants.PARAM_YANK_CRATE]
         if (!crateValue.isNullOrBlank()) {
-            arguments.add(crateValue!!.trim())
+            arguments.add(crateValue.trim())
         }
 
         return arguments

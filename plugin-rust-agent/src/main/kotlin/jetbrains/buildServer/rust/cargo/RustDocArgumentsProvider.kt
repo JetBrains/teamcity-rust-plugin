@@ -11,7 +11,7 @@ import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.rust.ArgumentsProvider
 import jetbrains.buildServer.rust.CargoConstants
 import jetbrains.buildServer.util.StringUtil
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Provides arguments to cargo rustdoc command.
@@ -26,21 +26,21 @@ class RustDocArgumentsProvider : ArgumentsProvider {
         val packageValue = parameters[CargoConstants.PARAM_RUSTDOC_PACKAGE]
         if (!packageValue.isNullOrBlank()) {
             arguments.add("--package")
-            arguments.add(packageValue!!.trim())
+            arguments.add(packageValue.trim())
         }
 
         val parallelJobsValue = parameters[CargoConstants.PARAM_RUSTDOC_PARALLEL]
         if (!parallelJobsValue.isNullOrBlank()) {
             arguments.add("--jobs")
-            arguments.add(parallelJobsValue!!.trim())
+            arguments.add(parallelJobsValue.trim())
         }
 
         val typeValue = parameters[CargoConstants.PARAM_RUSTDOC_TYPE]
         if (!typeValue.isNullOrBlank()) {
-            arguments.add(typeValue!!.trim())
+            arguments.add(typeValue.trim())
             val typeNameValue = parameters[CargoConstants.PARAM_RUSTDOC_TYPE_NAME]
             if (!typeNameValue.isNullOrBlank()) {
-                arguments.add(typeNameValue!!.trim())
+                arguments.add(typeNameValue.trim())
             }
         }
 
@@ -52,7 +52,7 @@ class RustDocArgumentsProvider : ArgumentsProvider {
         val featuresValue = parameters[CargoConstants.PARAM_RUSTDOC_FEATURES]
         if (!featuresValue.isNullOrBlank()) {
             arguments.add("--features")
-            arguments.add(featuresValue!!.trim())
+            arguments.add(featuresValue.trim())
         }
 
         val noDefaultFeaturesValue = parameters[CargoConstants.PARAM_RUSTDOC_NO_DEFAULT_FEATURES]
@@ -63,23 +63,23 @@ class RustDocArgumentsProvider : ArgumentsProvider {
         val targetValue = parameters[CargoConstants.PARAM_RUSTDOC_TARGET]
         if (!targetValue.isNullOrBlank()) {
             arguments.add("--target")
-            arguments.add(targetValue!!.trim())
+            arguments.add(targetValue.trim())
         }
 
         val manifestValue = parameters[CargoConstants.PARAM_RUSTDOC_MANIFEST]
         if (!manifestValue.isNullOrBlank()) {
             arguments.add("--manifest-path")
-            arguments.add(manifestValue!!.trim())
+            arguments.add(manifestValue.trim())
         }
 
         val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
         if (!verbosityValue.isNullOrBlank()) {
-            arguments.add(verbosityValue!!.trim())
+            arguments.add(verbosityValue.trim())
         }
 
         val optionsValue = parameters[CargoConstants.PARAM_RUSTDOC_OPTS]
         if (!optionsValue.isNullOrBlank()) {
-            arguments.addAll(StringUtil.splitCommandArgumentsAndUnquote(optionsValue!!))
+            arguments.addAll(StringUtil.splitCommandArgumentsAndUnquote(optionsValue))
         }
 
         return arguments

@@ -10,7 +10,7 @@ package jetbrains.buildServer.rust.cargo
 import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.rust.ArgumentsProvider
 import jetbrains.buildServer.rust.CargoConstants
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Provides arguments to cargo build command.
@@ -25,21 +25,21 @@ class BuildArgumentsProvider : ArgumentsProvider {
         val packageValue = parameters[CargoConstants.PARAM_BUILD_PACKAGE]
         if (!packageValue.isNullOrBlank()) {
             arguments.add("--package")
-            arguments.add(packageValue!!.trim())
+            arguments.add(packageValue.trim())
         }
 
         val parallelJobsValue = parameters[CargoConstants.PARAM_BUILD_PARALLEL]
         if (!parallelJobsValue.isNullOrBlank()) {
             arguments.add("--jobs")
-            arguments.add(parallelJobsValue!!.trim())
+            arguments.add(parallelJobsValue.trim())
         }
 
         val typeValue = parameters[CargoConstants.PARAM_BUILD_TYPE]
         if (!typeValue.isNullOrBlank()) {
-            arguments.add(typeValue!!.trim())
+            arguments.add(typeValue.trim())
             val typeNameValue = parameters[CargoConstants.PARAM_BUILD_TYPE_NAME]
             if (!typeNameValue.isNullOrBlank()) {
-                arguments.add(typeNameValue!!.trim())
+                arguments.add(typeNameValue.trim())
             }
         }
 
@@ -51,7 +51,7 @@ class BuildArgumentsProvider : ArgumentsProvider {
         val featuresValue = parameters[CargoConstants.PARAM_BUILD_FEATURES]
         if (!featuresValue.isNullOrBlank()) {
             arguments.add("--features")
-            arguments.add(featuresValue!!.trim())
+            arguments.add(featuresValue.trim())
         }
 
         val noDefaultFeaturesValue = parameters[CargoConstants.PARAM_BUILD_NO_DEFAULT_FEATURES]
@@ -62,18 +62,18 @@ class BuildArgumentsProvider : ArgumentsProvider {
         val targetValue = parameters[CargoConstants.PARAM_BUILD_TARGET]
         if (!targetValue.isNullOrBlank()) {
             arguments.add("--target")
-            arguments.add(targetValue!!.trim())
+            arguments.add(targetValue.trim())
         }
 
         val manifestValue = parameters[CargoConstants.PARAM_BUILD_MANIFEST]
         if (!manifestValue.isNullOrBlank()) {
             arguments.add("--manifest-path")
-            arguments.add(manifestValue!!.trim())
+            arguments.add(manifestValue.trim())
         }
 
         val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
         if (!verbosityValue.isNullOrBlank()) {
-            arguments.add(verbosityValue!!.trim())
+            arguments.add(verbosityValue.trim())
         }
 
         return arguments
