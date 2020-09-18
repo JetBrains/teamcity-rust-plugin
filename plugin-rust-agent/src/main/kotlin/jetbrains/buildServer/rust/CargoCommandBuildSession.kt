@@ -14,7 +14,6 @@ import jetbrains.buildServer.agent.runner.CommandLineBuildService
 import jetbrains.buildServer.agent.runner.MultiCommandBuildSession
 import jetbrains.buildServer.util.FileUtil
 import java.io.File
-import kotlin.coroutines.experimental.buildIterator
 
 /**
  * Cargo runner service.
@@ -42,7 +41,7 @@ class CargoCommandBuildSession(private val runnerContext: BuildRunnerContext) : 
         return lastCommands.last().result
     }
 
-    private fun getSteps() = buildIterator<CommandExecution> {
+    private fun getSteps() = iterator<CommandExecution> {
         runnerContext.runnerParameters[CargoConstants.PARAM_TOOLCHAIN]?.let {
             if (it.isNotBlank()) {
                 val installToolchain = RustupBuildService("install")
