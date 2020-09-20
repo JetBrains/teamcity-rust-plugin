@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2017 JetBrains s.r.o.
+ * Copyright 2000-2020 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -8,7 +8,10 @@
 package jetbrains.buildServer.rust
 
 import jetbrains.buildServer.agent.BuildFinishedStatus
-import jetbrains.buildServer.agent.runner.*
+import jetbrains.buildServer.agent.runner.CommandExecution
+import jetbrains.buildServer.agent.runner.CommandLineBuildService
+import jetbrains.buildServer.agent.runner.ProgramCommandLine
+import jetbrains.buildServer.agent.runner.TerminationAction
 import java.io.File
 
 class CommandExecutionAdapter(private val buildService: CommandLineBuildService) : CommandExecution {
