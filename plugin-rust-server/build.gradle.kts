@@ -36,7 +36,7 @@ dependencies {
 
     implementation(project(":plugin-rust-common"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    provided("org.jetbrains.teamcity.internal:server:$teamcityVersion")
+    compileOnly("org.jetbrains.teamcity.internal:server:$teamcityVersion")
 }
 
 tasks.named<Test>("test") {

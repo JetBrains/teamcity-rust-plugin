@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":plugin-rust-common"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("com.github.zafarkhaja:java-semver:0.9.0")
-    provided("org.jetbrains.teamcity.internal:agent:${teamcityVersion}")
+    compileOnly("org.jetbrains.teamcity.internal:agent:${teamcityVersion}")
     testImplementation("org.testng:testng:6.8")
     testImplementation("org.jmock:jmock:2.5.1")
 }
