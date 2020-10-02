@@ -10,3 +10,9 @@ dependencies {
 teamcity {
     version = rootProject.extra["teamcityVersion"] as String
 }
+
+tasks.jar {
+    archiveVersion.convention(null as String?)
+    archiveVersion.set(null as String?)
+}
+

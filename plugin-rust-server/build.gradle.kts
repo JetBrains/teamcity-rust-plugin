@@ -51,4 +51,5 @@ tasks.jar {
 tasks.named<Zip>("serverPlugin") {
     archiveVersion.convention(null as String?)
     archiveVersion.set(null as String?)
+    archiveBaseName.set("teamcity-rust-plugin")
 }
