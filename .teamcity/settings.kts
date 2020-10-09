@@ -109,11 +109,11 @@ object Build : BuildType({
             vcsRootExtId = "411"
             publisher = github {
                 githubUrl = "https://api.github.com"
-                authType = password {
-                    userName = "dtretyakov"
-                    password = "credentialsJSON:2e7632cf-adba-44ae-9aa4-3f196bd2fef5"
+                authType = personalToken {
+                    token = "credentialsJSON:1f157e28-9566-463a-a597-06d7bc6b8ed2"
                 }
             }
+            param("github_oauth_user", "missingdays")
         }
     }
 })
