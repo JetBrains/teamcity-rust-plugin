@@ -19,7 +19,9 @@ class RustupToolProvider(toolsRegistry: ToolProvidersRegistry,
                         events: EventDispatcher<AgentLifeCycleListener>)
     : AbstractToolProvider(toolsRegistry, events,
         CargoConstants.RUSTUP_CONFIG_NAME,
-        CargoConstants.RUSTUP_CONFIG_PATH) {
+        CargoConstants.RUSTUP_CONFIG_PATH,
+        CargoConstants.RUSTUP_EXECUTABLE_NAME
+) {
 
     companion object {
         fun getHome(): File {

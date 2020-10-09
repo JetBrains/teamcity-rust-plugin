@@ -20,12 +20,13 @@ import java.io.File
 /**
  * Determines tool location.
  */
-abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
-                                    events: EventDispatcher<AgentLifeCycleListener>,
-                                    private val configName: String,
-                                    private val configPath: String)
-    : AgentLifeCycleAdapter(), ToolProvider {
-
+abstract class AbstractToolProvider(
+        toolsRegistry: ToolProvidersRegistry,
+        events: EventDispatcher<AgentLifeCycleListener>,
+        private val configName: String,
+        private val configPath: String,
+        private val configExecutableName: String
+): AgentLifeCycleAdapter(), ToolProvider {
     private val LOG = Logger.getInstance(AbstractToolProvider::class.java.name)
     private val VERSION_PATTERN = Regex("^$configName[\\s-]([^\\s]+)", RegexOption.IGNORE_CASE)
     private val PATH_PATTERN = Regex("^.*$configName(\\.(exe))?$", RegexOption.IGNORE_CASE)
@@ -64,8 +65,13 @@ abstract class AbstractToolProvider(toolsRegistry: ToolProvidersRegistry,
 
     override fun getPath(toolName: String,
                          build: AgentRunningBuild,
-                         runner: BuildRunnerContext) =
-            build.agentConfiguration.configurationParameters[configPath] ?: getPath(toolName)
+                         runner: BuildRunnerContext): String {
+        if (runner.isVirtualContext) {
+            return configExecutableName
+        }
+
+        return build.agentConfiguration.configurationParameters[configPath] ?: getPath(toolName)
+    }
 
     /**
      * Returns a first matching file in the list of directories.
