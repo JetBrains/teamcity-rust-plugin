@@ -12,7 +12,7 @@ package jetbrains.buildServer.rust
  */
 object CargoConstants {
     const val RUNNER_TYPE = "cargo"
-    const val RUNNER_DISPLAY_NAME = "cargo"
+    const val RUNNER_DISPLAY_NAME = "Cargo"
     const val RUNNER_DESCRIPTION = "Provides cargo support for rust projects"
     const val CARGO_CONFIG_NAME = "Cargo"
     const val CARGO_CONFIG_PATH = CARGO_CONFIG_NAME + "_Path"
