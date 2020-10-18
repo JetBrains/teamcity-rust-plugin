@@ -34,16 +34,45 @@
     </td>
 </tr>
 
-<tr class="advancedSetting">
+<tr class="advancedSetting" id="${params.toolchainKey}-wrapper">
     <th><label for="${params.toolchainKey}">Toolchain version:</label></th>
     <td>
-        <props:textProperty name="${params.toolchainKey}" className="longField"/>
+        <props:textProperty
+                name="${params.toolchainKey}"
+                className="longField"
+        />
         <span class="error" id="error_${params.toolchainKey}"></span>
         <span class="smallNote">
             Defines rust toolchain version: stable, beta, nightly or custom.<br/>
-            Leave blank to use default version installed on the build agent. <br/>
-            Note that this parameter is meaningless if Docker image is used for running Rust.
+            Leave blank to use default version installed on the build agent.
         </span>
         <span class="error" id="error_${params.toolchainKey}"></span>
     </td>
 </tr>
+
+<bs:executeOnce id="rustToolChainVersionUpdate">
+    <script>
+        $j(document).ready(function() {
+            var dockerImageId = "#plugin\\.docker\\.imageId";
+
+            BS.CargoParametersPage = {
+                updateToolchainVersionField: function() {
+                    var value = $j(dockerImageId).val()
+                    var toolChainKeyWrapper = $j("#${params.toolchainKey}-wrapper");
+                    var toolchainKey = $j("#${params.toolchainKey}");
+
+                    if (value !== "") {
+                        toolChainKeyWrapper.hide();
+                        toolchainKey.val("");
+                    } else {
+                        toolChainKeyWrapper.show();
+                    }
+                }
+            };
+
+            BS.CargoParametersPage.updateToolchainVersionField();
+            $j(dockerImageId).change(BS.CargoParametersPage.updateToolchainVersionField);
+            $j(dockerImageId).keyup(BS.CargoParametersPage.updateToolchainVersionField);
+        });
+    </script>
+</bs:executeOnce>
