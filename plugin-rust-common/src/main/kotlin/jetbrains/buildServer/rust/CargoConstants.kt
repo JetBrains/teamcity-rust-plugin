@@ -16,10 +16,13 @@ object CargoConstants {
     const val RUNNER_DESCRIPTION = "Provides cargo support for rust projects"
     const val CARGO_CONFIG_NAME = "Cargo"
     const val CARGO_CONFIG_PATH = CARGO_CONFIG_NAME + "_Path"
+    const val CARGO_EXECUTABLE_NAME = "cargo"
     const val RUSTC_CONFIG_NAME = "Rustc"
     const val RUSTC_CONFIG_PATH = RUSTC_CONFIG_NAME + "_Path"
+    const val RUSTC_EXECUTABLE_NAME = "rustc"
     const val RUSTUP_CONFIG_NAME = "Rustup"
     const val RUSTUP_CONFIG_PATH = RUSTUP_CONFIG_NAME + "_Path"
+    const val RUSTUP_EXECUTABLE_NAME = "rustup"
     const val PROJECT_FILE = "Cargo.toml"
 
     const val ENV_CARGO_HOME = "CARGO_HOME"

@@ -18,4 +18,6 @@ class RustcToolProvider(toolsRegistry: ToolProvidersRegistry,
                         events: EventDispatcher<AgentLifeCycleListener>)
     : AbstractToolProvider(toolsRegistry, events,
         CargoConstants.RUSTC_CONFIG_NAME,
-        CargoConstants.RUSTC_CONFIG_PATH)
+        CargoConstants.RUSTC_CONFIG_PATH,
+        CargoConstants.RUSTC_EXECUTABLE_NAME
+)
