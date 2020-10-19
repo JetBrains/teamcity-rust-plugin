@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
-    id("com.github.rodm.teamcity-server") version "1.3"
-    id("com.github.rodm.teamcity-environments") version "1.3"
+    id("com.github.rodm.teamcity-server") version "1.3.1"
+    id("com.github.rodm.teamcity-environments") version "1.3.1"
 }
 
 val teamcityVersion = rootProject.extra["teamcityVersion"] as String
