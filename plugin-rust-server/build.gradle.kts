@@ -10,6 +10,7 @@ teamcity {
     version = teamcityVersion
 
     server {
+        archiveName = "teamcity-rust-plugin"
         descriptor = project.file("teamcity-plugin.xml")
         tokens = mapOf("Plugin_Version" to "project.version")
     }
@@ -41,15 +42,4 @@ dependencies {
 
 tasks.named<Test>("test") {
     useTestNG()
-}
-
-tasks.jar {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
-}
-
-tasks.named<Zip>("serverPlugin") {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
-    archiveBaseName.set("teamcity-rust-plugin")
 }

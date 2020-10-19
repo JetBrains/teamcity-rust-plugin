@@ -8,6 +8,7 @@ val teamcityVersion = rootProject.extra["teamcityVersion"] as String
 teamcity {
     version = teamcityVersion
     agent {
+        archiveName = project.name
         descriptor = project.file("teamcity-plugin.xml")
     }
 }
@@ -23,14 +24,4 @@ dependencies {
 
 tasks.named<Test>("test") {
     useTestNG()
-}
-
-tasks.jar {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
-}
-
-tasks.named<Zip>("agentPlugin") {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
 }
