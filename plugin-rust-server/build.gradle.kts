@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
-    id("com.github.rodm.teamcity-server") version "1.3"
-    id("com.github.rodm.teamcity-environments") version "1.3"
+    id("com.github.rodm.teamcity-server") version "1.3.1"
+    id("com.github.rodm.teamcity-environments") version "1.3.1"
 }
 
 val teamcityVersion = rootProject.extra["teamcityVersion"] as String
@@ -10,6 +10,7 @@ teamcity {
     version = teamcityVersion
 
     server {
+        archiveName = "teamcity-rust-plugin"
         descriptor = project.file("teamcity-plugin.xml")
         tokens = mapOf("Plugin_Version" to "project.version")
     }
@@ -41,15 +42,4 @@ dependencies {
 
 tasks.named<Test>("test") {
     useTestNG()
-}
-
-tasks.jar {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
-}
-
-tasks.named<Zip>("serverPlugin") {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
-    archiveBaseName.set("teamcity-rust-plugin")
 }

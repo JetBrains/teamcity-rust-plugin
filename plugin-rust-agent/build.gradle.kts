@@ -1,6 +1,6 @@
 plugins {
     id("kotlin")
-    id("com.github.rodm.teamcity-agent") version "1.3"
+    id("com.github.rodm.teamcity-agent") version "1.3.1"
 }
 
 val teamcityVersion = rootProject.extra["teamcityVersion"] as String
@@ -8,6 +8,7 @@ val teamcityVersion = rootProject.extra["teamcityVersion"] as String
 teamcity {
     version = teamcityVersion
     agent {
+        archiveName = project.name
         descriptor = project.file("teamcity-plugin.xml")
     }
 }
@@ -23,14 +24,4 @@ dependencies {
 
 tasks.named<Test>("test") {
     useTestNG()
-}
-
-tasks.jar {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
-}
-
-tasks.named<Zip>("agentPlugin") {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
 }

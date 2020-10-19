@@ -36,5 +36,4 @@ version = versionNumber
 
 allprojects {
     group = groupId
-    version = versionNumber
 }

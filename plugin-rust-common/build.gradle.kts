@@ -1,5 +1,5 @@
 plugins{
-    id("com.github.rodm.teamcity-common") version "1.3"
+    id("com.github.rodm.teamcity-common") version "1.3.1"
     id("kotlin")
 }
 
@@ -9,10 +9,5 @@ dependencies {
 
 teamcity {
     version = rootProject.extra["teamcityVersion"] as String
-}
-
-tasks.jar {
-    archiveVersion.convention(null as String?)
-    archiveVersion.set(null as String?)
 }
 
