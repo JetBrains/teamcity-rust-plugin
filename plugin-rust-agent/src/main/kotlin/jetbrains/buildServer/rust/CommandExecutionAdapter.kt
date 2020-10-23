@@ -14,7 +14,10 @@ import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.agent.runner.TerminationAction
 import java.io.File
 
-class CommandExecutionAdapter(private val buildService: CommandLineBuildService) : CommandExecution {
+class CommandExecutionAdapter(
+        private val buildService: CommandLineBuildService,
+        private val redirectStderrToStdout: Boolean = false
+) : CommandExecution {
 
     private val processListeners by lazy { buildService.listeners }
 
@@ -48,7 +51,11 @@ class CommandExecutionAdapter(private val buildService: CommandLineBuildService)
 
     override fun onErrorOutput(text: String) {
         processListeners.forEach {
-            it.onErrorOutput(text)
+            if (redirectStderrToStdout) {
+                it.onStandardOutput(text)
+            } else {
+                it.onErrorOutput(text)
+            }
         }
     }
 

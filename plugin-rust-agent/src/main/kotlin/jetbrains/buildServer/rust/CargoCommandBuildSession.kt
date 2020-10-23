@@ -73,12 +73,12 @@ class CargoCommandBuildSession(private val runnerContext: BuildRunnerContextEx) 
             }
         }
 
-        yield(addCommand(CargoRunnerBuildService(runnerContext)))
+        yield(addCommand(CargoRunnerBuildService(runnerContext), true))
     }
 
-    private fun addCommand(buildService: CommandLineBuildService) = CommandExecutionAdapter(buildService.apply {
+    private fun addCommand(buildService: CommandLineBuildService, redirectStderrToStdout: Boolean = false) = CommandExecutionAdapter(buildService.apply {
             this.initialize(runnerContext.build, runnerContext)
-        }).apply {
+        }, redirectStderrToStdout).apply {
             lastCommands.add(this)
         }
 }
