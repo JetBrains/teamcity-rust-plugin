@@ -61,7 +61,7 @@
                     var toolChainKeyWrapper = $j("#${params.toolchainKey}-wrapper");
                     var toolchainKey = $j("#${params.toolchainKey}");
 
-                    if (value !== "") {
+                    if (value) {
                         toolChainKeyWrapper.hide();
                         toolchainKey.val("");
                     } else {
