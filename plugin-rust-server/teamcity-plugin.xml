@@ -13,5 +13,5 @@
         </vendor>
     </info>
     <requirements min-build="40000" />
-    <deployment use-separate-classloader="true"/>
+    <deployment use-separate-classloader="true" allow-runtime-reload="true"/>
 </teamcity-plugin>
