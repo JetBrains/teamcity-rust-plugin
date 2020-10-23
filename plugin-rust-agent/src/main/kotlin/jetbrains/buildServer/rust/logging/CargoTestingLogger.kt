@@ -18,7 +18,7 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
     private var myTestName: String? = null
     private var myTestStartTime: Long = 0
     private var myTestOutputName: String? = null
-    private var myFailedTests: MutableMap<String, Pair<Long, StringBuilder>>? = null
+    private var myFailedTests = mutableMapOf<String, Pair<Long, StringBuilder>>()
 
     override fun onEnter(text: String) {
         myTestSuiteName = if (text.isBlank()) null else text
@@ -50,15 +50,20 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
             myTestName = testName
 
             val testDuration = System.currentTimeMillis() - myTestStartTime
-            if ("ok" == result) {
-                myLogger.message(String.format(TEST_STARTED_FORMAT, testName))
-                myLogger.message(String.format(TEST_FINISHED_FORMAT, testName, testDuration))
-            } else if ("ignored" == result) {
-                myLogger.message(String.format(TEST_IGNORED_FORMAT, testName, ""))
-            } else if ("failed" == result) {
-                myFailedTests?.set(testName, Pair(testDuration, StringBuilder()))
-            } else {
-                myLogger.message(String.format(TEST_STDOUT_FORMAT, myTestName, escapeValue(line)))
+            when (result) {
+                "ok" -> {
+                    myLogger.message(String.format(TEST_STARTED_FORMAT, testName))
+                    myLogger.message(String.format(TEST_FINISHED_FORMAT, testName, testDuration))
+                }
+                "ignored" -> {
+                    myLogger.message(String.format(TEST_IGNORED_FORMAT, testName, ""))
+                }
+                "failed" -> {
+                    myFailedTests.set(testName, Pair(testDuration, StringBuilder()))
+                }
+                else -> {
+                    myLogger.message(String.format(TEST_STDOUT_FORMAT, myTestName, escapeValue(line)))
+                }
             }
 
             myTestStartTime = System.currentTimeMillis()
@@ -67,21 +72,21 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
             if (outputMatcher.find()) {
                 // Test output line
                 val testName = outputMatcher.group(1)
-                if (myFailedTests?.containsKey(testName) == true) {
+                if (myFailedTests.containsKey(testName) == true) {
                     myTestOutputName = testName
                     return
                 }
             }
 
             if (!myTestOutputName.isNullOrEmpty()) {
-                val pair = myFailedTests?.get(myTestOutputName!!)
+                val pair = myFailedTests.get(myTestOutputName!!)
                 pair?.second?.append(line)?.append("\n")
             }
         }
     }
 
     override fun onLeave() {
-        myFailedTests?.forEach {
+        myFailedTests.forEach {
             myLogger.message(String.format(TEST_STARTED_FORMAT, it.key))
             val text = it.value.second.trimEnd('\n').toString()
             val index = text.indexOfAny(arrayListOf(": ", ", "))
