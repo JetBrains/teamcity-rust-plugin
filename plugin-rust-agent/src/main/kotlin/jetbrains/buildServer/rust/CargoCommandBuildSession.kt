@@ -8,7 +8,7 @@
 package jetbrains.buildServer.rust
 
 import jetbrains.buildServer.agent.BuildFinishedStatus
-import jetbrains.buildServer.agent.BuildRunnerContext
+import jetbrains.buildServer.agent.BuildRunnerContextEx
 import jetbrains.buildServer.agent.runner.CommandExecution
 import jetbrains.buildServer.agent.runner.CommandLineBuildService
 import jetbrains.buildServer.agent.runner.MultiCommandBuildSession
@@ -18,7 +18,7 @@ import java.io.File
 /**
  * Cargo runner service.
  */
-class CargoCommandBuildSession(private val runnerContext: BuildRunnerContext) : MultiCommandBuildSession {
+class CargoCommandBuildSession(private val runnerContext: BuildRunnerContextEx) : MultiCommandBuildSession {
 
     private var buildSteps: Iterator<CommandExecution>? = null
     private var lastCommands = arrayListOf<CommandExecutionAdapter>()
@@ -73,7 +73,7 @@ class CargoCommandBuildSession(private val runnerContext: BuildRunnerContext) : 
             }
         }
 
-        yield(addCommand(CargoRunnerBuildService()))
+        yield(addCommand(CargoRunnerBuildService(runnerContext)))
     }
 
     private fun addCommand(buildService: CommandLineBuildService) = CommandExecutionAdapter(buildService.apply {

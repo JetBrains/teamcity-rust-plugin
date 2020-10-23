@@ -9,6 +9,7 @@ package jetbrains.buildServer.rust
 
 import com.github.zafarkhaja.semver.Version
 import jetbrains.buildServer.RunBuildException
+import jetbrains.buildServer.agent.BuildRunnerContextEx
 import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter
 import jetbrains.buildServer.agent.runner.ProcessListener
@@ -17,14 +18,16 @@ import jetbrains.buildServer.rust.cargo.*
 import jetbrains.buildServer.rust.logging.BlockListener
 import jetbrains.buildServer.rust.logging.CargoLoggerFactory
 import jetbrains.buildServer.rust.logging.CargoLoggingListener
+import jetbrains.buildServer.util.OSType
 import jetbrains.buildServer.util.StringUtil
 
 /**
  * Cargo runner service.
  */
-class CargoRunnerBuildService : BuildServiceAdapter() {
+class CargoRunnerBuildService(
+        private val runnerContext: BuildRunnerContextEx
+) : BuildServiceAdapter() {
 
-    private val osName = System.getProperty("os.name").toLowerCase()
     private val myCargoWithStdErrVersion = Version.forIntegers(0, 13)
     private val myArgumentsProviders = mapOf(
             Pair(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider()),
@@ -70,14 +73,18 @@ class CargoRunnerBuildService : BuildServiceAdapter() {
 
         runnerContext.configParameters[CargoConstants.CARGO_CONFIG_NAME]?.let {
             if (Version.valueOf(it).greaterThanOrEqualTo(myCargoWithStdErrVersion)) {
-                return if (osName.startsWith("windows")) {
-                    createProgramCommandline("cmd.exe", arrayListOf("/c", "2>&1", toolPath).apply {
-                        addAll(arguments)
-                    })
-                } else if (osName.startsWith("freebsd") || osName.startsWith("sunos")) {
-                    createProgramCommandline("sh", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
-                } else {
-                    createProgramCommandline("bash", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                return when (runnerContext.virtualContext.targetOSType) {
+                    OSType.WINDOWS -> {
+                        createProgramCommandline("cmd.exe", arrayListOf("/c", "2>&1", toolPath).apply {
+                            addAll(arguments)
+                        })
+                    }
+                    OSType.UNIX -> {
+                        createProgramCommandline("sh", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                    }
+                    else -> {
+                        createProgramCommandline("bash", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                    }
                 }
             }
         }

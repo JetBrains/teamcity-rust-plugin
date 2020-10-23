@@ -10,6 +10,7 @@ package jetbrains.buildServer.rust
 import jetbrains.buildServer.agent.AgentBuildRunnerInfo
 import jetbrains.buildServer.agent.BuildAgentConfiguration
 import jetbrains.buildServer.agent.BuildRunnerContext
+import jetbrains.buildServer.agent.BuildRunnerContextEx
 import jetbrains.buildServer.agent.runner.MultiCommandBuildSessionFactory
 
 /**
@@ -17,7 +18,7 @@ import jetbrains.buildServer.agent.runner.MultiCommandBuildSessionFactory
  */
 class CargoBuildSessionFactory : MultiCommandBuildSessionFactory {
 
-    override fun createSession(runnerContext: BuildRunnerContext) = CargoCommandBuildSession(runnerContext)
+    override fun createSession(runnerContext: BuildRunnerContext) = CargoCommandBuildSession(runnerContext as BuildRunnerContextEx)
 
     override fun getBuildRunnerInfo(): AgentBuildRunnerInfo {
         return object : AgentBuildRunnerInfo {
