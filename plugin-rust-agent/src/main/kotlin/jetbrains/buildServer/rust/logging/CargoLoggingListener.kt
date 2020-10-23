@@ -28,7 +28,8 @@ class CargoLoggingListener(private val myLoggerFactory: CargoLoggerFactory) : Pr
         myLastLine = line
 
         myTestsStart.find(line)?.let {
-            val testSuiteName = getTestSuiteName(lastLine!!.trim())
+            val testSuiteText = lastLine ?: ""
+            val testSuiteName = getTestSuiteName(testSuiteText.trim())
             changeState(CargoState.Testing, testSuiteName)
             return
         }

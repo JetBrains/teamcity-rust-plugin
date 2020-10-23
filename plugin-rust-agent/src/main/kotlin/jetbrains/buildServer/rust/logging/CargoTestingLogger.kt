@@ -21,12 +21,14 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
     private var myFailedTests: MutableMap<String, Pair<Long, StringBuilder>>? = null
 
     override fun onEnter(text: String) {
-        myTestSuiteName = text
+        myTestSuiteName = if (text.isBlank()) null else text
         myFailedTests = hashMapOf()
         myTestStartTime = System.currentTimeMillis()
         myTestOutputName = null
 
-        myLogger.message(String.format(TEST_SUITE_STARTED_FORMAT, myTestSuiteName))
+        if (myTestSuiteName != null) {
+            myLogger.message(String.format(TEST_SUITE_STARTED_FORMAT, myTestSuiteName))
+        }
     }
 
     override fun canChangeState(state: CargoState, text: String): Boolean {
