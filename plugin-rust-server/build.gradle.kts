@@ -12,7 +12,7 @@ teamcity {
     server {
         archiveName = "teamcity-rust-plugin"
         descriptor = project.file("teamcity-plugin.xml")
-        tokens = mapOf("Plugin_Version" to "project.version")
+        tokens = mapOf("Plugin_Version" to rootProject.version)
     }
 
     environments {
