@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright 2000-2020 JetBrains s.r.o.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License").
+  ~ See LICENSE in the project root for license information.
+  -->
+
+<dsl-extension kind="buildStep" type="cargo" generateDslJar="true">
+    <class name="CargoBuildStep">
+        <description>
+            Cargo build step
+        </description>
+    </class>
+    <function name="cargo">
+        <description>
+            Adds Cargo build step
+            @see CargoBuildStep
+        </description>
+    </function>
+    <params>
+        <param name="cargo-command" dslName="command" type="compound">
+            <option name="benchmark" value="bench">
+                <param name="cargo-bench-arguments" dslName="arguments">
+                    <description>
+                        Benchmark arguments
+                    </description>
+                </param>
+
+                <param name="cargo-bench-package" dslName="benchPackage">
+                    <description>
+                        Package to run benchmarks for
+                    </description>
+                </param>
+
+                <param name="cargo-bench-type" dslName="type" type="BuildType">
+                    <description>
+                        Benchmark type
+                    </description>
+                </param>
+
+                <param name="cargo-bench-type-name" dslName="typeName">
+                    <description>
+                        Benchmark type name
+                    </description>
+                </param>
+
+                <param name="cargo-bench-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
+
+                <param name="cargo-bench-no-run" dslName="compileOnly" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Compile, but do not run benchmarks
+                    </description>
+                </param>
+
+                <param name="cargo-bench-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-bench-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-bench-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-bench-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-bench-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="build" value="build">
+                <param name="cargo-build-package" dslName="buildPackage">
+                    <description>
+                        Package
+                    </description>
+                </param>
+
+                <param name="cargo-build-type" dslName="type" type="BuildType">
+                    <description>
+                        Build type
+                    </description>
+                </param>
+
+                <param name="cargo-build-type-name" dslName="typeName">
+                    <description>
+                        Build type name
+                    </description>
+                </param>
+
+                <param name="cargo-build-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
+
+                <param name="cargo-build-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-build-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-build-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-build-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-build-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="clean" value="clean">
+                <param name="cargo-clean-package" dslName="cleanPackage">
+                    <description>
+                        Package
+                    </description>
+                </param>
+
+                <param name="cargo-clean-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Whether or not to clean release artifacts
+                    </description>
+                </param>
+
+                <param name="cargo clean-target" dslName="target">
+                    <description>
+                        Target triple to clean output for
+                    </description>
+                </param>
+
+                <param name="cargo-clean-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to to the package to clean
+                    </description>
+                </param>
+            </option>
+
+            <option name="document" value="doc">
+                <param name="cargo-doc-package" dslName="docPackage">
+                    <description>
+                        Package to document
+                    </description>
+                </param>
+
+                <param name="cargo-doc-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
+
+                <param name="cargo-doc-no-deps" dslName="documentDependencies" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build documentation for dependencies
+                    </description>
+                </param>
+
+                <param name="cargo-doc-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-doc-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-doc-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-doc-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-doc-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="login" value="login">
+                <param name="cargo-login-token" dslName="token">
+                    <description>
+                        Token
+                    </description>
+                </param>
+
+                <param name="cargo-login-host" dslName="host">
+                    <description>
+                        Host
+                    </description>
+                </param>
+            </option>
+
+            <option name="pkg" value="package">
+                <param name="cargo-package-no-verify" dslName="verify" type="boolean" trueValue="" falseValue="true">
+                    Verify the contents by building them
+                </param>
+
+                <param name="cargo-package-no-metadata" dslName="metadata" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Don't ignore warnings about a lack of human-usable metadata
+                    </description>
+                </param>
+
+                <param name="cargo-package-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+            </option>
+
+            <option name="publish" value="publish">
+                <param name="cargo-publish-token" dslName="token">
+                    <description>
+                        Token to use when uploading
+                    </description>
+                </param>
+
+                <param name="cargo-publish-host" dslName="host">
+                    <description>
+                        Host to upload the package to
+                    </description>
+                </param>
+
+                <param name="cargo-publish-no-verify" dslName="verify" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Verify package tarball before publish
+                    </description>
+                </param>
+
+                <param name="cargo-publish-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest of the package to publish
+                    </description>
+                </param>
+            </option>
+
+            <option name="run" value="run">
+                <param name="cargo-run-arguments" dslName="arguments">
+                    <description>
+                        Run arguments
+                    </description>
+                </param>
+
+                <param name="cargo-run-type" dslName="type" type="RunType">
+                    <description>
+                        Run type
+                    </description>
+                </param>
+
+                <param name="cargo-run-type-name" dslName="typeName">
+                    <description>
+                        Run type name
+                    </description>
+                </param>
+
+
+                <param name="cargo-run-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-run-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-run-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-run-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-run-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="rustdoc" value="rustdoc">
+                <param name="cargo-rustdoc-opts" dslName="options">
+                    <description>
+                        Options
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-package" dslName="rustdocPackage">
+                    <description>
+                        Package
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-type" dslName="type" type="BuildType">
+                    <description>
+                        Build type
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-type-name" dslName="typeName">
+                    <description>
+                        Build type name
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-rustdoc-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="rustc" value="rustc">
+                <param name="cargo-rustc-opts" dslName="options">
+                    <description>
+                        Options
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-package" dslName="rustdocPackage">
+                    <description>
+                        The profile to compile for
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-type" dslName="type" type="BuildType">
+                    <description>
+                        Build type
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-type-name" dslName="typeName">
+                    <description>
+                        Build type name
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-rustc-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="test" value="test">
+                <param name="cargo-test-arguments" dslName="arguments">
+                    <description>
+                        Test arguments
+                    </description>
+                </param>
+
+                <param name="cargo-test-package" dslName="testPackage">
+                    <description>
+                        Package to run tests for
+                    </description>
+                </param>
+
+                <param name="cargo-test-type" dslName="type" type="BuildType">
+                    <description>
+                        Test type
+                    </description>
+                </param>
+
+                <param name="cargo-test-type-name" dslName="typeName">
+                    <description>
+                        Test type name
+                    </description>
+                </param>
+
+                <param name="cargo-test-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
+
+                <param name="cargo-test-no-run" dslName="compileOnly" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Compile, but do not run test
+                    </description>
+                </param>
+
+                <param name="cargo-test-no-fail-fast" dslName="failFast" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Do not run all tests if some tests failed
+                    </description>
+                </param>
+
+                <param name="cargo-test-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-test-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-test-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-test-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-test-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="update" value="update">
+                <param name="cargo-update-package" dslName="updatePackage">
+                    <description>
+                        Package to update
+                    </description>
+                </param>
+
+                <param name="cargo-update-precise" dslName="precise">
+                    <description>
+                        Update a single dependency to exactly precise
+                    </description>
+                </param>
+
+                <param name="cargo-update-aggressive" dslName="force" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Force updating all dependencies
+                    </description>
+                </param>
+
+                <param name="cargo-update-manifest" dslName="manifest">
+                    <description>
+                        Path to the crate's manifest
+                    </description>
+                </param>
+            </option>
+
+            <option name="yank" value="yank">
+                <param name="cargo-yank-crate" dslName="crate">
+                    <description>
+                        Crate name
+                    </description>
+                </param>
+
+                <param name="cargo-yank-version" dslName="version">
+                    <description>
+                        Version to yank or un-yank
+                    </description>
+                </param>
+
+                <param name="cargo-yank-undo" dslName="undo" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Undo a yank, putting a version back into the index
+                    </description>
+                </param>
+
+                <param name="cargo-yank-index" dslName="index">
+                    <description>
+                        Registry index to yank from
+                    </description>
+                </param>
+
+                <param name="cargo-yank-token" dslName="token">
+                    <description>
+                        API token to use when authenticating
+                    </description>
+                </param>
+            </option>
+        </param>
+        <param name="cargo-verbosity" dslName="verbosity" type="Verbosity">
+            <description>
+                Specify Cargo output verbosity
+                @see Verbosity
+            </description>
+        </param>
+        <param name="cargo-toolchain" dslName="toolchain">
+            <description>
+                Toolchain version
+            </description>
+        </param>
+    </params>
+    <types>
+        <enum name="Verbosity">
+            <description>
+                Cargo output verbosity
+            </description>
+            <option name="Default" value=""/>
+            <option name="Verbose" value="--verbose"/>
+            <option name="Quiet" value="--quiet"/>
+        </enum>
+
+        <enum name="BuildType">
+            <description>
+                Cargo build type
+            </description>
+            <option name="Auto" value=""/>
+            <option name="Library" value="--lib"/>
+            <option name="Binary" value="--bin"/>
+            <option name="Example" value="--example"/>
+            <option name="Test" value="--test"/>
+            <option name="Benchmark" value="--bench"/>
+        </enum>
+
+        <enum name="RunType">
+            <description>
+                Cargo run type
+            </description>
+            <option name="Auto" value=""/>
+            <option name="Binary" value="--bin"/>
+            <option name="Example" value="--example"/>
+        </enum>
+    </types>
+</dsl-extension>

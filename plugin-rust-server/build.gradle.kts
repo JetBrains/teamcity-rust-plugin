@@ -13,6 +13,12 @@ teamcity {
         archiveName = "teamcity-rust-plugin"
         descriptor = project.file("teamcity-plugin.xml")
         tokens = mapOf("Plugin_Version" to rootProject.version)
+
+        files {
+            into("kotlin-dsl") {
+                from("kotlin-dsl")
+            }
+        }
     }
 
     environments {
