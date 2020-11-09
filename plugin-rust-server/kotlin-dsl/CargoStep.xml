@@ -597,6 +597,38 @@
                 Toolchain version
             </description>
         </param>
+
+        <!-- FIXME: Remove this when Docker wrapper gets proper support for plugins. See TW-68264 -->
+        <param name="plugin.docker.imageId" dslName="dockerImage" type="string">
+            <description>
+                Specifies which Docker image to use for running this build step. I.e. the build step will be run inside specified docker image, using 'docker run' wrapper.
+            </description>
+        </param>
+        <param name="plugin.docker.imagePlatform" dslName="dockerImagePlatform" type="ImagePlatform">
+            <description>
+                Specifies which Docker image platform will be used to run this build step.
+            </description>
+            <option name="path" value="PATH">
+                <description>
+                    Sets filesystem path to Dockerfile
+                </description>
+                <param name="dockerfile.path" dslName="path" mandatory="true">
+                    <description>
+                        The specified path should be relative to the checkout directory.
+                    </description>
+                </param>
+            </option>
+        </param>
+        <param name="plugin.docker.pull.enabled" dslName="dockerPull" type="boolean" trueValue="true" falseValue="">
+            <description>
+                If enabled, "docker pull [image][dockerImage]" will be run before docker run.
+            </description>
+        </param>
+        <param name="plugin.docker.run.parameters" dslName="dockerRunParameters" type="string">
+            <description>
+                Additional docker run command arguments
+            </description>
+        </param>
     </params>
     <types>
         <enum name="Verbosity">
@@ -627,6 +659,15 @@
             <option name="Auto" value=""/>
             <option name="Binary" value="--bin"/>
             <option name="Example" value="--example"/>
+        </enum>
+
+        <enum name="ImagePlatform">
+            <description>
+                Docker image platforms
+            </description>
+            <option name="Any" value=""/>
+            <option name="Linux" value="linux"/>
+            <option name="Windows" value="windows"/>
         </enum>
     </types>
 </dsl-extension>
