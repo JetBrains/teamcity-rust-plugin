@@ -328,6 +328,12 @@
                         The number of jobs to run in parallel
                     </description>
                 </param>
+
+                <param name="cargo-run-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
             </option>
 
             <option name="rustdoc" value="rustdoc">
