@@ -25,7 +25,7 @@ val versionNumber = if (correctVersion) {
 extra["teamcityVersion"] = if (project.hasProperty("teamcityVersion")) {
     property("teamcityVersion")
 } else {
-    "2020.1"
+    "2020.2"
 }
 
 extra["downloadsDir"] = project.findProperty("downloads.dir") ?: "$rootDir/downloads"

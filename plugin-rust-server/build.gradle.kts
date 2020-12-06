@@ -35,6 +35,11 @@ teamcity {
             version = "2020.1.4"
             javaHome = file(System.getProperty("java.home"))
         }
+
+        create("teamcity2020.2") {
+            version = "2020.2"
+            javaHome = file(System.getProperty("java.home"))
+        }
     }
 }
 
