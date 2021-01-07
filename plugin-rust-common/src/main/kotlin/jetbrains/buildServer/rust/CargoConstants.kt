@@ -111,6 +111,7 @@ object CargoConstants {
 
     const val PARAM_PUBLISH_HOST = "cargo-publish-host"
     const val PARAM_PUBLISH_TOKEN = "cargo-publish-token"
+    const val PARAM_PUBLISH_TOKEN_SECURE = "secure:cargo-publish-token"
     const val PARAM_PUBLISH_NO_VERIFY = "cargo-publish-no-verify"
     const val PARAM_PUBLISH_MANIFEST = "cargo-publish-manifest"
 
@@ -126,6 +127,7 @@ object CargoConstants {
     const val PARAM_RUSTC_PARALLEL = "cargo-rustc-parallel"
 
     const val PARAM_LOGIN_TOKEN = "cargo-login-token"
+    const val PARAM_LOGIN_TOKEN_SECURE = "secure:cargo-login-token"
     const val PARAM_LOGIN_HOST = "cargo-login-host"
 
     const val PARAM_UPDATE_PACKAGE = "cargo-update-package"
@@ -149,6 +151,7 @@ object CargoConstants {
     const val PARAM_YANK_UNDO = "cargo-yank-undo"
     const val PARAM_YANK_INDEX = "cargo-yank-index"
     const val PARAM_YANK_TOKEN = "cargo-yank-token"
+    const val PARAM_YANK_TOKEN_SECURE = "secure:cargo-yank-token"
 
     const val RUSTUP_DOWNLOADS_DIR = "downloads"
     const val RUSTUP_TMP_DIR = "tmp"

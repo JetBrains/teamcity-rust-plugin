@@ -28,7 +28,7 @@ class PublishArgumentsProvider : ArgumentsProvider {
             arguments.add(hostValue.trim())
         }
 
-        val tokenValue = parameters[CargoConstants.PARAM_PUBLISH_TOKEN]
+        val tokenValue = parameters[CargoConstants.PARAM_PUBLISH_TOKEN_SECURE] ?: parameters[CargoConstants.PARAM_PUBLISH_TOKEN]
         if (!tokenValue.isNullOrBlank()) {
             arguments.add("--token")
             arguments.add(tokenValue.trim())

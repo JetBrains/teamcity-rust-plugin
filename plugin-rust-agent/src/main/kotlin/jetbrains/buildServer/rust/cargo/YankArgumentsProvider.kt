@@ -39,7 +39,7 @@ class YankArgumentsProvider : ArgumentsProvider {
             arguments.add(indexValue.trim())
         }
 
-        val tokenValue = parameters[CargoConstants.PARAM_YANK_TOKEN]
+        val tokenValue = parameters[CargoConstants.PARAM_YANK_TOKEN_SECURE] ?: parameters[CargoConstants.PARAM_YANK_TOKEN]
         if (!tokenValue.isNullOrBlank()) {
             arguments.add("--token")
             arguments.add(tokenValue.trim())

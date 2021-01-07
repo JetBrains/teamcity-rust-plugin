@@ -33,7 +33,7 @@ class LoginArgumentsProvider : ArgumentsProvider {
             arguments.add(verbosityValue.trim())
         }
 
-        val tokenValue = parameters[CargoConstants.PARAM_LOGIN_TOKEN]
+        val tokenValue = parameters[CargoConstants.PARAM_LOGIN_TOKEN_SECURE] ?: parameters[CargoConstants.PARAM_LOGIN_TOKEN]
         if (!tokenValue.isNullOrBlank()) {
             arguments.add(tokenValue.trim())
         }

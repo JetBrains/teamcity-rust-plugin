@@ -7,8 +7,10 @@
 
 package jetbrains.buildServer.rust
 
+import jetbrains.buildServer.controllers.BasePropertiesBean
 import jetbrains.buildServer.rust.commands.CommandType
 import jetbrains.buildServer.rust.commands.cargo.*
+import jetbrains.buildServer.util.StringUtil
 
 /**
  * Provides parameters for cargo runner.
@@ -214,6 +216,9 @@ class CargoParametersProvider {
     val publishTokenKey: String
         get() = CargoConstants.PARAM_PUBLISH_TOKEN
 
+    val publishTokenKeySecure: String
+        get() = CargoConstants.PARAM_PUBLISH_TOKEN_SECURE
+
     val publishNoVerifyKey: String
         get() = CargoConstants.PARAM_PUBLISH_NO_VERIFY
 
@@ -252,6 +257,9 @@ class CargoParametersProvider {
 
     val loginTokenKey: String
         get() = CargoConstants.PARAM_LOGIN_TOKEN
+
+    val loginTokenKeySecure: String
+        get() = CargoConstants.PARAM_LOGIN_TOKEN_SECURE
 
     val loginHostKey: String
         get() = CargoConstants.PARAM_LOGIN_HOST
@@ -312,4 +320,17 @@ class CargoParametersProvider {
 
     val yankTokenKey: String
         get() = CargoConstants.PARAM_YANK_TOKEN
+
+    val yankTokenKeySecure: String
+        get() = CargoConstants.PARAM_YANK_TOKEN_SECURE
+
+    companion object {
+        @JvmStatic
+        fun replaceWithNewParameter(propertiesBean: BasePropertiesBean, oldParameterName: String, newParameterName: String) {
+            if (!propertiesBean.properties.containsKey(newParameterName) && propertiesBean.properties.containsKey(oldParameterName)) {
+                propertiesBean.properties[newParameterName] = propertiesBean.properties[oldParameterName]
+                propertiesBean.properties.remove(oldParameterName)
+            }
+        }
+    }
 }

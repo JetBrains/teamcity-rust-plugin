@@ -1,3 +1,4 @@
+<%@ page import="jetbrains.buildServer.rust.CargoParametersProvider" %>
 <%@ taglib prefix="forms" tagdir="/WEB-INF/tags/forms" %>
 <%@ taglib prefix="props" tagdir="/WEB-INF/tags/props" %>
 <%@ taglib prefix="l" tagdir="/WEB-INF/tags/layout" %>
@@ -13,11 +14,15 @@
 <jsp:useBean id="propertiesBean" scope="request" type="jetbrains.buildServer.controllers.BasePropertiesBean"/>
 <jsp:useBean id="params" class="jetbrains.buildServer.rust.CargoParametersProvider"/>
 
+<%
+    CargoParametersProvider.replaceWithNewParameter(propertiesBean, params.getPublishTokenKey(), params.getPublishTokenKeySecure());
+%>
+
 <tr class="advancedSetting">
-    <th><label for="${params.publishTokenKey}">Token:</label></th>
+    <th><label for="${params.publishTokenKeySecure}">Token:</label></th>
     <td>
-        <props:textProperty name="${params.publishTokenKey}" className="longField"/>
-        <span class="error" id="error_${params.publishTokenKey}"></span>
+        <props:passwordProperty name="${params.publishTokenKeySecure}" className="longField"/>
+        <span class="error" id="error_${params.publishTokenKeySecure}"></span>
         <span class="smallNote">Token to use when uploading.</span>
     </td>
 </tr>

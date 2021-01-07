@@ -1,3 +1,4 @@
+<%@ page import="jetbrains.buildServer.rust.CargoParametersProvider" %>
 <%@ taglib prefix="forms" tagdir="/WEB-INF/tags/forms" %>
 <%@ taglib prefix="props" tagdir="/WEB-INF/tags/props" %>
 <%@ taglib prefix="l" tagdir="/WEB-INF/tags/layout" %>
@@ -12,6 +13,10 @@
 
 <jsp:useBean id="propertiesBean" scope="request" type="jetbrains.buildServer.controllers.BasePropertiesBean"/>
 <jsp:useBean id="params" class="jetbrains.buildServer.rust.CargoParametersProvider"/>
+
+<%
+    CargoParametersProvider.replaceWithNewParameter(propertiesBean, params.getYankTokenKey(), params.getYankTokenKeySecure());
+%>
 
 <tr class="advancedSetting">
     <th><label for="${params.yankCrateKey}">Crate:</label></th>
@@ -48,10 +53,10 @@
 </tr>
 
 <tr class="advancedSetting">
-    <th><label for="${params.yankTokenKey}">Token:</label></th>
+    <th><label for="${params.yankTokenKeySecure}">Token:</label></th>
     <td>
-        <props:textProperty name="${params.yankTokenKey}" className="longField"/>
-        <span class="error" id="error_${params.yankTokenKey}"></span>
+        <props:passwordProperty name="${params.yankTokenKeySecure}" className="longField"/>
+        <span class="error" id="error_${params.yankTokenKeySecure}"></span>
         <span class="smallNote">API token to use when authenticating.</span>
     </td>
 </tr>

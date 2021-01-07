@@ -223,6 +223,16 @@
 
             <option name="login" value="login">
                 <param name="cargo-login-token" dslName="token">
+                    <deprecated replaceWith="tokenSecure"/>
+                    <description>
+                        Token
+
+                        Deprecated due being stored as plain text in versioned settings.
+                        See [tokenSecure] parameter instead
+                    </description>
+                </param>
+
+                <param name="secure:cargo-login-token" dslName="tokenSecure">
                     <description>
                         Token
                     </description>
@@ -255,6 +265,16 @@
 
             <option name="publish" value="publish">
                 <param name="cargo-publish-token" dslName="token">
+                    <deprecated replaceWith="tokenSecure"/>
+                    <description>
+                        Token to use when uploading
+
+                        Deprecated due being stored as plain text in versioned settings.
+                        See [tokenSecure] parameter instead
+                    </description>
+                </param>
+
+                <param name="secure:cargo-publish-token" dslName="tokenSecure">
                     <description>
                         Token to use when uploading
                     </description>
@@ -586,6 +606,16 @@
                 </param>
 
                 <param name="cargo-yank-token" dslName="token">
+                    <deprecated replaceWith="tokenSecure"/>
+                    <description>
+                        API token to use when authenticating
+
+                        Deprecated due being stored as plain text in versioned settings.
+                        See [tokenSecure] parameter instead
+                    </description>
+                </param>
+
+                <param name="secure:cargo-yank-token" dslName="tokenSecure">
                     <description>
                         API token to use when authenticating
                     </description>
