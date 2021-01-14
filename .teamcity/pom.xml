@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
+<!--
+  ~ Copyright 2000-2021 JetBrains s.r.o.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License").
+  ~ See LICENSE in the project root for license information.
+  -->
+
 <project>
   <modelVersion>4.0.0</modelVersion>
   <name>TeamCityPluginsByJetBrains_RustPlugin Config DSL Script</name>
