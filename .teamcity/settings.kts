@@ -35,12 +35,12 @@ version = "2020.1"
 project {
     description = "https://github.com/JetBrains/teamcity-rust-plugin"
 
-    vcsRoot(HttpsGithubComHyperiumHyperGitRefsHeadsMas)
+    vcsRoot(HttpsGithubComHyperiumHyperGitRefsHeadsMaster)
     vcsRoot(HttpsGithubComAlexcrichtonFuturesRsGitRefs)
-    vcsRoot(HttpsGithubComCarllercheMioGitRefsHeadsMas)
+    vcsRoot(HttpsGithubComCarllercheMioGitRefsHeadsMaster)
     vcsRoot(HttpsGithubComSergioBenitezRocketGitRefsHe)
-    vcsRoot(HttpsGithubComDieselRsDieselGitRefsHeadsMa)
-    vcsRoot(HttpsGithubComGothamRsGothamGitRefsHeadsMa)
+    vcsRoot(HttpsGithubComDieselRsDieselGitRefsHeadsMaster)
+    vcsRoot(HttpsGithubComGothamRsGothamGitRefsHeadsMaster)
     vcsRoot(HttpsGithubComIronIronGitRefsHeadsMaster)
 
     buildType(DieselBuild)
@@ -124,7 +124,7 @@ object Build : BuildType({
                 authType = token {
                     token = "credentialsJSON:1f157e28-9566-463a-a597-06d7bc6b8ed2"
                 }
-                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER_OR_COLLABORATOR
+                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
             }
         }
     }
@@ -134,7 +134,7 @@ object DieselBuild : BuildType({
     name = "Diesel Build"
 
     vcs {
-        root(HttpsGithubComDieselRsDieselGitRefsHeadsMa)
+        root(HttpsGithubComDieselRsDieselGitRefsHeadsMaster)
     }
 
     steps {
@@ -182,7 +182,7 @@ object GothamBuild : BuildType({
     name = "Gotham Build"
 
     vcs {
-        root(HttpsGithubComGothamRsGothamGitRefsHeadsMa)
+        root(HttpsGithubComGothamRsGothamGitRefsHeadsMaster)
     }
 
     steps {
@@ -207,7 +207,7 @@ object HyperBuild : BuildType({
     name = "Hyper Build"
 
     vcs {
-        root(HttpsGithubComHyperiumHyperGitRefsHeadsMas)
+        root(HttpsGithubComHyperiumHyperGitRefsHeadsMaster)
     }
 
     steps {
@@ -255,7 +255,7 @@ object MioBuild : BuildType({
     name = "Mio Build"
 
     vcs {
-        root(HttpsGithubComCarllercheMioGitRefsHeadsMas)
+        root(HttpsGithubComCarllercheMioGitRefsHeadsMaster)
     }
 
     steps {
@@ -304,22 +304,22 @@ object HttpsGithubComAlexcrichtonFuturesRsGitRefs : GitVcsRoot({
     url = "https://github.com/alexcrichton/futures-rs.git"
 })
 
-object HttpsGithubComCarllercheMioGitRefsHeadsMas : GitVcsRoot({
+object HttpsGithubComCarllercheMioGitRefsHeadsMaster : GitVcsRoot({
     name = "https://github.com/carllerche/mio.git#refs/heads/master"
     url = "https://github.com/carllerche/mio.git"
 })
 
-object HttpsGithubComDieselRsDieselGitRefsHeadsMa : GitVcsRoot({
+object HttpsGithubComDieselRsDieselGitRefsHeadsMaster : GitVcsRoot({
     name = "https://github.com/diesel-rs/diesel.git#refs/heads/master"
     url = "https://github.com/diesel-rs/diesel.git"
 })
 
-object HttpsGithubComGothamRsGothamGitRefsHeadsMa : GitVcsRoot({
+object HttpsGithubComGothamRsGothamGitRefsHeadsMaster : GitVcsRoot({
     name = "https://github.com/gotham-rs/gotham.git#refs/heads/master"
     url = "https://github.com/gotham-rs/gotham.git"
 })
 
-object HttpsGithubComHyperiumHyperGitRefsHeadsMas : GitVcsRoot({
+object HttpsGithubComHyperiumHyperGitRefsHeadsMaster : GitVcsRoot({
     name = "https://github.com/hyperium/hyper.git#refs/heads/master"
     url = "https://github.com/hyperium/hyper.git"
 })
