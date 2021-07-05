@@ -1,0 +1,14 @@
+Checking clippy2 v0.0.1 (/home/evgenii_bovykin/IdeaProjects/teamcity-rust-plugin/servers/TeamCity-2021.1/buildAgent/work/2d3c4d163bcdcf0e)
+warning: unused variable: `y`
+  --> clippy.rs:16:9
+   |
+16 |     let y = 1_f64 / x;
+   |         ^ help: if this is intentional, prefix it with an underscore: `_y`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+error: aborting due to 2 previous errors; 4 warnings emitted
+
+error: could not compile `clippy2`
+
+To learn more, run the command again with --verbose.

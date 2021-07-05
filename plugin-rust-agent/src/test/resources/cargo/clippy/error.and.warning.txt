@@ -1,0 +1,25 @@
+    Checking clippy2 v0.0.1 (/home/evgenii_bovykin/IdeaProjects/teamcity-rust-plugin/servers/TeamCity-2021.1/buildAgent/work/2d3c4d163bcdcf0e)t
+error: for loop over `option`, which is an `Option`. This is more readably written as an `if let` statement
+ --> clippy2.rs:9:14
+  |
+9 |     for x in option {
+  |              ^^^^^^
+  |
+  = note: `#[deny(clippy::for_loops_over_fallibles)]` on by default
+  = help: consider replacing `for x in option` with `if let Some(x) = option`
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#for_loops_over_fallibles
+
+warning: `assert!(false)` should probably be replaced
+  --> clippy.rs:19:5
+   |
+19 |     assert!(false);
+   |     ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(clippy::assertions_on_constants)]` on by default
+   = help: use `panic!()` or `unreachable!()`
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+   = note: this warning originates in a macro (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: could not compile `clippy2`
+
+To learn more, run the command again with --verbose.

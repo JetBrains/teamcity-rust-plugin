@@ -27,6 +27,7 @@ dependencies {
     compileOnly("org.jetbrains.teamcity.internal:agent:${teamcityVersion}")
     testImplementation("org.testng:testng:6.8")
     testImplementation("org.jmock:jmock:2.5.1")
+    testImplementation("org.assertj:assertj-core:3.11.1")
 }
 
 tasks.named<Test>("test") {

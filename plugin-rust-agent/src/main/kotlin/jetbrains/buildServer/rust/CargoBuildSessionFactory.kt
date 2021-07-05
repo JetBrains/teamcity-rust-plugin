@@ -19,12 +19,11 @@ import jetbrains.buildServer.rust.inspections.ClippyInspectionsParser
  * Cargo runner service factory.
  */
 class CargoBuildSessionFactory(
-    private val inspectionReporter: InspectionReporter,
-    private val clippyInspectionsParser: ClippyInspectionsParser
+    private val inspectionReporter: InspectionReporter
 ) : MultiCommandBuildSessionFactory {
 
     override fun createSession(runnerContext: BuildRunnerContext) =
-        CargoCommandBuildSession(runnerContext as BuildRunnerContextEx, inspectionReporter, clippyInspectionsParser)
+        CargoCommandBuildSession(runnerContext as BuildRunnerContextEx, inspectionReporter, ClippyInspectionsParser())
 
     override fun getBuildRunnerInfo(): AgentBuildRunnerInfo {
         return object : AgentBuildRunnerInfo {
