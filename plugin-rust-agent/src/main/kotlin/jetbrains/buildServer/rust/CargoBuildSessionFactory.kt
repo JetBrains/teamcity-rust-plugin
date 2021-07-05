@@ -11,14 +11,20 @@ import jetbrains.buildServer.agent.AgentBuildRunnerInfo
 import jetbrains.buildServer.agent.BuildAgentConfiguration
 import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.agent.BuildRunnerContextEx
+import jetbrains.buildServer.agent.inspections.InspectionReporter
 import jetbrains.buildServer.agent.runner.MultiCommandBuildSessionFactory
+import jetbrains.buildServer.rust.inspections.ClippyInspectionsParser
 
 /**
  * Cargo runner service factory.
  */
-class CargoBuildSessionFactory : MultiCommandBuildSessionFactory {
+class CargoBuildSessionFactory(
+    private val inspectionReporter: InspectionReporter,
+    private val clippyInspectionsParser: ClippyInspectionsParser
+) : MultiCommandBuildSessionFactory {
 
-    override fun createSession(runnerContext: BuildRunnerContext) = CargoCommandBuildSession(runnerContext as BuildRunnerContextEx)
+    override fun createSession(runnerContext: BuildRunnerContext) =
+        CargoCommandBuildSession(runnerContext as BuildRunnerContextEx, inspectionReporter, clippyInspectionsParser)
 
     override fun getBuildRunnerInfo(): AgentBuildRunnerInfo {
         return object : AgentBuildRunnerInfo {

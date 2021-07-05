@@ -7,8 +7,8 @@
 
 plugins {
     kotlin("jvm")
-    id("com.github.rodm.teamcity-server") version "1.3.1"
-    id("com.github.rodm.teamcity-environments") version "1.3.1"
+    id("com.github.rodm.teamcity-server") version "1.3.2"
+    id("com.github.rodm.teamcity-environments") version "1.3.2"
 }
 
 val teamcityVersion = rootProject.extra["teamcityVersion"] as String
@@ -33,18 +33,12 @@ teamcity {
         baseHomeDir = rootProject.extra["serversDir"] as String
         baseDataDir = "data"
 
-        create("teamcity.2019.2") {
-            version = "2019.2"
-            javaHome = file(System.getProperty("java.home"))
-        }
-
-        create("teamcity2020.1") {
-            version = "2020.1.4"
-            javaHome = file(System.getProperty("java.home"))
-        }
-
         create("teamcity2020.2") {
             version = "2020.2"
+            javaHome = file(System.getProperty("java.home"))
+        }
+        create("teamcity2021.1") {
+            version = "2021.1"
             javaHome = file(System.getProperty("java.home"))
         }
     }

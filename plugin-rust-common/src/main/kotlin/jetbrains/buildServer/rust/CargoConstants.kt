@@ -31,6 +31,7 @@ object CargoConstants {
     const val COMMAND_BENCH = "bench"
     const val COMMAND_BUILD = "build"
     const val COMMAND_CLEAN = "clean"
+    const val COMMAND_CLIPPY = "clippy"
     const val COMMAND_DOC = "doc"
     const val COMMAND_LOGIN = "login"
     const val COMMAND_PACKAGE = "package"
@@ -60,6 +61,8 @@ object CargoConstants {
     const val PARAM_CLEAN_RELEASE = "cargo-clean-release"
     const val PARAM_CLEAN_TARGET = "cargo clean-target"
     const val PARAM_CLEAN_MANIFEST = "cargo-clean-manifest"
+
+    const val PARAM_CLIPPY_MANIFEST = "cargo-clippy-manifest"
 
     const val PARAM_TEST_ARGUMENTS = "cargo-test-arguments"
     const val PARAM_TEST_PACKAGE = "cargo-test-package"

@@ -11,10 +11,13 @@ import com.github.zafarkhaja.semver.Version
 import jetbrains.buildServer.RunBuildException
 import jetbrains.buildServer.agent.BuildRunnerContextEx
 import jetbrains.buildServer.agent.ToolCannotBeFoundException
+import jetbrains.buildServer.agent.inspections.InspectionReporter
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter
 import jetbrains.buildServer.agent.runner.ProcessListener
 import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.rust.cargo.*
+import jetbrains.buildServer.rust.inspections.ClippyInspectionsParser
+import jetbrains.buildServer.rust.inspections.ClippyListener
 import jetbrains.buildServer.rust.logging.BlockListener
 import jetbrains.buildServer.rust.logging.CargoLoggerFactory
 import jetbrains.buildServer.rust.logging.CargoLoggingListener
@@ -25,7 +28,9 @@ import jetbrains.buildServer.util.StringUtil
  * Cargo runner service.
  */
 class CargoRunnerBuildService(
-        private val runnerContext: BuildRunnerContextEx
+        private val runnerContext: BuildRunnerContextEx,
+        private val inspectionReporter: InspectionReporter,
+        private val clippyInspectionsParser: ClippyInspectionsParser
 ) : BuildServiceAdapter() {
 
     private val myCargoWithStdErrVersion = Version.forIntegers(0, 13)
@@ -33,6 +38,7 @@ class CargoRunnerBuildService(
             Pair(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider()),
             Pair(CargoConstants.COMMAND_BUILD, BuildArgumentsProvider()),
             Pair(CargoConstants.COMMAND_CLEAN, CleanArgumentsProvider()),
+            CargoConstants.COMMAND_CLIPPY to ClippyArgumentsProvider(),
             Pair(CargoConstants.COMMAND_DOC, DocArgumentsProvider()),
             Pair(CargoConstants.COMMAND_LOGIN, LoginArgumentsProvider()),
             Pair(CargoConstants.COMMAND_PACKAGE, PackageArgumentsProvider()),
@@ -106,10 +112,20 @@ class CargoRunnerBuildService(
 
     override fun getListeners(): List<ProcessListener> {
         val loggerFactory = CargoLoggerFactory(logger)
-        val blockName = "cargo ${runnerParameters[CargoConstants.PARAM_COMMAND]}"
-        return listOf(
+        val command = runnerParameters[CargoConstants.PARAM_COMMAND]
+        val blockName = "cargo $command"
+
+        val listeners = mutableListOf(
                 CargoLoggingListener(loggerFactory),
                 BlockListener(blockName, logger)
         )
+
+        if (command == CargoConstants.COMMAND_CLIPPY) {
+            listeners.add(
+                ClippyListener(inspectionReporter, clippyInspectionsParser)
+            )
+        }
+
+        return listeners
     }
 }

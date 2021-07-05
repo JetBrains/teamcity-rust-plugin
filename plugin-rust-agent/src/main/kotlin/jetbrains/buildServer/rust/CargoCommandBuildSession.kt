@@ -9,16 +9,22 @@ package jetbrains.buildServer.rust
 
 import jetbrains.buildServer.agent.BuildFinishedStatus
 import jetbrains.buildServer.agent.BuildRunnerContextEx
+import jetbrains.buildServer.agent.inspections.InspectionReporter
 import jetbrains.buildServer.agent.runner.CommandExecution
 import jetbrains.buildServer.agent.runner.CommandLineBuildService
 import jetbrains.buildServer.agent.runner.MultiCommandBuildSession
+import jetbrains.buildServer.rust.inspections.ClippyInspectionsParser
 import jetbrains.buildServer.util.FileUtil
 import java.io.File
 
 /**
  * Cargo runner service.
  */
-class CargoCommandBuildSession(private val runnerContext: BuildRunnerContextEx) : MultiCommandBuildSession {
+class CargoCommandBuildSession(
+    private val runnerContext: BuildRunnerContextEx,
+    private val inspectionReporter: InspectionReporter,
+    private val clippyInspectionsParser: ClippyInspectionsParser
+) : MultiCommandBuildSession {
 
     private var buildSteps: Iterator<CommandExecution>? = null
     private var lastCommands = arrayListOf<CommandExecutionAdapter>()
@@ -73,7 +79,7 @@ class CargoCommandBuildSession(private val runnerContext: BuildRunnerContextEx) 
             }
         }
 
-        yield(addCommand(CargoRunnerBuildService(runnerContext), true))
+        yield(addCommand(CargoRunnerBuildService(runnerContext, inspectionReporter, clippyInspectionsParser), true))
     }
 
     private fun addCommand(buildService: CommandLineBuildService, redirectStderrToStdout: Boolean = false) = CommandExecutionAdapter(buildService.apply {

@@ -11,6 +11,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-autowire="constructor">
     <bean class="jetbrains.buildServer.rust.CargoBuildSessionFactory"/>
+    <bean class="jetbrains.buildServer.rust.inspections.ClippyInspectionsParser"/>
     <bean class="jetbrains.buildServer.rust.CargoToolProvider"/>
     <bean class="jetbrains.buildServer.rust.RustCommandExecutor"/>
     <bean class="jetbrains.buildServer.rust.RustcToolProvider"/>

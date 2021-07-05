@@ -21,6 +21,7 @@ class CargoParametersProvider {
             BenchCommandType(),
             BuildCommandType(),
             CleanCommandType(),
+            ClippyCommandType(),
             DocCommandType(),
             LoginCommandType(),
             PackageCommandType(),
@@ -80,6 +81,9 @@ class CargoParametersProvider {
 
     val cleanManifestKey: String
         get() = CargoConstants.PARAM_CLEAN_MANIFEST
+
+    val clippyManifestKey: String
+        get() = CargoConstants.PARAM_CLIPPY_MANIFEST
 
     val testArgumentsKey: String
         get() = CargoConstants.PARAM_TEST_ARGUMENTS
