@@ -166,7 +166,7 @@
 
                 <param name="cargo-clean-manifest" dslName="manifest">
                     <description>
-                        Path to the manifest to to the package to clean
+                        Path to the manifest to the package to clean
                     </description>
                 </param>
             </option>
@@ -618,6 +618,14 @@
                 <param name="secure:cargo-yank-token" dslName="tokenSecure">
                     <description>
                         API token to use when authenticating
+                    </description>
+                </param>
+            </option>
+
+            <option name="clippy" value="clippy">
+                <param name="cargo-clippy-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest file
                     </description>
                 </param>
             </option>
