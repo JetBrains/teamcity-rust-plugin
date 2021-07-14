@@ -68,7 +68,7 @@ class CargoRunnerBuildService(
         return if (argumentsProvider.shouldFailBuildIfCommandFailed()) {
             BuildFinishedStatus.FINISHED_FAILED
         } else {
-            BuildFinishedStatus.FINISHED_SUCCESS
+            super.getRunResult(exitCode)
         }
     }
 
