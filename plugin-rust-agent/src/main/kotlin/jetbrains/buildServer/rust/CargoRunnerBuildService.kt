@@ -35,20 +35,21 @@ class CargoRunnerBuildService(
 
     private val myCargoWithStdErrVersion = Version.forIntegers(0, 13)
     private val myArgumentsProviders = mapOf(
-            Pair(CargoConstants.COMMAND_BENCH, BenchArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_BUILD, BuildArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_CLEAN, CleanArgumentsProvider()),
+            CargoConstants.COMMAND_BENCH to BenchArgumentsProvider(),
+            CargoConstants.COMMAND_BUILD to BuildArgumentsProvider(),
+            CargoConstants.COMMAND_CLEAN to CleanArgumentsProvider(),
             CargoConstants.COMMAND_CLIPPY to ClippyArgumentsProvider(),
-            Pair(CargoConstants.COMMAND_DOC, DocArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_LOGIN, LoginArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_PACKAGE, PackageArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_PUBLISH, PublishArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_RUN, RunArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_RUSTC, RustcArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_RUSTDOC, RustDocArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_TEST, TestArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_UPDATE, UpdateArgumentsProvider()),
-            Pair(CargoConstants.COMMAND_YANK, YankArgumentsProvider()))
+            CargoConstants.COMMAND_DOC to DocArgumentsProvider(),
+            CargoConstants.COMMAND_LOGIN to LoginArgumentsProvider(),
+            CargoConstants.COMMAND_PACKAGE to PackageArgumentsProvider(),
+            CargoConstants.COMMAND_PUBLISH to PublishArgumentsProvider(),
+            CargoConstants.COMMAND_RUN to RunArgumentsProvider(),
+            CargoConstants.COMMAND_RUSTC to RustcArgumentsProvider(),
+            CargoConstants.COMMAND_RUSTDOC to RustDocArgumentsProvider(),
+            CargoConstants.COMMAND_TEST to TestArgumentsProvider(),
+            CargoConstants.COMMAND_UPDATE to UpdateArgumentsProvider(),
+            CargoConstants.COMMAND_YANK to YankArgumentsProvider()
+    )
 
     override fun makeProgramCommandLine(): ProgramCommandLine {
         val parameters = runnerParameters
