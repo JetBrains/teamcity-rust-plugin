@@ -14,4 +14,5 @@ import jetbrains.buildServer.agent.BuildRunnerContext
  */
 interface ArgumentsProvider {
     fun getArguments(runnerContext: BuildRunnerContext): List<String>
+    fun shouldFailBuildIfCommandFailed(): Boolean = true
 }

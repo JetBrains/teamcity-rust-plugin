@@ -9,6 +9,7 @@ package jetbrains.buildServer.rust
 
 import com.github.zafarkhaja.semver.Version
 import jetbrains.buildServer.RunBuildException
+import jetbrains.buildServer.agent.BuildFinishedStatus
 import jetbrains.buildServer.agent.BuildRunnerContextEx
 import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.inspections.InspectionReporter
@@ -50,6 +51,26 @@ class CargoRunnerBuildService(
             CargoConstants.COMMAND_UPDATE to UpdateArgumentsProvider(),
             CargoConstants.COMMAND_YANK to YankArgumentsProvider()
     )
+
+    override fun getRunResult(exitCode: Int): BuildFinishedStatus {
+        if (exitCode == 0) {
+            return BuildFinishedStatus.FINISHED_SUCCESS
+        }
+
+        val commandName = runnerParameters[CargoConstants.PARAM_COMMAND]
+        val argumentsProvider = myArgumentsProviders[commandName]
+        if (argumentsProvider == null) {
+            val buildException = RunBuildException("Unable to construct arguments for cargo command $commandName")
+            buildException.isLogStacktrace = false
+            throw buildException
+        }
+
+        return if (argumentsProvider.shouldFailBuildIfCommandFailed()) {
+            BuildFinishedStatus.FINISHED_FAILED
+        } else {
+            BuildFinishedStatus.FINISHED_SUCCESS
+        }
+    }
 
     override fun makeProgramCommandLine(): ProgramCommandLine {
         val parameters = runnerParameters

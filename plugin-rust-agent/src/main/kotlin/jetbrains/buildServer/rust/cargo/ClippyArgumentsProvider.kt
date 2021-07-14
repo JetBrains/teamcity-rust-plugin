@@ -30,4 +30,6 @@ class ClippyArgumentsProvider : ArgumentsProvider {
 
         return arguments
     }
+
+    override fun shouldFailBuildIfCommandFailed(): Boolean = false
 }
