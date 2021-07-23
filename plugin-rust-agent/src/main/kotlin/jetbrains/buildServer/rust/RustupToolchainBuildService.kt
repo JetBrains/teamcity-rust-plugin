@@ -18,7 +18,7 @@ import jetbrains.buildServer.rust.logging.BlockListener
 /**
  * Rustup runner service.
  */
-class RustupBuildService(private val action: String) : BuildServiceAdapter() {
+class RustupToolchainBuildService(private val action: String) : BuildServiceAdapter() {
 
     val errors = arrayListOf<String>()
     var foundVersion: String? = null

@@ -13,16 +13,15 @@ import jetbrains.buildServer.agent.runner.CommandLineBuildService
 import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.agent.runner.TerminationAction
 import java.io.File
+import java.util.concurrent.atomic.AtomicReference
 
 class CommandExecutionAdapter(
         private val buildService: CommandLineBuildService,
-        private val redirectStderrToStdout: Boolean = false
+        private val redirectStderrToStdout: Boolean,
+        private val executionResult: AtomicReference<BuildFinishedStatus>
 ) : CommandExecution {
 
     private val processListeners by lazy { buildService.listeners }
-
-    var result: BuildFinishedStatus? = null
-        private set
 
     override fun processFinished(exitCode: Int) {
         buildService.afterProcessFinished()
@@ -31,10 +30,11 @@ class CommandExecutionAdapter(
             it.processFinished(exitCode)
         }
 
-        result = buildService.getRunResult(exitCode)
+        val result = buildService.getRunResult(exitCode)
         if (result == BuildFinishedStatus.FINISHED_SUCCESS) {
             buildService.afterProcessSuccessfullyFinished()
         }
+        executionResult.set(result)
     }
 
     override fun processStarted(programCommandLine: String, workingDirectory: File) {
