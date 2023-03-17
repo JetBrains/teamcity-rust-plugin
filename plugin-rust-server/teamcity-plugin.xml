@@ -13,7 +13,7 @@
         <display-name>Rust and Cargo Support</display-name>
         <version>@Plugin_Version@</version>
         <description>Provides build facilities for Rust projects</description>
-        <download-url>https://github.com/dtretyakov/teamcity-rust-plugin</download-url>
+        <download-url>https://github.com/JetBrains/teamcity-rust-plugin</download-url>
         <vendor>
             <name>JetBrains</name>
             <url>https://www.jetbrains.com/</url>
