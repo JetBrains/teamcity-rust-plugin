@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -30,6 +30,7 @@ object CargoConstants {
 
     const val COMMAND_BENCH = "bench"
     const val COMMAND_BUILD = "build"
+    const val COMMAND_CHECK = "check"
     const val COMMAND_CLEAN = "clean"
     const val COMMAND_CLIPPY = "clippy"
     const val COMMAND_DOC = "doc"
@@ -56,6 +57,16 @@ object CargoConstants {
     const val PARAM_BUILD_TARGET = "cargo-build-target"
     const val PARAM_BUILD_MANIFEST = "cargo-build-manifest"
     const val PARAM_BUILD_PARALLEL = "cargo-build-parallel"
+
+    const val PARAM_CHECK_PACKAGE = "cargo-check-package"
+    const val PARAM_CHECK_TYPE = "cargo-check-type"
+    const val PARAM_CHECK_TYPE_NAME = "cargo-check-type-name"
+    const val PARAM_CHECK_FEATURES = "cargo-check-features"
+    const val PARAM_CHECK_NO_DEFAULT_FEATURES = "cargo-check-no-default-features"
+    const val PARAM_CHECK_TARGET = "cargo-check-target"
+    const val PARAM_CHECK_RELEASE = "cargo-check-release"
+    const val PARAM_CHECK_MANIFEST = "cargo-check-manifest"
+    const val PARAM_CHECK_PARALLEL = "cargo-check-parallel"
 
     const val PARAM_CLEAN_PACKAGE = "cargo-clean-package"
     const val PARAM_CLEAN_RELEASE = "cargo-clean-release"

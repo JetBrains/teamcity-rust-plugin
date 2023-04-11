@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -10,7 +10,6 @@ package jetbrains.buildServer.rust
 import jetbrains.buildServer.controllers.BasePropertiesBean
 import jetbrains.buildServer.rust.commands.CommandType
 import jetbrains.buildServer.rust.commands.cargo.*
-import jetbrains.buildServer.util.StringUtil
 
 /**
  * Provides parameters for cargo runner.
@@ -20,6 +19,7 @@ class CargoParametersProvider {
     val types: List<CommandType> = listOf(
             BenchCommandType(),
             BuildCommandType(),
+            CheckCommandType(),
             CleanCommandType(),
             ClippyCommandType(),
             DocCommandType(),
@@ -69,6 +69,33 @@ class CargoParametersProvider {
 
     val buildParallelKey: String
         get() = CargoConstants.PARAM_BUILD_PARALLEL
+
+    val checkPackageKey: String
+        get() = CargoConstants.PARAM_CHECK_PACKAGE
+
+    val checkTypeKey: String
+        get() = CargoConstants.PARAM_CHECK_TYPE
+
+    val checkTypeNameKey: String
+        get() = CargoConstants.PARAM_CHECK_TYPE_NAME
+
+    val checkFeaturesKey: String
+        get() = CargoConstants.PARAM_CHECK_FEATURES
+
+    val checkNoDefaultFeaturesKey: String
+        get() = CargoConstants.PARAM_CHECK_NO_DEFAULT_FEATURES
+
+    val checkReleaseKey: String
+        get() = CargoConstants.PARAM_CHECK_RELEASE
+
+    val checkTargetKey: String
+        get() = CargoConstants.PARAM_CHECK_TARGET
+
+    val checkManifestKey: String
+        get() = CargoConstants.PARAM_CHECK_MANIFEST
+
+    val checkParallelKey: String
+        get() = CargoConstants.PARAM_CHECK_PARALLEL
 
     val cleanPackageKey: String
         get() = CargoConstants.PARAM_CLEAN_PACKAGE

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright 2000-2021 JetBrains s.r.o.
+  ~ Copyright 2000-2023 JetBrains s.r.o.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License").
   ~ See LICENSE in the project root for license information.
@@ -139,6 +139,62 @@
                 </param>
 
                 <param name="cargo-build-parallel" dslName="parallelJobsNumber">
+                    <description>
+                        The number of jobs to run in parallel
+                    </description>
+                </param>
+            </option>
+
+            <option name="check" value="check">
+                <param name="cargo-check-package" dslName="testPackage">
+                    <description>
+                        Package to check for errors
+                    </description>
+                </param>
+
+                <param name="cargo-check-type" dslName="type" type="BuildType">
+                    <description>
+                        Build type
+                    </description>
+                </param>
+
+                <param name="cargo-check-type-name" dslName="typeName">
+                    <description>
+                        Build type name
+                    </description>
+                </param>
+
+                <param name="cargo-check-features" dslName="features">
+                    <description>
+                        Space-separated list of features to also build
+                    </description>
+                </param>
+
+                <param name="cargo-check-no-default-features" dslName="defaultFeatures" type="boolean" trueValue="" falseValue="true">
+                    <description>
+                        Build default features
+                    </description>
+                </param>
+
+                <param name="cargo-check-target" dslName="target">
+                    <description>
+                        Build for the target triple
+                    </description>
+                </param>
+
+                <param name="cargo-check-release" dslName="release" type="boolean" trueValue="true" falseValue="">
+                    <description>
+                        Build artifacts in release mode, with optimizations
+                    </description>
+                </param>
+
+                <param name="cargo-check-manifest" dslName="manifest">
+                    <description>
+                        Path to the manifest to compile
+                    </description>
+                </param>
+
+                <param name="cargo-check-parallel" dslName="parallelJobsNumber">
                     <description>
                         The number of jobs to run in parallel
                     </description>
