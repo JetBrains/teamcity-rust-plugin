@@ -139,6 +139,15 @@ class CargoRunnerBuildServiceTest {
         Assert.assertEquals(result, arguments)
     }
 
+    @Test(dataProvider = "testCheckArgumentsData")
+    fun testCheckArguments(parameters: Map<String, String>, arguments: List<String>) {
+        val context = getRunnerContext(parameters)
+        val argumentsProvider = CheckArgumentsProvider()
+        val result = argumentsProvider.getArguments(context)
+
+        Assert.assertEquals(result, arguments)
+    }
+
     private fun getRunnerContext(parameters: Map<String, String>): BuildRunnerContext {
         val m = Mockery()
         val context = m.mock<BuildRunnerContext>(BuildRunnerContext::class.java)
@@ -350,4 +359,27 @@ class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_YANK_TOKEN, "token",
                         CargoConstants.PARAM_YANK_CRATE, "crate"), listOf("yank", "--index", "index", "--token", "token", "crate")))
     }
+
+    @DataProvider(name = "testCheckArgumentsData")
+    fun testCheckArgumentsData(): Array<Array<Any>> =
+        arrayOf(
+            arrayOf(
+                mapOf(CargoConstants.PARAM_CHECK_PACKAGE to "name",
+                      CargoConstants.PARAM_CHECK_RELEASE to "true"),
+                listOf("check", "--package", "name", "--release")),
+            arrayOf(
+                mapOf(
+                    CargoConstants.PARAM_CHECK_TYPE to "--bin",
+                    CargoConstants.PARAM_CHECK_TYPE_NAME to "name"),
+                listOf("check", "--bin", "name")),
+            arrayOf(
+                mapOf(
+                    CargoConstants.PARAM_CHECK_FEATURES to "name1 name2",
+                    CargoConstants.PARAM_CHECK_NO_DEFAULT_FEATURES to "true"),
+                listOf("check", "--features", "name1 name2", "--no-default-features")),
+            arrayOf(
+                mapOf(
+                    CargoConstants.PARAM_CHECK_TARGET to "name",
+                    CargoConstants.PARAM_CHECK_MANIFEST to "/path/to/manifest"),
+                listOf("check", "--target", "name", "--manifest-path", "/path/to/manifest")))
 }

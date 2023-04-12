@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -38,6 +38,7 @@ class CargoRunnerBuildService(
     private val myArgumentsProviders = mapOf(
             CargoConstants.COMMAND_BENCH to BenchArgumentsProvider(),
             CargoConstants.COMMAND_BUILD to BuildArgumentsProvider(),
+            CargoConstants.COMMAND_CHECK to CheckArgumentsProvider(),
             CargoConstants.COMMAND_CLEAN to CleanArgumentsProvider(),
             CargoConstants.COMMAND_CLIPPY to ClippyArgumentsProvider(),
             CargoConstants.COMMAND_DOC to DocArgumentsProvider(),

@@ -19,6 +19,7 @@ class CargoParametersProvider {
     val types: List<CommandType> = listOf(
             BenchCommandType(),
             BuildCommandType(),
+            CheckCommandType(),
             CleanCommandType(),
             ClippyCommandType(),
             DocCommandType(),
@@ -75,6 +76,33 @@ class CargoParametersProvider {
 
     val buildParallelKey: String
         get() = CargoConstants.PARAM_BUILD_PARALLEL
+
+    val checkPackageKey: String
+        get() = CargoConstants.PARAM_CHECK_PACKAGE
+
+    val checkTypeKey: String
+        get() = CargoConstants.PARAM_CHECK_TYPE
+
+    val checkTypeNameKey: String
+        get() = CargoConstants.PARAM_CHECK_TYPE_NAME
+
+    val checkFeaturesKey: String
+        get() = CargoConstants.PARAM_CHECK_FEATURES
+
+    val checkNoDefaultFeaturesKey: String
+        get() = CargoConstants.PARAM_CHECK_NO_DEFAULT_FEATURES
+
+    val checkReleaseKey: String
+        get() = CargoConstants.PARAM_CHECK_RELEASE
+
+    val checkTargetKey: String
+        get() = CargoConstants.PARAM_CHECK_TARGET
+
+    val checkManifestKey: String
+        get() = CargoConstants.PARAM_CHECK_MANIFEST
+
+    val checkParallelKey: String
+        get() = CargoConstants.PARAM_CHECK_PARALLEL
 
     val cleanPackageKey: String
         get() = CargoConstants.PARAM_CLEAN_PACKAGE
