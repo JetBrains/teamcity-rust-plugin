@@ -3,10 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="bs" tagdir="/WEB-INF/tags" %>
 <%--
-  ~ Copyright 2000-2021 JetBrains s.r.o.
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License").
-  ~ See LICENSE in the project root for license information.
+  - Copyright 2000-2023 JetBrains s.r.o.
+  -
+  - Licensed under the Apache License, Version 2.0 (the "License").
+  - See LICENSE in the project root for license information.
   --%>
 
 <jsp:useBean id="propertiesBean" scope="request" type="jetbrains.buildServer.controllers.BasePropertiesBean"/>
@@ -31,6 +31,16 @@
             <props:option value="--verbose">Verbose</props:option>
             <props:option value="--quiet">Quiet</props:option>
         </props:selectProperty>
+    </td>
+</tr>
+
+<tr class="advancedSetting">
+    <th><label for="${params.configKey}">Configuration options:</label></th>
+    <td>
+        <props:textProperty name="${params.configKey}" className="longField"/>
+        <span class="smallNote">
+            Space-separated list of Cargo configuration options in KEY=VALUE format.
+        </span>
     </td>
 </tr>
 

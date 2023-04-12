@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -45,6 +45,7 @@ object CargoConstants {
 
     const val PARAM_COMMAND = "cargo-command"
     const val PARAM_VERBOSITY = "cargo-verbosity"
+    const val PARAM_CONFIG = "cargo-config"
     const val PARAM_TOOLCHAIN = "cargo-toolchain"
 
     const val PARAM_BUILD_PACKAGE = "cargo-build-package"

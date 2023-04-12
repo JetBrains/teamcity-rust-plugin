@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -77,10 +77,7 @@ class BenchArgumentsProvider : ArgumentsProvider {
             arguments.add(manifestValue.trim())
         }
 
-        val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
-        if (!verbosityValue.isNullOrBlank()) {
-            arguments.add(verbosityValue.trim())
-        }
+        addCommonArguments(parameters, arguments)
 
         val argumentsValue = parameters[CargoConstants.PARAM_BENCH_ARGUMENTS]
         if (!argumentsValue.isNullOrBlank()) {

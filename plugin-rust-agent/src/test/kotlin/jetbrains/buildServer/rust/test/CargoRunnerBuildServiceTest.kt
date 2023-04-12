@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -167,7 +167,10 @@ class CargoRunnerBuildServiceTest {
 
                 arrayOf(CollectionsUtil.asMap(
                         CargoConstants.PARAM_BUILD_TARGET, "name",
-                        CargoConstants.PARAM_BUILD_MANIFEST, "/path/to/manifest"), listOf("build", "--target", "name", "--manifest-path", "/path/to/manifest")))
+                        CargoConstants.PARAM_BUILD_MANIFEST, "/path/to/manifest"), listOf("build", "--target", "name", "--manifest-path", "/path/to/manifest")),
+
+                arrayOf(mapOf(CargoConstants.PARAM_CONFIG to "simple=\"value\" complex=[\"value\",\"another value\"]"),
+                        listOf("build", "--config", "simple=\"value\"", "--config", "complex=[\"value\",\"another value\"]")))
     }
 
     @DataProvider(name = "testCleanArgumentsData")

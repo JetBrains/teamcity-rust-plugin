@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -10,7 +10,6 @@ package jetbrains.buildServer.rust
 import jetbrains.buildServer.controllers.BasePropertiesBean
 import jetbrains.buildServer.rust.commands.CommandType
 import jetbrains.buildServer.rust.commands.cargo.*
-import jetbrains.buildServer.util.StringUtil
 
 /**
  * Provides parameters for cargo runner.
@@ -39,6 +38,9 @@ class CargoParametersProvider {
 
     val verbosityKey: String
         get() = CargoConstants.PARAM_VERBOSITY
+
+    val configKey: String
+        get() = CargoConstants.PARAM_CONFIG
 
     val toolchainKey: String
         get() = CargoConstants.PARAM_TOOLCHAIN
