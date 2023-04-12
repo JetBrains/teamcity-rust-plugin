@@ -40,3 +40,34 @@ This project uses gradle as the build system. You can easily open it in [Intelli
 # Contributions
 
 We appreciate all kinds of feedback, so please feel free to send a PR or submit an issue.
+
+# Developing locally
+
+## First time setup
+
+To download TeamCity distribution locally, run
+```shell
+gradle downloadTeamcity2021.1
+```
+
+To install the downloaded distribution, run
+```shell
+gradle installTeamcity2021.1
+```
+
+## Running TeamCity with installed plugin
+
+To start TeamCity, run
+```shell
+gradle startTeamcity2021.1
+```
+
+To build the plugin, run
+```shell
+gradle serverPlugin
+```
+
+To install the built plugin to TeamCity, run
+```shell
+gradle deployToTeamcity2021.1
+```
