@@ -121,7 +121,7 @@ object Build : BuildType({
         pullRequests {
             provider = github {
                 authType = token {
-                    token = "credentialsJSON:1f157e28-9566-463a-a597-06d7bc6b8ed2"
+                    token = "credentialsJSON:03adaca2-d4f7-48de-a841-7802ae3518be"
                 }
                 filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
             }
