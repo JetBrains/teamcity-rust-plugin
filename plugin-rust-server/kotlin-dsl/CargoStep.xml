@@ -629,6 +629,15 @@
                     </description>
                 </param>
             </option>
+
+
+            <option name="custom" value="custom-crate">
+                <param name="cargo-custom-crate-name" dslName="crate">
+                    <description>
+                        Crate name without `cargo-` prefix
+                    </description>
+                </param>
+            </option>
         </param>
 
         <param name="cargo-verbosity" dslName="verbosity" type="Verbosity">
@@ -643,10 +652,15 @@
                 Toolchain version
             </description>
         </param>
-
         <param name="cargo-config" dslName="config">
             <description>
                 Space-separated list of Cargo configuration options in KEY=VALUE format.
+            </description>
+        </param>
+
+        <param name="cargo-additional-arguments" dslName="additionalArguments">
+            <description>
+                Additional arguments
             </description>
         </param>
 

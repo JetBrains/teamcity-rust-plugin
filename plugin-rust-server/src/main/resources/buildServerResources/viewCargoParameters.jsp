@@ -38,3 +38,10 @@
         Toolchain version: <props:displayValue name="${params.toolchainKey}"/>
     </div>
 </c:if>
+
+
+<c:if test="${not empty propertiesBean.properties[params.additionalArguments]}">
+    <div class="parameter">
+        Additional arguments: <props:displayValue name="${params.additionalArguments}"/>
+    </div>
+</c:if>

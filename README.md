@@ -14,6 +14,7 @@ It provides the following features for Rust projects:
 * Structured build log listener
 * Auto-discovery of build steps
 * Run steps in Docker
+* Running custom Cargo crates
 
 ## Running steps in Docker
 Add `cargo` to `teamcity.docker.runners` TeamCity property, for example `teamcity.docker.runners=cargo`.
@@ -35,8 +36,39 @@ To locate rust and cargo tools on build agent in addition to `CARGO_HOME` value 
 
 # Build
 
-This project uses gradle as the build system. You can easily open it in [IntelliJ IDEA](https://www.jetbrains.com/idea/help/importing-project-from-gradle-model.html) or [Eclipse](http://gradle.org/eclipse/).
+This project uses Gradle as the build system. You can easily open it in [IntelliJ IDEA](https://www.jetbrains.com/idea/help/importing-project-from-gradle-model.html) or [Eclipse](http://gradle.org/eclipse/).
 
 # Contributions
 
 We appreciate all kinds of feedback, so please feel free to send a PR or submit an issue.
+
+# Developing locally
+
+## First time setup
+
+To download TeamCity distribution locally, run
+```shell
+gradle downloadTeamcity2021.1
+```
+
+To install the downloaded distribution, run
+```shell
+gradle installTeamcity2021.1
+```
+
+## Running TeamCity with installed plugin
+
+To start TeamCity, run
+```shell
+gradle startTeamcity2021.1
+```
+
+To build the plugin, run
+```shell
+gradle serverPlugin
+```
+
+To install the built plugin to TeamCity, run
+```shell
+gradle deployToTeamcity2021.1
+```

@@ -49,7 +49,8 @@ class CargoRunnerBuildService(
             CargoConstants.COMMAND_RUSTDOC to RustDocArgumentsProvider(),
             CargoConstants.COMMAND_TEST to TestArgumentsProvider(),
             CargoConstants.COMMAND_UPDATE to UpdateArgumentsProvider(),
-            CargoConstants.COMMAND_YANK to YankArgumentsProvider()
+            CargoConstants.COMMAND_YANK to YankArgumentsProvider(),
+            CargoConstants.COMMAND_CUSTOM_CRATE to CustomCrateArgumentsProvider()
     )
 
     override fun getRunResult(exitCode: Int): BuildFinishedStatus {
@@ -90,13 +91,19 @@ class CargoRunnerBuildService(
         }
 
         val toolchainVersion = parameters[CargoConstants.PARAM_TOOLCHAIN]?.trim() ?: ""
-        val (toolPath, arguments) = if (toolchainVersion.isNotEmpty()) {
+        val (toolPath, providedArguments) = if (toolchainVersion.isNotEmpty()) {
             val rustupPath = getPath(CargoConstants.RUSTUP_CONFIG_NAME)
             rustupPath to argumentsProvider.getArguments(runnerContext).toMutableList().apply {
                 addAll(0, arrayListOf("run", toolchainVersion, "cargo"))
             }
         } else {
             getPath(CargoConstants.CARGO_CONFIG_NAME) to argumentsProvider.getArguments(runnerContext)
+        }
+
+        val arguments = providedArguments.toMutableList()
+
+        parameters[CargoConstants.PARAM_ADDITIONAL_ARGUMENTS]?.let {
+            arguments.addAll(StringUtil.splitHonorQuotes(it))
         }
 
         runnerContext.configParameters[CargoConstants.CARGO_CONFIG_NAME]?.let {
@@ -135,7 +142,10 @@ class CargoRunnerBuildService(
     override fun getListeners(): List<ProcessListener> {
         val loggerFactory = CargoLoggerFactory(logger)
         val command = runnerParameters[CargoConstants.PARAM_COMMAND]
-        val blockName = "cargo $command"
+        val blockName = if (command == CargoConstants.COMMAND_CUSTOM_CRATE) {
+            val crate = runnerParameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
+            "cargo $crate"
+        } else "cargo $command"
 
         val listeners = mutableListOf(
                 CargoLoggingListener(loggerFactory),
