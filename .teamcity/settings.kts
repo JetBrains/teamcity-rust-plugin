@@ -119,7 +119,6 @@ object Build : BuildType({
         }
 
         pullRequests {
-            vcsRootExtId = "${DslContext.settingsRoot.id}"
             provider = github {
                 authType = token {
                     token = "credentialsJSON:1f157e28-9566-463a-a597-06d7bc6b8ed2"
