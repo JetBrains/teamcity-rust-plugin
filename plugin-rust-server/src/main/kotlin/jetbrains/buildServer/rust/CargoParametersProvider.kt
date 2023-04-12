@@ -10,7 +10,6 @@ package jetbrains.buildServer.rust
 import jetbrains.buildServer.controllers.BasePropertiesBean
 import jetbrains.buildServer.rust.commands.CommandType
 import jetbrains.buildServer.rust.commands.cargo.*
-import jetbrains.buildServer.util.StringUtil
 
 /**
  * Provides parameters for cargo runner.
@@ -31,7 +30,8 @@ class CargoParametersProvider {
             RustDocCommandType(),
             TestCommandType(),
             UpdateCommandType(),
-            YankCommandType()
+            YankCommandType(),
+            CustomCrateCommandType()
     )
 
     val commandKey: String
@@ -42,6 +42,9 @@ class CargoParametersProvider {
 
     val toolchainKey: String
         get() = CargoConstants.PARAM_TOOLCHAIN
+
+    val additionalArguments: String
+        get() = CargoConstants.PARAM_ADDITIONAL_ARGUMENTS
 
     val buildPackageKey: String
         get() = CargoConstants.PARAM_BUILD_PACKAGE
@@ -327,6 +330,9 @@ class CargoParametersProvider {
 
     val yankTokenKeySecure: String
         get() = CargoConstants.PARAM_YANK_TOKEN_SECURE
+
+    val customCrateCommandName: String
+        get() = CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME
 
     companion object {
         @JvmStatic

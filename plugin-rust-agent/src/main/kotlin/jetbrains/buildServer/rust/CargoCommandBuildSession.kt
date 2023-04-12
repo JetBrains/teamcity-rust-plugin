@@ -93,6 +93,11 @@ class CargoCommandBuildSession(
             commands.add(createCommand(RustupComponentAddBuildService("clippy")))
         }
 
+        if (runnerContext.runnerParameters[CargoConstants.PARAM_COMMAND] == CargoConstants.COMMAND_CUSTOM_CRATE) {
+            val command = runnerContext.runnerParameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
+            commands.add(createCommand(CargoInstallCrateService("cargo-$command")))
+        }
+
         commands.add(createCommand(CargoRunnerBuildService(runnerContext, inspectionReporter, clippyInspectionsParser), true))
 
         val command = MultiCommandExecution(commands, runnerContext.workingDirectory, filesToClean)

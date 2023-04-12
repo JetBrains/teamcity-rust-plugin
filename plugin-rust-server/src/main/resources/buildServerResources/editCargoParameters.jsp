@@ -50,6 +50,18 @@
     </td>
 </tr>
 
+
+<tr class="advancedSetting">
+    <th><label for="${params.additionalArguments}">Additional arguments:</label></th>
+    <td>
+        <props:textProperty
+                name="${params.additionalArguments}"
+                className="longField"
+        />
+        <span class="error" id="error_${params.additionalArguments}"></span>
+    </td>
+</tr>
+
 <bs:executeOnce id="rustToolChainVersionUpdate">
     <script>
         $j(document).ready(function() {

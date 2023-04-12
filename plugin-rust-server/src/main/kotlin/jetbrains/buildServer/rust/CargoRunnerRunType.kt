@@ -9,6 +9,7 @@ package jetbrains.buildServer.rust
 
 import jetbrains.buildServer.requirements.Requirement
 import jetbrains.buildServer.requirements.RequirementType
+import jetbrains.buildServer.serverSide.InvalidProperty
 import jetbrains.buildServer.serverSide.PropertiesProcessor
 import jetbrains.buildServer.serverSide.RunType
 import jetbrains.buildServer.serverSide.RunTypeRegistry
@@ -37,7 +38,17 @@ class CargoRunnerRunType(private val myPluginDescriptor: PluginDescriptor,
     }
 
     override fun getRunnerPropertiesProcessor(): PropertiesProcessor? {
-        return PropertiesProcessor { emptyList() }
+        return PropertiesProcessor {
+            val errors = mutableListOf<InvalidProperty>()
+            val command = it[CargoConstants.PARAM_COMMAND]
+            if (command == CargoConstants.COMMAND_CUSTOM_CRATE) {
+                val crate = it[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
+                if (crate.isNullOrBlank()) {
+                    errors.add(InvalidProperty(CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME, "Crate name should not be empty"))
+                }
+            }
+            errors
+        }
     }
 
     override fun getEditRunnerParamsJspFilePath(): String? {
@@ -48,12 +59,17 @@ class CargoRunnerRunType(private val myPluginDescriptor: PluginDescriptor,
         return myPluginDescriptor.getPluginResourcesPath("viewCargoParameters.jsp")
     }
 
-    override fun getDefaultRunnerProperties(): Map<String, String>? {
+    override fun getDefaultRunnerProperties(): Map<String, String> {
         return emptyMap()
     }
 
     override fun describeParameters(parameters: Map<String, String>): String {
-        return "cargo ${parameters[CargoConstants.PARAM_COMMAND]}"
+        val command = parameters[CargoConstants.PARAM_COMMAND]
+        if (command == CargoConstants.COMMAND_CUSTOM_CRATE) {
+            val crate = parameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
+            return "cargo $crate"
+        }
+        return "cargo $command"
     }
 
     override fun getRunnerSpecificRequirements(parameters: Map<String, String>): List<Requirement> {

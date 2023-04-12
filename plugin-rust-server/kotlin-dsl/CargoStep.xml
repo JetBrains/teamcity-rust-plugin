@@ -629,6 +629,15 @@
                     </description>
                 </param>
             </option>
+
+
+            <option name="custom" value="custom-crate">
+                <param name="cargo-custom-crate-name" dslName="crate">
+                    <description>
+                        Crate name without `cargo-` prefix
+                    </description>
+                </param>
+            </option>
         </param>
         <param name="cargo-verbosity" dslName="verbosity" type="Verbosity">
             <description>
@@ -641,6 +650,13 @@
                 Toolchain version
             </description>
         </param>
+
+        <param name="cargo-additional-arguments" dslName="additionalArguments">
+            <description>
+                Additional arguments
+            </description>
+        </param>
+
 
         <!-- FIXME: Remove this when Docker wrapper gets proper support for plugins. See TW-68264 -->
         <param name="plugin.docker.imageId" dslName="dockerImage" type="string">

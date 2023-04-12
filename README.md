@@ -14,6 +14,7 @@ It provides the following features for Rust projects:
 * Structured build log listener
 * Auto-discovery of build steps
 * Run steps in Docker
+* Running custom Cargo crates
 
 ## Running steps in Docker
 Add `cargo` to `teamcity.docker.runners` TeamCity property, for example `teamcity.docker.runners=cargo`.

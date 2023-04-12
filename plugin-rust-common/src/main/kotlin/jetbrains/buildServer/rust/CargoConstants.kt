@@ -42,10 +42,12 @@ object CargoConstants {
     const val COMMAND_TEST = "test"
     const val COMMAND_UPDATE = "update"
     const val COMMAND_YANK = "yank"
+    const val COMMAND_CUSTOM_CRATE = "custom-crate"
 
     const val PARAM_COMMAND = "cargo-command"
     const val PARAM_VERBOSITY = "cargo-verbosity"
     const val PARAM_TOOLCHAIN = "cargo-toolchain"
+    const val PARAM_ADDITIONAL_ARGUMENTS = "cargo-additional-arguments"
 
     const val PARAM_BUILD_PACKAGE = "cargo-build-package"
     const val PARAM_BUILD_TYPE = "cargo-build-type"
@@ -156,8 +158,11 @@ object CargoConstants {
     const val PARAM_YANK_TOKEN = "cargo-yank-token"
     const val PARAM_YANK_TOKEN_SECURE = "secure:cargo-yank-token"
 
+    const val PARAM_CUSTOM_CRATE_COMMAND_NAME = "cargo-custom-crate-name"
+
     const val RUSTUP_DOWNLOADS_DIR = "downloads"
     const val RUSTUP_TMP_DIR = "tmp"
     const val RUSTUP_TOOLCHAINS_DIR = "toolchains"
     const val RUSTUP_HASHES_DIR = "update-hashes"
+
 }
