@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2021 JetBrains s.r.o.
+ * Copyright 2000-2023 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * See LICENSE in the project root for license information.
@@ -28,10 +28,7 @@ class LoginArgumentsProvider : ArgumentsProvider {
             arguments.add(hostValue.trim())
         }
 
-        val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
-        if (!verbosityValue.isNullOrBlank()) {
-            arguments.add(verbosityValue.trim())
-        }
+        addCommonArguments(parameters, arguments)
 
         val tokenValue = parameters[CargoConstants.PARAM_LOGIN_TOKEN_SECURE] ?: parameters[CargoConstants.PARAM_LOGIN_TOKEN]
         if (!tokenValue.isNullOrBlank()) {
