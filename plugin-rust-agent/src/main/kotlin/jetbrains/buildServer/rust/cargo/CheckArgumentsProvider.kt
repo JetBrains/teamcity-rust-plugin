@@ -69,10 +69,7 @@ class CheckArgumentsProvider : ArgumentsProvider {
             arguments += parallelJobsValue.trim()
         }
 
-        val verbosityValue = parameters[CargoConstants.PARAM_VERBOSITY]
-        if (!verbosityValue.isNullOrBlank()) {
-            arguments += verbosityValue.trim()
-        }
+        addCommonArguments(parameters, arguments)
 
         return arguments
     }

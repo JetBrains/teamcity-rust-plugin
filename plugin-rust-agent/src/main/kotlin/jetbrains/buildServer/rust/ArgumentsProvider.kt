@@ -25,7 +25,7 @@ interface ArgumentsProvider {
 
         val configValue = parameters[CargoConstants.PARAM_CONFIG]
         if (!configValue.isNullOrBlank()) {
-            StringUtil.splitCommandArgumentsAndUnquote(configValue).forEach { value ->
+            StringUtil.splitHonorQuotes(configValue).forEach { value ->
                 arguments += "--config"
                 arguments += value
             }

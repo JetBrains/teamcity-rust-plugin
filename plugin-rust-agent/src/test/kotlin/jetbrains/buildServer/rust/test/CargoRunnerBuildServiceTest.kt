@@ -178,8 +178,8 @@ class CargoRunnerBuildServiceTest {
                         CargoConstants.PARAM_BUILD_TARGET, "name",
                         CargoConstants.PARAM_BUILD_MANIFEST, "/path/to/manifest"), listOf("build", "--target", "name", "--manifest-path", "/path/to/manifest")),
 
-                arrayOf(mapOf(CargoConstants.PARAM_CONFIG to "simple=\"value\" complex=[\"value\",\"another value\"]"),
-                        listOf("build", "--config", "simple=\"value\"", "--config", "complex=[\"value\",\"another value\"]")))
+                arrayOf(mapOf(CargoConstants.PARAM_CONFIG to """simple="value" 'complex=["value", "another value"]'"""),
+                        listOf("build", "--config", """simple="value"""", "--config", """'complex=["value", "another value"]'""")))
     }
 
     @DataProvider(name = "testCleanArgumentsData")
