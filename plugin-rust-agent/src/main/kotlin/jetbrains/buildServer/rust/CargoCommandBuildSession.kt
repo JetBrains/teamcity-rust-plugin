@@ -1,5 +1,3 @@
-
-
 package jetbrains.buildServer.rust
 
 import com.intellij.openapi.diagnostic.Logger
@@ -164,8 +162,8 @@ class MultiProgramCommandLine(
         val script = File(workingDirectory, "multi-command-line-${UUID.randomUUID()}")
         val stream = script.outputStream().bufferedWriter()
         for (command in commands) {
-            stream.appendln("cd ${command.workingDirectory}")
-            stream.appendln("${command.executablePath} \"${command.arguments.joinToString("\" \"")}\"")
+            stream.appendLine("cd ${command.workingDirectory}")
+            stream.appendLine("${command.executablePath} \"${command.arguments.joinToString("\" \"")}\"")
         }
         stream.close()
         script.setExecutable(true)
