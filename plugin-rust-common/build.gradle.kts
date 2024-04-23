@@ -1,8 +1,6 @@
-
-
 plugins{
-    id("com.github.rodm.teamcity-common") version "1.3.1"
-    id("kotlin")
+    kotlin("jvm")
+    id("io.github.rodm.teamcity-common") version "1.5.3"
 }
 
 dependencies {

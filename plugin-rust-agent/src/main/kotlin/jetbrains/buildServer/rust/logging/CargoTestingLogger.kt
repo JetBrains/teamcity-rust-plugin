@@ -1,5 +1,3 @@
-
-
 package jetbrains.buildServer.rust.logging
 
 import jetbrains.buildServer.agent.BuildProgressLogger
@@ -41,7 +39,7 @@ class CargoTestingLogger(private val myLogger: BuildProgressLogger) : CargoDefau
         if (testMatcher.find()) {
             // Test result line
             val testName = testMatcher.group(1).replace('\\', '/')
-            val result = testMatcher.group(2).toLowerCase()
+            val result = testMatcher.group(2).lowercase()
             myTestName = testName
 
             val testDuration = System.currentTimeMillis() - myTestStartTime

@@ -1,9 +1,7 @@
-
-
 plugins {
     kotlin("jvm")
-    id("com.github.rodm.teamcity-server") version "1.3.2"
-    id("com.github.rodm.teamcity-environments") version "1.3.2"
+    id("io.github.rodm.teamcity-server") version "1.5.3"
+    id("io.github.rodm.teamcity-environments") version "1.5.3"
 }
 
 val teamcityVersion = rootProject.extra["teamcityVersion"] as String
@@ -30,11 +28,11 @@ teamcity {
 
         create("teamcity2020.2") {
             version = "2020.2"
-            javaHome = file(System.getProperty("java.home"))
+            javaHome = System.getProperty("java.home")
         }
         create("teamcity2021.1") {
             version = "2021.1"
-            javaHome = file(System.getProperty("java.home"))
+            javaHome = System.getProperty("java.home")
         }
     }
 }
