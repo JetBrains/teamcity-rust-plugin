@@ -1,7 +1,4 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.PullRequests
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.commitStatusPublisher
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.v2019_2.failureConditions.BuildFailureOnMetric
 import jetbrains.buildServer.configs.kotlin.v2019_2.failureConditions.failOnMetricChange
@@ -35,22 +32,12 @@ version = "2020.1"
 project {
     description = "https://github.com/JetBrains/teamcity-rust-plugin"
 
-    vcsRoot(HttpsGithubComHyperiumHyperGitRefsHeadsMaster)
-    vcsRoot(HttpsGithubComAlexcrichtonFuturesRsGitRefs)
-    vcsRoot(HttpsGithubComCarllercheMioGitRefsHeadsMaster)
-    vcsRoot(HttpsGithubComSergioBenitezRocketGitRefsHe)
-    vcsRoot(HttpsGithubComDieselRsDieselGitRefsHeadsMaster)
-    vcsRoot(HttpsGithubComGothamRsGothamGitRefsHeadsMaster)
-    vcsRoot(HttpsGithubComIronIronGitRefsHeadsMaster)
+    vcsRoot(HttpsGithubComRustLangFuturesRsGitRefsHeadsMaster1)
+    vcsRoot(HttpsGithubComGothamRsGothamGitRefsHeadsMain)
 
-    buildType(DieselBuild)
-    buildType(IronBuild)
-    buildType(MioBuild)
-    buildType(GothamBuild)
-    buildType(FuturesBuild)
-    buildType(HyperBuild)
     buildType(Build)
-    buildType(RocketBuild)
+    buildType(FuturesBuild)
+    buildType(GothamBuild)
 }
 
 object Build : BuildType({
@@ -105,230 +92,62 @@ object Build : BuildType({
             }
         }
     }
-
-    features {
-        commitStatusPublisher {
-            vcsRootExtId = "411"
-            publisher = github {
-                githubUrl = "https://api.github.com"
-                authType = personalToken {
-                    token = "credentialsJSON:1f157e28-9566-463a-a597-06d7bc6b8ed2"
-                }
-            }
-            param("github_oauth_user", "missingdays")
-        }
-
-        pullRequests {
-            provider = github {
-                authType = token {
-                    token = "credentialsJSON:03adaca2-d4f7-48de-a841-7802ae3518be"
-                }
-                filterAuthorRole = PullRequests.GitHubRoleFilter.MEMBER
-            }
-        }
-    }
-})
-
-object DieselBuild : BuildType({
-    name = "Diesel Build"
-
-    vcs {
-        root(HttpsGithubComDieselRsDieselGitRefsHeadsMaster)
-    }
-
-    steps {
-        step {
-            type = "cargo"
-            param("cargo-command", "build")
-        }
-        step {
-            type = "cargo"
-            param("cargo-command", "test")
-        }
-    }
-
-    triggers {
-        vcs {
-        }
-    }
 })
 
 object FuturesBuild : BuildType({
-    name = "Futures Build"
+    name = "Demo: rust-lang / futures-rs"
+    description = "https://github.com/rust-lang/futures-rs"
 
     vcs {
-        root(HttpsGithubComAlexcrichtonFuturesRsGitRefs)
+        root(HttpsGithubComRustLangFuturesRsGitRefsHeadsMaster1)
     }
 
     steps {
         step {
             type = "cargo"
-            param("cargo-command", "build")
-        }
-        step {
-            type = "cargo"
             param("cargo-command", "test")
+            param("cargo-test-features", "default,thread-pool,io-compat")
+            param("cargo-test-no-fail-fast", "true")
         }
     }
 
     triggers {
-        vcs {
-        }
+        vcs { }
     }
 })
 
 object GothamBuild : BuildType({
-    name = "Gotham Build"
+    name = "Demo: gotham-rs / gotham"
+    description = "https://github.com/gotham-rs/gotham"
 
     vcs {
-        root(HttpsGithubComGothamRsGothamGitRefsHeadsMaster)
+        root(HttpsGithubComGothamRsGothamGitRefsHeadsMain)
     }
 
     steps {
         step {
             type = "cargo"
-            param("cargo-command", "build")
-        }
-        step {
-            type = "cargo"
+            param("cargo-command", "test")
+            param("cargo-test-no-fail-fast", "true")
             param("cargo-test-type", "--lib")
-            param("cargo-command", "test")
         }
     }
 
     triggers {
-        vcs {
-        }
+        vcs { }
     }
 })
 
-object HyperBuild : BuildType({
-    name = "Hyper Build"
-
-    vcs {
-        root(HttpsGithubComHyperiumHyperGitRefsHeadsMaster)
-    }
-
-    steps {
-        step {
-            type = "cargo"
-            param("cargo-command", "build")
-        }
-        step {
-            type = "cargo"
-            param("cargo-command", "test")
-        }
-    }
-
-    triggers {
-        vcs {
-        }
-    }
+object HttpsGithubComRustLangFuturesRsGitRefsHeadsMaster1 : GitVcsRoot({
+    name = "https://github.com/rust-lang/futures-rs.git#refs/heads/master"
+    url = "https://github.com/rust-lang/futures-rs.git"
+    branch = "master"
+    checkoutPolicy = GitVcsRoot.AgentCheckoutPolicy.USE_MIRRORS
 })
 
-object IronBuild : BuildType({
-    name = "Iron Build"
-
-    vcs {
-        root(HttpsGithubComIronIronGitRefsHeadsMaster)
-    }
-
-    steps {
-        step {
-            type = "cargo"
-            param("cargo-command", "build")
-        }
-        step {
-            type = "cargo"
-            param("cargo-command", "test")
-        }
-    }
-
-    triggers {
-        vcs {
-        }
-    }
-})
-
-object MioBuild : BuildType({
-    name = "Mio Build"
-
-    vcs {
-        root(HttpsGithubComCarllercheMioGitRefsHeadsMaster)
-    }
-
-    steps {
-        step {
-            type = "cargo"
-            param("cargo-command", "build")
-        }
-        step {
-            type = "cargo"
-            param("cargo-command", "test")
-        }
-    }
-
-    triggers {
-        vcs {
-        }
-    }
-})
-
-object RocketBuild : BuildType({
-    name = "Rocket Build"
-
-    vcs {
-        root(HttpsGithubComSergioBenitezRocketGitRefsHe)
-    }
-
-    steps {
-        step {
-            type = "cargo"
-            param("cargo-command", "build")
-        }
-        step {
-            type = "cargo"
-            param("cargo-command", "test")
-        }
-    }
-
-    triggers {
-        vcs {
-        }
-    }
-})
-
-object HttpsGithubComAlexcrichtonFuturesRsGitRefs : GitVcsRoot({
-    name = "https://github.com/alexcrichton/futures-rs.git#refs/heads/master"
-    url = "https://github.com/alexcrichton/futures-rs.git"
-})
-
-object HttpsGithubComCarllercheMioGitRefsHeadsMaster : GitVcsRoot({
-    name = "https://github.com/carllerche/mio.git#refs/heads/master"
-    url = "https://github.com/carllerche/mio.git"
-})
-
-object HttpsGithubComDieselRsDieselGitRefsHeadsMaster : GitVcsRoot({
-    name = "https://github.com/diesel-rs/diesel.git#refs/heads/master"
-    url = "https://github.com/diesel-rs/diesel.git"
-})
-
-object HttpsGithubComGothamRsGothamGitRefsHeadsMaster : GitVcsRoot({
-    name = "https://github.com/gotham-rs/gotham.git#refs/heads/master"
+object HttpsGithubComGothamRsGothamGitRefsHeadsMain : GitVcsRoot({
+    name = "https://github.com/gotham-rs/gotham.git#refs/heads/main"
     url = "https://github.com/gotham-rs/gotham.git"
-})
-
-object HttpsGithubComHyperiumHyperGitRefsHeadsMaster : GitVcsRoot({
-    name = "https://github.com/hyperium/hyper.git#refs/heads/master"
-    url = "https://github.com/hyperium/hyper.git"
-})
-
-object HttpsGithubComIronIronGitRefsHeadsMaster : GitVcsRoot({
-    name = "https://github.com/iron/iron.git#refs/heads/master"
-    url = "https://github.com/iron/iron.git"
-})
-
-object HttpsGithubComSergioBenitezRocketGitRefsHe : GitVcsRoot({
-    name = "https://github.com/SergioBenitez/Rocket.git#refs/heads/master"
-    url = "https://github.com/SergioBenitez/Rocket.git"
+    branch = "main"
+    checkoutPolicy = GitVcsRoot.AgentCheckoutPolicy.USE_MIRRORS
 })
