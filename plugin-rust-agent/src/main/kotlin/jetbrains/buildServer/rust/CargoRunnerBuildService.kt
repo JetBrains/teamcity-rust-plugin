@@ -1,5 +1,3 @@
-
-
 package jetbrains.buildServer.rust
 
 import com.github.zafarkhaja.semver.Version
@@ -19,6 +17,7 @@ import jetbrains.buildServer.rust.logging.CargoLoggerFactory
 import jetbrains.buildServer.rust.logging.CargoLoggingListener
 import jetbrains.buildServer.util.OSType
 import jetbrains.buildServer.util.StringUtil
+import java.io.File
 
 /**
  * Cargo runner service.
@@ -103,18 +102,15 @@ class CargoRunnerBuildService(
         }
 
         runnerContext.configParameters[CargoConstants.CARGO_CONFIG_NAME]?.let {
-            if (Version.valueOf(it).greaterThanOrEqualTo(myCargoWithStdErrVersion)) {
+            if (Version.valueOf(it) >= myCargoWithStdErrVersion) {
                 return when (runnerContext.virtualContext.targetOSType) {
                     OSType.WINDOWS -> {
-                        createProgramCommandline("cmd.exe", arrayListOf("/c", "2>&1", toolPath).apply {
-                            addAll(arguments)
-                        })
-                    }
-                    OSType.UNIX -> {
-                        createProgramCommandline("sh", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                        createProgramCommandline("cmd.exe", listOf("/c", toolPath) + arguments + listOf("2>&1"))
                     }
                     else -> {
-                        createProgramCommandline("bash", arrayListOf("-c", "$toolPath ${arguments.joinToString(" ")} 2>&1"))
+                        val scriptlet = "$toolPath ${arguments.joinToString(" ")} 2>&1"
+                        val toolName = File(toolPath).name
+                        createProgramCommandline("/bin/sh", listOf("-c", scriptlet, toolName))
                     }
                 }
             }
