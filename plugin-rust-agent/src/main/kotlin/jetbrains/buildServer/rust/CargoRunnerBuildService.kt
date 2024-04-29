@@ -108,7 +108,7 @@ class CargoRunnerBuildService(
                         createProgramCommandline("cmd.exe", listOf("/c", toolPath) + arguments + listOf("2>&1"))
                     }
                     else -> {
-                        val scriptlet = "$toolPath ${arguments.joinToString(" ")} 2>&1"
+                        val scriptlet = "$toolPath ${arguments.map(::escapeSingleQuotes).joinToString(" ")} 2>&1"
                         val toolName = File(toolPath).name
                         createProgramCommandline("/bin/sh", listOf("-c", scriptlet, toolName))
                     }
@@ -127,6 +127,18 @@ class CargoRunnerBuildService(
             buildException.isLogStacktrace = false
             throw buildException
         }
+    }
+
+    private fun escapeSingleQuotes(arg: String): String {
+        val escapedArg = StringBuilder(arg.length)
+        for (i in 0 until arg.length) {
+            val c = arg[i]
+            if (c == '\'' && (i == 0 || arg[i - 1] != '\\')) {
+                escapedArg.append('\\')
+            }
+            escapedArg.append(c)
+        }
+        return escapedArg.toString()
     }
 
     override fun isCommandLineLoggingEnabled() = false
