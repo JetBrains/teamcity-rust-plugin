@@ -1,5 +1,3 @@
-
-
 package jetbrains.buildServer.rust.cargo
 
 import jetbrains.buildServer.agent.BuildRunnerContext
@@ -9,7 +7,7 @@ import java.lang.IllegalStateException
 import java.util.*
 
 /**
- * Provides arguments to cargo clean command.
+ * Provides arguments to custom crate command.
  */
 class CustomCrateArgumentsProvider : ArgumentsProvider {
 

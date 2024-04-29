@@ -4,9 +4,7 @@ import com.github.zafarkhaja.semver.Version
 import jetbrains.buildServer.RunBuildException
 import jetbrains.buildServer.agent.BuildFinishedStatus
 import jetbrains.buildServer.agent.BuildRunnerContextEx
-import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.inspections.InspectionReporter
-import jetbrains.buildServer.agent.runner.BuildServiceAdapter
 import jetbrains.buildServer.agent.runner.ProcessListener
 import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.rust.cargo.*
@@ -26,7 +24,7 @@ class CargoRunnerBuildService(
         private val runnerContext: BuildRunnerContextEx,
         private val inspectionReporter: InspectionReporter,
         private val clippyInspectionsParser: ClippyInspectionsParser
-) : BuildServiceAdapter() {
+) : BaseCargoBuildService() {
 
     private val myCargoWithStdErrVersion = Version.forIntegers(0, 13)
     private val myArgumentsProviders = mapOf(
@@ -85,20 +83,13 @@ class CargoRunnerBuildService(
             throw buildException
         }
 
-        val toolchainVersion = parameters[CargoConstants.PARAM_TOOLCHAIN]?.trim() ?: ""
-        val (toolPath, providedArguments) = if (toolchainVersion.isNotEmpty()) {
-            val rustupPath = getPath(CargoConstants.RUSTUP_CONFIG_NAME)
-            rustupPath to argumentsProvider.getArguments(runnerContext).toMutableList().apply {
-                addAll(0, arrayListOf("run", toolchainVersion, "cargo"))
-            }
-        } else {
-            getPath(CargoConstants.CARGO_CONFIG_NAME) to argumentsProvider.getArguments(runnerContext)
-        }
-
-        val arguments = providedArguments.toMutableList()
+        val arguments = mutableListOf<String>()
+        val (toolPath, toolArgs) = getToolPath()
+        arguments += toolArgs
+        arguments += argumentsProvider.getArguments(runnerContext)
 
         parameters[CargoConstants.PARAM_ADDITIONAL_ARGUMENTS]?.let {
-            arguments.addAll(StringUtil.splitHonorQuotes(it))
+            arguments += StringUtil.splitHonorQuotes(it)
         }
 
         runnerContext.configParameters[CargoConstants.CARGO_CONFIG_NAME]?.let {
@@ -117,16 +108,6 @@ class CargoRunnerBuildService(
         }
 
         return createProgramCommandline(toolPath, arguments)
-    }
-
-    private fun getPath(toolName: String): String {
-        try {
-            return getToolPath(toolName)
-        } catch (e: ToolCannotBeFoundException) {
-            val buildException = RunBuildException(e)
-            buildException.isLogStacktrace = false
-            throw buildException
-        }
     }
 
     private fun escapeSingleQuotes(arg: String): String {
