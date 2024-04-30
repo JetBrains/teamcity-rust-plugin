@@ -56,7 +56,7 @@ class CargoCommandBuildSession(
 
                 // `Rustup` could fail to install a toolchain.
                 // We can try to resolve it by uninstalling the toolchain and cleaning up temporary directories.
-                if (installToolchain.errors.isNotEmpty()) {
+                if (installToolchain.hasErrors) {
                     val logger = runnerContext.build.buildLogger
                     logger.message("Installation has failed, will remove toolchain '${installToolchain.version}' and try again")
 

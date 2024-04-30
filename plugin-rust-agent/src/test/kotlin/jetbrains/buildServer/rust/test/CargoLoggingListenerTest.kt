@@ -1,5 +1,3 @@
-
-
 package jetbrains.buildServer.rust.test
 
 import jetbrains.buildServer.agent.BuildProgressLogger
@@ -16,13 +14,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-/**
- * @author Dmitry.Tretyakov
- * *         Date: 21.06.2016
- * *         Time: 0:05
- */
 class CargoLoggingListenerTest {
-
     @Test(dataProvider = "testTransformations")
     @Throws(IOException::class)
     fun testTransformation(filename: String) {
@@ -54,9 +46,8 @@ class CargoLoggingListenerTest {
 
     private fun getMatcher(processed: MutableList<String>): BaseMatcher<String> {
         return object : BaseMatcher<String>() {
-            override fun matches(actual: Any): Boolean {
-                return processed.size > 0 && isEquals(actual as String, processed.removeAt(0))
-            }
+            override fun matches(actual: Any): Boolean =
+                processed.isNotEmpty() && isEquals(actual as String, processed.removeAt(0))
 
             override fun describeTo(description: Description) {
                 description.appendText("List matcher")
@@ -70,18 +61,16 @@ class CargoLoggingListenerTest {
     }
 
     @DataProvider
-    fun testTransformations(): Array<Array<Any>> {
-        return arrayOf(
-                arrayOf<Any>("cargoTests.txt"),
-                arrayOf<Any>("cargoCompileVerbose.txt"),
-                arrayOf<Any>("cargoTestFailures.txt"),
-                arrayOf<Any>("cargoBuild.txt"),
-                arrayOf<Any>("cargoWarnings.txt"),
-                arrayOf<Any>("cargoDocTests1.txt"),
-                arrayOf<Any>("cargoDocTests2.txt"),
-                arrayOf<Any>("cargoDocTests3.txt"),
-                arrayOf<Any>("cargoDocTests4.txt"),
-                arrayOf<Any>("cargoFeatureError.txt")
-        )
-    }
+    fun testTransformations(): Array<Array<Any>> = arrayOf(
+        arrayOf("cargoTests.txt"),
+        arrayOf("cargoCompileVerbose.txt"),
+        arrayOf("cargoTestFailures.txt"),
+        arrayOf("cargoBuild.txt"),
+        arrayOf("cargoWarnings.txt"),
+        arrayOf("cargoDocTests1.txt"),
+        arrayOf("cargoDocTests2.txt"),
+        arrayOf("cargoDocTests3.txt"),
+        arrayOf("cargoDocTests4.txt"),
+        arrayOf("cargoFeatureError.txt")
+    )
 }

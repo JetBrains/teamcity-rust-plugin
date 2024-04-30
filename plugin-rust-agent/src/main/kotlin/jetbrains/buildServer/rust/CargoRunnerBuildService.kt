@@ -10,7 +10,6 @@ import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.rust.cargo.*
 import jetbrains.buildServer.rust.inspections.ClippyInspectionsParser
 import jetbrains.buildServer.rust.inspections.ClippyListener
-import jetbrains.buildServer.rust.logging.BlockListener
 import jetbrains.buildServer.rust.logging.CargoLoggerFactory
 import jetbrains.buildServer.rust.logging.CargoLoggingListener
 import jetbrains.buildServer.util.OSType
@@ -124,25 +123,15 @@ class CargoRunnerBuildService(
 
     override fun isCommandLineLoggingEnabled() = false
 
-    override fun getListeners(): List<ProcessListener> {
-        val loggerFactory = CargoLoggerFactory(logger)
-        val command = runnerParameters[CargoConstants.PARAM_COMMAND]
-        val blockName = if (command == CargoConstants.COMMAND_CUSTOM_CRATE) {
-            val crate = runnerParameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
-            "cargo $crate"
-        } else "cargo $command"
+    override fun getListeners(): List<ProcessListener> =
+        super.getListeners() +
+        CargoLoggingListener(CargoLoggerFactory(this.logger)) +
+        (if (runnerParameters[CargoConstants.PARAM_COMMAND] != CargoConstants.COMMAND_CLIPPY) emptyList()
+         else listOf(ClippyListener(inspectionReporter, clippyInspectionsParser)))
 
-        val listeners = mutableListOf(
-                CargoLoggingListener(loggerFactory),
-                BlockListener(blockName, logger)
-        )
-
-        if (command == CargoConstants.COMMAND_CLIPPY) {
-            listeners.add(
-                ClippyListener(inspectionReporter, clippyInspectionsParser)
-            )
+    override val blockName: String
+        get() = when (val command = runnerParameters[CargoConstants.PARAM_COMMAND]) {
+            CargoConstants.COMMAND_CUSTOM_CRATE -> "cargo ${runnerParameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]}"
+            else -> "cargo $command"
         }
-
-        return listeners
-    }
 }
