@@ -52,10 +52,19 @@ class RustupToolchainBuildService(private val action: String, private val toolch
 
 private val VERSION_PATTERN = Regex("info: syncing channel updates for '([^']+)'")
 
+class RustupTargetBuildService(private val target: String, private val toolchain: String?) : BaseCargoBuildService() {
+    override fun makeProgramCommandLine(): ProgramCommandLine =
+        createProgramCommandline(
+            getRustupPath(),
+            listOf("target", "add") + (toolchain?.let { listOf("--toolchain", toolchain) } ?: emptyList()) + listOf(target))
+
+    override val blockName: String = "add target: $target"
+}
+
 abstract class BaseCargoBuildService : BuildServiceAdapter() {
     private val errorFlag = AtomicBoolean()
 
-    val hasErrors: Boolean = errorFlag.get()
+    fun hasErrors(): Boolean = errorFlag.get()
 
     protected fun getToolPath(): Pair<String, List<String>> {
         val toolchain = this.runnerParameters[CargoConstants.PARAM_TOOLCHAIN]

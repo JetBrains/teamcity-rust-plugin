@@ -49,44 +49,58 @@ class CargoCommandBuildSession(
     }
 
     private fun getSteps(): Iterator<CommandExecution> = iterator {
-        runnerContext.runnerParameters[CargoConstants.PARAM_TOOLCHAIN]?.let {
-            if (it.isNotBlank()) {
-                val installToolchain = RustupToolchainBuildService("install")
+        val parameters = runnerContext.runnerParameters
+        val command = parameters[CargoConstants.PARAM_COMMAND]
+
+        if (!runnerContext.isVirtualContext) {
+            val toolchainVersion = parameters[CargoConstants.PARAM_TOOLCHAIN]?.takeIf(String::isNotBlank)?.trim()
+
+            toolchainVersion?.let { requestedVersion ->
+                val installToolchain = RustupToolchainBuildService("install", requestedVersion)
                 yield(createCommand(installToolchain))
 
                 // `Rustup` could fail to install a toolchain.
                 // We can try to resolve it by uninstalling the toolchain and cleaning up temporary directories.
-                if (installToolchain.hasErrors) {
+                if (installToolchain.hasErrors()) {
                     val logger = runnerContext.build.buildLogger
                     logger.message("Installation has failed, will remove toolchain '${installToolchain.version}' and try again")
 
-                    val uninstallToolchain = RustupToolchainBuildService("uninstall")
-                    yield(createCommand(uninstallToolchain))
+                    yield(createCommand(RustupToolchainBuildService("uninstall", requestedVersion)))
 
                     val rustupCache = RustupToolProvider.getHome()
-                    installToolchain.version.let { toolchainVersion ->
-                        // Cleanup temp directories
-                        FileUtil.delete(File(rustupCache, CargoConstants.RUSTUP_DOWNLOADS_DIR))
-                        FileUtil.delete(File(rustupCache, CargoConstants.RUSTUP_TMP_DIR))
+                    // Cleanup temp directories
+                    FileUtil.delete(File(rustupCache, CargoConstants.RUSTUP_DOWNLOADS_DIR))
+                    FileUtil.delete(File(rustupCache, CargoConstants.RUSTUP_TMP_DIR))
+                    // Remove toolchain files
+                    FileUtil.delete(File(rustupCache, "${CargoConstants.RUSTUP_TOOLCHAINS_DIR}/$installToolchain.version"))
+                    FileUtil.delete(File(rustupCache, "${CargoConstants.RUSTUP_HASHES_DIR}/$installToolchain.version"))
 
-                        // Remove toolchain files
-                        FileUtil.delete(File(rustupCache, "${CargoConstants.RUSTUP_TOOLCHAINS_DIR}/$toolchainVersion"))
-                        FileUtil.delete(File(rustupCache, "${CargoConstants.RUSTUP_HASHES_DIR}/$toolchainVersion"))
+                    val reinstallToolchain = RustupToolchainBuildService("install", requestedVersion)
+                    yield(createCommand(reinstallToolchain))
+                    if (reinstallToolchain.hasErrors()) {
+                        return@iterator
                     }
+                }
+            }
 
-                    yield(createCommand(RustupToolchainBuildService("install")))
+            val targetParamName = "cargo-$command-target"
+            parameters[targetParamName]?.takeIf(String::isNotBlank)?.trim()?.let { targetTriple ->
+                val addTarget = RustupTargetBuildService(targetTriple, toolchainVersion)
+                yield(createCommand(addTarget))
+                if (addTarget.hasErrors()) {
+                    return@iterator
                 }
             }
         }
 
         val commands = mutableListOf<CommandExecution>()
 
-        if (runnerContext.runnerParameters[CargoConstants.PARAM_COMMAND] == CargoConstants.COMMAND_CLIPPY) {
+        if (command == CargoConstants.COMMAND_CLIPPY) {
             commands.add(createCommand(RustupComponentAddBuildService("clippy")))
         }
 
-        if (runnerContext.runnerParameters[CargoConstants.PARAM_COMMAND] == CargoConstants.COMMAND_CUSTOM_CRATE) {
-            val command = runnerContext.runnerParameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
+        if (command == CargoConstants.COMMAND_CUSTOM_CRATE) {
+            val command = parameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
             commands.add(createCommand(CargoInstallCrateService("cargo-$command")))
         }
 
@@ -95,7 +109,7 @@ class CargoCommandBuildSession(
         if (runnerContext.isVirtualContext) {
             yield(MultiCommandExecution(commands, runnerContext, filesToClean))
         } else {
-            commands.forEach { command -> yield(command) }
+            yieldAll(commands)
         }
     }
 

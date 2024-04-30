@@ -1,5 +1,3 @@
-
-
 package jetbrains.buildServer.rust
 
 /**
@@ -171,5 +169,4 @@ object CargoConstants {
     const val RUSTUP_TMP_DIR = "tmp"
     const val RUSTUP_TOOLCHAINS_DIR = "toolchains"
     const val RUSTUP_HASHES_DIR = "update-hashes"
-
 }
