@@ -98,7 +98,7 @@ class CargoRunnerBuildService(
                         createProgramCommandline("cmd.exe", listOf("/c", toolPath) + arguments + listOf("2>&1"))
                     }
                     else -> {
-                        val scriptlet = "$toolPath ${arguments.map(::escapeSingleQuotes).joinToString(" ")} 2>&1"
+                        val scriptlet = "$toolPath ${arguments.joinToString(" ", transform = ::escapeSingleQuotes)} 2>&1"
                         val toolName = File(toolPath).name
                         createProgramCommandline("/bin/sh", listOf("-c", scriptlet, toolName))
                     }
