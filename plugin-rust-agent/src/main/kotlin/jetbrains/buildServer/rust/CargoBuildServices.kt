@@ -66,11 +66,11 @@ abstract class BaseCargoBuildService : BuildServiceAdapter() {
 
     fun hasErrors(): Boolean = errorFlag.get()
 
-    protected fun getToolPath(): Pair<String, List<String>> {
-        val toolchain = this.runnerParameters[CargoConstants.PARAM_TOOLCHAIN]
-        val toolArgs = if (toolchain.isNullOrEmpty()) emptyList() else listOf("+" + toolchain.trim())
-        return getCargoPath() to toolArgs
-    }
+    protected fun getToolPath(): Pair<String, List<String>> =
+        runnerParameters[CargoConstants.PARAM_TOOLCHAIN].let { toolchain ->
+            if (toolchain.isNullOrEmpty()) getCargoPath() to emptyList()
+            else getRustupPath() to listOf("run", toolchain, "cargo")
+        }
 
     protected fun getCargoPath(): String = getPath(CargoConstants.CARGO_CONFIG_NAME)
 
