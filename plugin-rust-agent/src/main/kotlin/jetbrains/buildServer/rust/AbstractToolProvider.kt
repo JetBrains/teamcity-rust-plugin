@@ -16,8 +16,10 @@ import jetbrains.buildServer.SimpleCommandLineProcessRunner
 import jetbrains.buildServer.agent.*
 import jetbrains.buildServer.util.EventDispatcher
 import jetbrains.buildServer.util.StringUtil
-
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.absolutePathString
 
 /**
  * Determines tool location.
@@ -31,9 +33,12 @@ abstract class AbstractToolProvider(
 ): AgentLifeCycleAdapter(), ToolProvider {
     private val LOG = Logger.getInstance(AbstractToolProvider::class.java.name)
     private val VERSION_PATTERN = Regex("^$configName[\\s-]([^\\s]+)", RegexOption.IGNORE_CASE)
-    private val PATH_PATTERN = Regex("^.*$configName(\\.(exe))?$", RegexOption.IGNORE_CASE)
+    private val FILE_NAME_PATH_FILTER: (Path) -> Boolean = { path: Path ->
+        path.fileName.toString().lowercase().removeSuffix(".exe") == configExecutableName
+    }
 
     init {
+        require(configExecutableName.lowercase() == configExecutableName)
         toolsRegistry.registerToolProvider(this)
         events.addListener(this)
     }
@@ -85,18 +90,29 @@ abstract class AbstractToolProvider(
             System.getenv(CargoConstants.ENV_CARGO_HOME)?.let {
                 this.add(it + File.separatorChar + "bin")
             }
-            this.addAll(StringUtil.splitHonorQuotes(System.getenv("PATH"), File.pathSeparatorChar))
-            add(System.getProperty("user.home") + File.separatorChar + ".cargo" + File.separatorChar + "bin")
+            System.getenv("PATH")?.let {
+                this.addAll(StringUtil.splitHonorQuotes(it, File.pathSeparatorChar))
+            }
+            System.getProperty("user.home")?.let {
+                this.add(it + File.separatorChar + ".cargo" + File.separatorChar + "bin")
+            }
         }
 
-        return paths.mapNotNull { File(it).listFiles() }
-                .flatMap { it.map { it.absolutePath } }
-                .filter { PATH_PATTERN.matches(it) }
-                .mapNotNull {
+        return paths.map { Path.of(it) }
+            .filter { Files.isDirectory(it) }
+            .flatMap { dir ->
+                try {
+                    Files.newDirectoryStream(dir, FILE_NAME_PATH_FILTER).use { stream -> stream.toList() }
+                } catch (_: Throwable) {
+                    emptyList<Path>()
+                }
+            }
+            .map { it.absolutePathString() }
+            .mapNotNull {
                     try {
                         val commandLine = getVersionCommandLine(it)
                         val result = SimpleCommandLineProcessRunner.runCommand(commandLine, byteArrayOf())
-                        val version = VERSION_PATTERN.find(result.stdout)?.destructured?.component1() ?: result.stdout
+                        val version = VERSION_PATTERN.find(result.stdout)?.groups?.get(1)?.value ?: result.stdout
                         it to Version.valueOf(version)
                     } catch (e: Throwable) {
                         LOG.warnAndDebugDetails("Failed to parse $configName version: ${e.message}", e)
