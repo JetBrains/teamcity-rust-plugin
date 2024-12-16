@@ -67,7 +67,7 @@ object Build : BuildType({
 
     triggers {
         vcs {
-            branchFilter = ""
+            branchFilter = "+:<default>"
         }
     }
 
