@@ -13,14 +13,14 @@ val groupId = "teamcity-rust-plugin"
 val javaVersion = JavaVersion.VERSION_11
 
 extra["teamcityVersion"] = project.findProperty("teamcityVersion") ?: "2020.2"
-
 extra["downloadsDir"] = project.findProperty("downloads.dir") ?: "$rootDir/downloads"
 extra["serversDir"] = project.findProperty("servers.dir") ?: "$rootDir/servers"
 
 group = groupId
+@Suppress("SpellCheckingInspection")
 version = project.findProperty("versionNumber")
     ?.takeIf { Regex("""\d+\.\d+\.\d+.*""").matches(it as String) }
-    ?: "SNAPSHOT-" + SimpleDateFormat("yyyyMMddHHmmss").format(Date())
+    ?: ("SNAPSHOT-" + SimpleDateFormat("yyyyMMddHHmmss").format(Date()))
 
 allprojects {
     group = groupId
