@@ -1,12 +1,3 @@
-/*
- * Copyright 2000-2024 JetBrains s.r.o.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * See LICENSE in the project root for license information.
- */
-
-
-
 package jetbrains.buildServer.rust
 
 import com.github.zafarkhaja.semver.Version
@@ -32,8 +23,8 @@ abstract class AbstractToolProvider(
         private val configExecutableName: String
 ): AgentLifeCycleAdapter(), ToolProvider {
     private val LOG = Logger.getInstance(AbstractToolProvider::class.java.name)
-    private val VERSION_PATTERN = Regex("^$configName[\\s-]([^\\s]+)", RegexOption.IGNORE_CASE)
-    private val FILE_NAME_PATH_FILTER: (Path) -> Boolean = { path: Path ->
+    private val VERSION_PATTERN = Regex("^$configName[\\s-](\\S+)", RegexOption.IGNORE_CASE)
+    private val FILE_NAME_PATH_FILTER: (Path) -> Boolean = { path ->
         path.fileName.toString().lowercase().removeSuffix(".exe") == configExecutableName
     }
 
@@ -81,7 +72,7 @@ abstract class AbstractToolProvider(
     }
 
     /**
-     * Returns a first matching file in the list of directories.
+     * Returns the first matching file in the list of directories.
      *
      * @return first matching file.
      */
