@@ -10,6 +10,7 @@ plugins {
 }
 
 val groupId = "teamcity-rust-plugin"
+val javaVersion = JavaVersion.VERSION_11
 
 extra["teamcityVersion"] = project.findProperty("teamcityVersion") ?: "2020.2"
 
@@ -23,4 +24,14 @@ version = project.findProperty("versionNumber")
 
 allprojects {
     group = groupId
+
+    tasks.withType<JavaCompile>().configureEach {
+        sourceCompatibility = javaVersion.toString()
+        targetCompatibility = javaVersion.toString()
+    }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = javaVersion.toString()
+        }
+    }
 }
