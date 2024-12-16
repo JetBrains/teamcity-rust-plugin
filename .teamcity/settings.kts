@@ -59,7 +59,7 @@ object Build : BuildType({
         gradle {
             name = "Build project"
             tasks = "clean build"
-            jdkHome = "%env.JDK_18%"
+            jdkHome = "%env.JDK_11%"
             param("org.jfrog.artifactory.selectedDeployableServer.defaultModuleVersionConfiguration", "GLOBAL")
             buildFile = "build.gradle.kts"
         }
