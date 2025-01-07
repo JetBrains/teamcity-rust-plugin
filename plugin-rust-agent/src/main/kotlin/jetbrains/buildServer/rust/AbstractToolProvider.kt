@@ -10,6 +10,7 @@ import jetbrains.buildServer.util.StringUtil
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.Paths
 import kotlin.io.path.absolutePathString
 
 /**
@@ -89,7 +90,7 @@ abstract class AbstractToolProvider(
             }
         }
 
-        return paths.map { Path.of(it) }
+        return paths.map { Paths.get(it) }
             .filter { Files.isDirectory(it) }
             .flatMap { dir ->
                 try {

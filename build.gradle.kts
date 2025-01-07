@@ -10,7 +10,7 @@ plugins {
 }
 
 val groupId = "teamcity-rust-plugin"
-val javaVersion = JavaVersion.VERSION_11
+val javaVersion = JavaVersion.VERSION_1_8
 
 extra["teamcityVersion"] = project.findProperty("teamcityVersion") ?: "2020.2"
 extra["downloadsDir"] = project.findProperty("downloads.dir") ?: "$rootDir/downloads"
