@@ -10,3 +10,8 @@
         Crate name: <props:displayValue name="${params.customCrateCommandName}"/>
     </div>
 </c:if>
+<c:if test="${not empty propertiesBean.properties[params.customCrateCommandVersion]}">
+    <div class="parameter">
+        Crate version: <props:displayValue name="${params.customCrateCommandVersion}"/>
+    </div>
+</c:if>

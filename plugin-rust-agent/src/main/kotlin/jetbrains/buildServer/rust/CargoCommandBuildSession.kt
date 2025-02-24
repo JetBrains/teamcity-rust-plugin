@@ -101,7 +101,8 @@ class CargoCommandBuildSession(
 
         if (command == CargoConstants.COMMAND_CUSTOM_CRATE) {
             val command = parameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME]
-            commands.add(createCommand(CargoInstallCrateService("cargo-$command")))
+            val version = parameters[CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_VERSION]
+            commands.add(createCommand(CargoInstallCrateService("cargo-$command", version)))
         }
 
         commands.add(createCommand(CargoRunnerBuildService(runnerContext, inspectionReporter, clippyInspectionsParser), true))

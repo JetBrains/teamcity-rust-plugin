@@ -1,5 +1,3 @@
-
-
 package jetbrains.buildServer.rust
 
 import jetbrains.buildServer.controllers.BasePropertiesBean
@@ -359,6 +357,9 @@ class CargoParametersProvider {
 
     val customCrateCommandName: String
         get() = CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_NAME
+
+    val customCrateCommandVersion: String
+        get() = CargoConstants.PARAM_CUSTOM_CRATE_COMMAND_VERSION
 
     companion object {
         @JvmStatic

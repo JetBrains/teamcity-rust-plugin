@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-
 <dsl-extension kind="buildStep" type="cargo" generateDslJar="true">
     <class name="CargoBuildStep">
         <description>
@@ -681,11 +678,15 @@
                 </param>
             </option>
 
-
             <option name="custom" value="custom-crate">
                 <param name="cargo-custom-crate-name" dslName="crate">
                     <description>
                         Crate name without `cargo-` prefix
+                    </description>
+                </param>
+                <param name="cargo-custom-crate-version" dslName="version">
+                    <description>
+                        Crate version. If unspecified, the default behavior of "cargo install" is using the latest version.
                     </description>
                 </param>
             </option>

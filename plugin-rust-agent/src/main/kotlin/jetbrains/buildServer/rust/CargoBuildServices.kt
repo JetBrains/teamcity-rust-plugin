@@ -10,10 +10,14 @@ import jetbrains.buildServer.rust.logging.BlockListener
 import jetbrains.buildServer.rust.logging.ErrorDetectingListener
 import java.util.concurrent.atomic.AtomicBoolean
 
-class CargoInstallCrateService(private val crate: String) : BaseCargoBuildService() {
+class CargoInstallCrateService(private val crate: String, private val version: String?) : BaseCargoBuildService() {
     override fun makeProgramCommandLine(): ProgramCommandLine {
         val (toolPath, toolArgs) = getToolPath()
-        return createProgramCommandline(toolPath, toolArgs + listOf("install", "--locked", crate))
+        val installCommand = if (version != null)
+            listOf("install", "--locked", "--version", version, crate)
+        else
+            listOf("install", "--locked", crate)
+        return createProgramCommandline(toolPath, toolArgs + installCommand)
     }
 
     override val blockName: String = "install: $crate"

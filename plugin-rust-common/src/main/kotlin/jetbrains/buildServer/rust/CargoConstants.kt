@@ -164,6 +164,7 @@ object CargoConstants {
     const val PARAM_YANK_TOKEN_SECURE = "secure:cargo-yank-token"
 
     const val PARAM_CUSTOM_CRATE_COMMAND_NAME = "cargo-custom-crate-name"
+    const val PARAM_CUSTOM_CRATE_COMMAND_VERSION = "cargo-custom-crate-version"
 
     const val RUSTUP_DOWNLOADS_DIR = "downloads"
     const val RUSTUP_TMP_DIR = "tmp"

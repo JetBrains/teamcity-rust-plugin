@@ -16,3 +16,11 @@
         <span class="smallNote">Crate name without `cargo-` prefix</span>
     </td>
 </tr>
+<tr class="advancedSetting">
+    <th><label for="${params.customCrateCommandVersion}">Crate version:</label></th>
+    <td>
+        <props:textProperty name="${params.customCrateCommandVersion}" className="longField"/>
+        <span class="error" id="error_${params.customCrateCommandVersion}"></span>
+        <span class="smallNote">Crate version (leave blank to use the latest)</span>
+    </td>
+</tr>
